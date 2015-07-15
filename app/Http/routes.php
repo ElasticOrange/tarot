@@ -47,3 +47,7 @@ Route::get('templates/email', function () {
     return view('email-templates');
 });
 
+
+Route::get('settings', function () {
+    return view('settings');
+});

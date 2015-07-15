@@ -21,12 +21,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Settings <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">Sites</a></li>
-						<li><a href="#">Users</a></li>
-						<li><a href="#">Question templates</a></li>
-						<li><a href="#">Email templates</a></li>
+						<li><a href="/sites">Sites</a></li>
+						<li><a href="/users">Users</a></li>
+						<li><a href="/questiontemplates">Question templates</a></li>
+						<li><a href="/emailtemplates">Email templates</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="#">Settings</a></li>
+						<li><a href="/settings">Settings</a></li>
 					</ul>
 				</li>
 			</ul>

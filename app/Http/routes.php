@@ -31,3 +31,7 @@ Route::get('profile', function () {
     return view('profile');
 });
 
+Route::get('sites', function () {
+    return view('sites');
+});
+

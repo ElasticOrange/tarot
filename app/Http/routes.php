@@ -35,3 +35,7 @@ Route::get('sites', function () {
     return view('sites');
 });
 
+Route::get('users', function () {
+    return view('users');
+});
+

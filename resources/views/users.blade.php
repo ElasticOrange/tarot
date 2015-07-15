@@ -2,13 +2,13 @@
 
 <?php $selected_menu_item = ''?>
 
-@section('title', 'Sites list')
+@section('title', 'Users list')
 
 @section('content')
 
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
-			<pagetitle>Sites</pagetitle>
+			<pagetitle>Users</pagetitle>
 		</div>
 		<div class="col-sm-3">
 			<form class="form">
@@ -28,45 +28,51 @@
 			<tr>
 				<th>#</th>
 				<th>Name</th>
-				<th class="hidden-xs">URL</th>
+				<th class="hidden-xs">Email</th>
+				<th>Type</th>
+				<th class="hidden-xs">Last login</th>
 				<th>Active</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
+				<td>User Name</td>
+				<td class="hidden-xs">username@example.com</td>
+				<td>Administrator</td>
+				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
 			<tr>
 				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
+				<td>User Name</td>
+				<td class="hidden-xs">username@example.com</td>
+				<td>Administrator</td>
+				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
 			<tr>
 				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
+				<td>User Name</td>
+				<td class="hidden-xs">username@example.com</td>
+				<td>Administrator</td>
+				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
 			<tr>
 				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
+				<td>User Name</td>
+				<td class="hidden-xs">username@example.com</td>
+				<td>Administrator</td>
+				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
 			<tr>
 				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
+				<td>User Name</td>
+				<td class="hidden-xs">username@example.com</td>
+				<td>Administrator</td>
+				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
 		</tbody>

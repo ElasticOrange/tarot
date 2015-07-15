@@ -43,3 +43,7 @@ Route::get('templates/question', function () {
     return view('question-templates');
 });
 
+Route::get('templates/email', function () {
+    return view('email-templates');
+});
+

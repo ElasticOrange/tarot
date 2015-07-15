@@ -35,8 +35,16 @@ Route::get('sites', function () {
     return view('sites');
 });
 
+Route::get('sites/item/{id?}', function () {
+    return view('site');
+});
+
 Route::get('users', function () {
     return view('users');
+});
+
+Route::get('users/item/{id?}', function () {
+    return view('user');
 });
 
 Route::get('templates/question', function () {
@@ -46,7 +54,6 @@ Route::get('templates/question', function () {
 Route::get('templates/email', function () {
     return view('email-templates');
 });
-
 
 Route::get('settings', function () {
     return view('settings');

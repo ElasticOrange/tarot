@@ -18,6 +18,11 @@
 				</div>
 			</div>
         </div>
+
+        <div class="overlay hidden">
+        </div>
+
+        @yield('boxes')
 	</body>
 	@include('javascripts')
 </html>

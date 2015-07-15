@@ -15,3 +15,22 @@ pagetitle {
 .no-margins {
 	margin: 0px
 }
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	opacity: 0.7;
+	z-index: 1001;
+}
+
+.floating {
+	position: fixed;
+	top: 100px;
+	left: 0px;
+	width: 100%;
+	height: 500px;
+}

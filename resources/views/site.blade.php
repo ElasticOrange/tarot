@@ -168,6 +168,7 @@
 							<label><input type="checkbox" />Default</label>
 						</div>
 						<div class="form-group">
+							<button class="btn btn-danger" type="submit">Delete</button>
 							<button class="btn btn-primary" type="submit">Save</button>
 							<button class="btn btn-default" type="button">Cancel</button>
 						</div>

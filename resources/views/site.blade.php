@@ -17,7 +17,7 @@
 							class="form-control"
 							name="name"
 							value=""
-							placeholder="Ex: John Doe"
+							placeholder="Ex: Sitename"
 					/>
 				</div>
 				<div class="form-group">
@@ -44,7 +44,7 @@
 							class="form-control"
 							name="email"
 							value=""
-							placeholder="Ex: www.sitename.com"
+							placeholder="Ex: admin@sitename.com"
 					/>
 				</div>
 				<div class="form-group">

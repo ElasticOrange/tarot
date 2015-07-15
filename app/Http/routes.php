@@ -39,3 +39,7 @@ Route::get('users', function () {
     return view('users');
 });
 
+Route::get('templates/question', function () {
+    return view('question-templates');
+});
+

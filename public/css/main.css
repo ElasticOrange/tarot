@@ -1,0 +1,17 @@
+pagetitle {
+	font-size: 26px;
+	text-align: center;
+	display: block;
+}
+
+.main-panel {
+	min-height: 700px;
+}
+
+.undread-email {
+	font-weight: bold;
+}
+
+.no-margins {
+	margin: 0px
+}

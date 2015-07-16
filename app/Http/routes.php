@@ -51,15 +51,18 @@ Route::get('templates/question', function () {
     return view('question-templates');
 });
 
-
 Route::get('templates/question/item', function () {
     return view('question-template');
 });
 
-
 Route::get('templates/email', function () {
     return view('email-templates');
 });
+
+Route::get('templates/email/item', function () {
+    return view('email-template');
+});
+
 
 Route::get('settings', function () {
     return view('settings');

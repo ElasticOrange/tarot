@@ -21,16 +21,16 @@
 					/>
 				</div>
 				<div class="form-group">
-					<label>Name</label>
-					<input 	type="text"
+					<label>Email</label>
+					<input 	type="email"
 							class="form-control"
-							name="name"
+							name="email"
 							value=""
-							placeholder="Ex: John Doe"
+							placeholder="Ex: johndoe@example.com"
 					/>
 				</div>
 				<div class="form-group">
-					<label>Name</label>
+					<label>User type</label>
 					<select name="type"
 							class="form-control"
 					>

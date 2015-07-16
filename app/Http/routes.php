@@ -66,3 +66,8 @@ Route::get('templates/email/item', function () {
 Route::get('settings', function () {
     return view('settings');
 });
+
+
+Route::get('client', function () {
+    return view('client');
+});

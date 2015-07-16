@@ -39,3 +39,11 @@ table.table tr:hover{
 	background-color: #eee;
 	cursor: pointer;
 }
+
+.email-title {
+	font-weight: bold;
+}
+
+.email-body {
+	padding-left: 40px;
+}

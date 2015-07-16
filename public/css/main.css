@@ -4,6 +4,10 @@ pagetitle {
 	display: block;
 }
 
+.checkbox label {
+	font-weight: bold;
+}
+
 .main-panel {
 	min-height: 700px;
 }

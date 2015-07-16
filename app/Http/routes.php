@@ -11,6 +11,27 @@
 |
 */
 
+// Create
+Route::get('sites/create', 'SiteController@create');
+
+// Save site
+Route::put('sites', 'SiteController@store');
+
+// Read site
+Route::get('sites/{id}', 'SiteController@edit');
+
+// Delete
+Route::delete('sites/{id}', function () {
+    return view('site');
+});
+
+// List sites
+Route::get('sites', 'SiteController@index');
+
+
+
+
+
 Route::get('/', function () {
     return view('questions');
 });
@@ -31,13 +52,7 @@ Route::get('profile', function () {
     return view('profile');
 });
 
-Route::get('sites', function () {
-    return view('sites');
-});
 
-Route::get('sites/item/{id?}', function () {
-    return view('site');
-});
 
 Route::get('users', function () {
     return view('users');

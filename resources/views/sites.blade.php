@@ -25,7 +25,7 @@
 
 	<div class="row">
 		<div class="col-sm-12">
-			<a href="/sites/item" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add </a>
+			<a href="/sites/create" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add </a>
 		</div>
 	</div>
 
@@ -39,42 +39,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
-			<tr href="/sites/item">
-				<td>1</td>
-				<td>Site one</td>
-				<td class="hidden-xs">www.siteone.com</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
-			</tr>
+			@foreach ($sites as $site)
+				<tr href="/sites/{{ $site->id }}">
+					<td>1</td>
+					<td>{{ $site->name }}</td>
+					<td class="hidden-xs">{{ $site->url }}</td>
+					<td> {{ $site->active ? '<span class="glyphicon glyphicon-ok">' : '' }}</span></td>
+				</tr>
+			@endforeach
 		</tbody>
 
 	</table>

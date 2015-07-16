@@ -10,13 +10,15 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<pagetitle>Website</pagetitle>
-			<form class="form">
+			<form class="form" action="/sites" method="post">
+				<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+				<input type="hidden" name="_method" value="PUT"/>
 				<div class="form-group">
 					<label>Name</label>
 					<input 	type="text"
 							class="form-control"
 							name="name"
-							value=""
+							value="{{ $site->name }}"
 							placeholder="Ex: Sitename"
 					/>
 				</div>
@@ -25,16 +27,26 @@
 					<input 	type="text"
 							class="form-control"
 							name="url"
-							value=""
+							value="{{ $site->url }}"
 							placeholder="Ex: www.sitename.com"
 					/>
+				</div>
+				<div class="form-group">
+					<div class="checkbox">
+						<input type="hidden" name="active" value="0"/>
+						<label><input 	type="checkbox"
+										name="active"
+										value="1"
+										{{ $site->active ? 'checked="checked"' : '' }}
+						/> Active</label>
+					</div>
 				</div>
 				<div class="form-group">
 					<label>Sender name</label>
 					<input 	type="text"
 							class="form-control"
 							name="sender"
-							value=""
+							value="{{ $site->sender }}"
 							placeholder="Ex: John Doe"
 					/>
 				</div>
@@ -43,7 +55,7 @@
 					<input 	type="email"
 							class="form-control"
 							name="email"
-							value=""
+							value="{{ $site->email }}"
 							placeholder="Ex: admin@sitename.com"
 					/>
 				</div>
@@ -52,7 +64,7 @@
 					<input 	type="text"
 							class="form-control"
 							name="subject"
-							value=""
+							value="{{ $site->subject }}"
 							placeholder="Ex: subject of mail"
 					/>
 				</div>
@@ -62,7 +74,7 @@
 							class="form-control"
 							name="signature"
 							rows="5"
-					></textarea>
+					>{{ $site->signature }}</textarea>
 				</div>
 				<div class="form-group">
 					<button class="btn btn-primary">Save</button>

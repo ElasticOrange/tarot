@@ -44,25 +44,25 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="undread-email">
+			<tr class="undread-email" href="/client">
 				<td>1</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
 				<td class="hidden-xs">13:30</td>
 			</tr>
-			<tr class="undread-email">
+			<tr class="undread-email" href="/client">
 				<td>2</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
 				<td class="hidden-xs">13:30</td>
 			</tr>
-			<tr>
+			<tr href="/client">
 				<td>3</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
 				<td class="hidden-xs">13:30</td>
 			</tr>
-			<tr>
+			<tr href="/client">
 				<td>4</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>

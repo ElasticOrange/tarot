@@ -47,3 +47,8 @@ table.table tr:hover{
 .email-body {
 	padding-left: 40px;
 }
+
+a.table-link {
+	color: inherit;
+	text-decoration: inherit;
+}

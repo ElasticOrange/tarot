@@ -39,37 +39,37 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/sites/item">
 				<td>1</td>
 				<td>Site one</td>
 				<td class="hidden-xs">www.siteone.com</td>

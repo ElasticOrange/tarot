@@ -7,7 +7,10 @@
 @section('content')
 
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-3">
+			@include('site-selector')
+		</div>
+		<div class="col-sm-6">
 			<pagetitle>Email answer templates</pagetitle>
 		</div>
 		<div class="col-sm-3">
@@ -25,7 +28,7 @@
 
 	<div class="row">
 		<div class="col-sm-12">
-			<button class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add new</button>
+			<a class="btn btn-primary" href="/templates/email/item"><span class="glyphicon glyphicon-plus"></span> Add new</a>
 			<button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 		</div>
 	</div>
@@ -34,38 +37,45 @@
 		<thead>
 			<tr>
 				<th>#</th>
+				<th></th>
 				<th>Name</th>
 				<th>Active</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/templates/email/item">
 				<td>1</td>
+				<td class="prevent-href"><input type="checkbox" name="idTemplate[]" value=""/></td>
 				<td>Mail template 1</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>

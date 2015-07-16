@@ -8,15 +8,7 @@
 
 	<div class="row">
 		<div class="col-sm-3">
-			<form class="form">
-				<div class="form-group">
-					<select class="form-control">
-						<option>Site 1</option>
-						<option>Site 2</option>
-						<option>Site 3</option>
-					</select>
-				</div>
-			</form>
+			@include('site-selector')
 		</div>
 		<div class="col-sm-6">
 			<pagetitle>Emails</pagetitle>
@@ -47,7 +39,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class="undread-email">
+			<tr class="undread-email" href="/client">
 				<td>1</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
@@ -56,7 +48,7 @@
 				<td>3</td>
 				<td>Some comment about markie</td>
 			</tr>
-			<tr class="undread-email">
+			<tr class="undread-email" href="/client">
 				<td>2</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
@@ -65,7 +57,7 @@
 				<td>3</td>
 				<td>Some comment about markie</td>
 			</tr>
-			<tr>
+			<tr href="/client">
 				<td>3</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>
@@ -74,7 +66,7 @@
 				<td>3</td>
 				<td>Some comment about markie</td>
 			</tr>
-			<tr>
+			<tr href="/client">
 				<td>4</td>
 				<td>Mark Wahlberg</td>
 				<td>markiemark@gmail.com</td>

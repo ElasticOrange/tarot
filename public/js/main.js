@@ -40,10 +40,14 @@ $(function(){
 	});
 
 	// When clicking on tr that gas href attr go to that address
-	$(document).on('click', 'table.table tbody tr', function(ev) {
+	$(document).on('click', 'table.table tbody td', function(ev) {
 		var $this = $(this);
 
-		var href = $this.attr('href');
+		if ($this.hasClass('prevent-href')) {
+			return;
+		}
+
+		var href = $this.parents('tr').attr('href');
 
 		if (href) {
 			window.document.location = href;
@@ -53,6 +57,10 @@ $(function(){
 	// When hovering td transform td content into link
 	$(document).on('mouseenter', 'table.table td', function(ev) {
 		var $this = $(this);
+
+		if ($this.hasClass('prevent-href')) {
+			return;
+		}
 
 		if ($this.attr('has-link') == 'true') {
 			return;

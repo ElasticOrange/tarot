@@ -41,7 +41,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr href="/users/item">
 				<td>1</td>
 				<td>User Name</td>
 				<td class="hidden-xs">username@example.com</td>
@@ -49,7 +49,7 @@
 				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/users/item">
 				<td>1</td>
 				<td>User Name</td>
 				<td class="hidden-xs">username@example.com</td>
@@ -57,7 +57,7 @@
 				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/users/item">
 				<td>1</td>
 				<td>User Name</td>
 				<td class="hidden-xs">username@example.com</td>
@@ -65,7 +65,7 @@
 				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/users/item">
 				<td>1</td>
 				<td>User Name</td>
 				<td class="hidden-xs">username@example.com</td>
@@ -73,7 +73,7 @@
 				<td>21-03-2014 21:20</td>
 				<td><span class="glyphicon glyphicon-ok"></span></td>
 			</tr>
-			<tr>
+			<tr href="/users/item">
 				<td>1</td>
 				<td>User Name</td>
 				<td class="hidden-xs">username@example.com</td>

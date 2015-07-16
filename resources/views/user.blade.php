@@ -44,11 +44,10 @@
 					<label><input type="checkbox" name="active" value="1"/>User active</label>
 				</div>
 				<div class="form-group">
-					<label>Sites access</label>
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th>Access</th>
+								<th>User can access website</th>
 							</tr>
 						</thead>
 						<tbody>

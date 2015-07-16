@@ -336,7 +336,6 @@
 						</div>
 						<div class="">
 							<button class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span> Send response</button>
-							<button class="btn btn-default"><span class="glyphicon glyphicon-list"></span> Back to list</button>
 							<button class="btn btn-info"><span class="glyphicon glyphicon-forward"></span> Next email</button>
 						</div>
 					</form>

@@ -112,7 +112,10 @@
 							</div>
 						</div>
 						<div class="checkbox">
-							<label><input type="checkbox" name="active" value="1"/>Ignore client</label>
+							<label><input type="checkbox" name="ignored" value="1"/>Ignore client</label>
+						</div>
+						<div class="checkbox">
+							<label><input type="checkbox" name="problem" value="1"/>Problem client</label>
 						</div>
 						<div class="form-group">
 								<label class="col-sm-2 control-label">Comment</label>

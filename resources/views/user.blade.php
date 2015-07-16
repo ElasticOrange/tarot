@@ -44,6 +44,9 @@
 					<label><input type="checkbox" name="active" value="1"/>User active</label>
 				</div>
 				<div class="form-group">
+					<a class="btn-danger btn" href="/users/delete/" data-confirm="Are you sure you want to delete this user?"><span class="glyphicon glyphicon-remove"></span> Delete user</a>
+				</div>
+				<div class="form-group">
 					<table class="table table-striped">
 						<thead>
 							<tr>

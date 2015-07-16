@@ -7,6 +7,7 @@
 		<title>@yield('title')</title>
 		<link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="/js/lib/bscombobox/css/bootstrap-combobox.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
 	</head>
 	<body>

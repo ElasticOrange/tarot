@@ -63,7 +63,6 @@ Route::get('templates/email/item', function () {
     return view('email-template');
 });
 
-
 Route::get('settings', function () {
     return view('settings');
 });

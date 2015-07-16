@@ -23,6 +23,12 @@
 		</div>
 	</div>
 
+	<div class="row">
+		<div class="col-sm-12">
+			<a href="/users/item/" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add</a>
+		</div>
+	</div>
+
 	<table class="table table-striped">
 		<thead>
 			<tr>

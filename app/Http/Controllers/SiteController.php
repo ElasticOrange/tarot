@@ -19,7 +19,7 @@ class SiteController extends Controller
     {
         $sites = Site::all();
 
-        return view('sites', ['sites' => $sites]);
+        return view('site/list', ['sites' => $sites]);
     }
 
     /**
@@ -31,7 +31,7 @@ class SiteController extends Controller
     {
         $site = new Site;
 
-        return view('site', ['site' => $site]);
+        return view('site/create', ['site' => $site]);
     }
 
     /**
@@ -44,9 +44,9 @@ class SiteController extends Controller
     {
         $input = $request->all();
 
-        Site::create($input);
+        $newSite = Site::create($input);
 
-        return redirect('/sites');
+        return redirect('/sites/'.$newSite->id);
     }
 
     /**
@@ -55,9 +55,9 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($site)
     {
-        //
+        return $this->edit($site);
     }
 
     /**
@@ -66,11 +66,9 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($site)
     {
-        $site = Site::findOrFail($id);
-
-        return view('site', ['site' => $site]);
+        return view('site/edit', ['site' => $site]);
     }
 
     /**
@@ -80,9 +78,13 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($site, Request $request)
     {
-        //
+        $input = $request->all();
+
+        $site->update($input);
+
+        return view('site/edit', ['site' => $site]);
     }
 
     /**
@@ -91,7 +93,7 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($site)
     {
         //
     }

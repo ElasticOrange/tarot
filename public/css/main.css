@@ -39,8 +39,11 @@ pagetitle {
 	height: 500px;
 }
 
-table.table tr:hover{
+table.table tbody tr:hover{
 	background-color: #eee;
+}
+
+table.table td, table.table th {
 	cursor: pointer;
 }
 

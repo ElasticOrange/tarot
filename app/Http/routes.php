@@ -11,6 +11,10 @@
 |
 */
 
+
+Route::resource('sites', 'SiteController');
+
+/*
 // Create
 Route::get('sites/create', 'SiteController@create');
 
@@ -27,7 +31,7 @@ Route::delete('sites/{id}', function () {
 
 // List sites
 Route::get('sites', 'SiteController@index');
-
+*/
 
 
 

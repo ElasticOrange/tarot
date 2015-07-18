@@ -1,3 +1,7 @@
+body {
+	background-image: url(/images/giftly.png);
+}
+
 pagetitle {
 	font-size: 26px;
 	text-align: center;

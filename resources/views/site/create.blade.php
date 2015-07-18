@@ -12,6 +12,10 @@
 			<pagetitle>Website</pagetitle>
 			<form class="form" action="/sites" method="post">
 				@include('site/form')
+				<div class="form-group">
+					<button class="btn btn-primary">Save</button>
+					<a href="/sites" class="btn btn-default">Back</a>
+				</div>
 			</form>
 		</div>
 	</div>

@@ -28,6 +28,16 @@ $(function(){
 	$('.combobox').combobox();
 	console.log('Done', $('.combobox').length);
 
+	$(document).on('click', '[data-confirm]', function(ev) {
+		var $this = $(this);
+
+		if (!confirm($this.attr('data-confirm'))) {
+			ev.preventDefault();
+		}
+
+	})
+
+
 	// When clicking on .email-title switch expand state of toggle icon
 	$(document).on('click', '.email-title', function() {
 		var $this = $(this);

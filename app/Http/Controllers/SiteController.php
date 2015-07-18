@@ -95,6 +95,7 @@ class SiteController extends Controller
      */
     public function destroy($site)
     {
-        //
+        $site->delete();
+        return redirect('/sites');
     }
 }

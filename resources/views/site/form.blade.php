@@ -62,7 +62,3 @@
 				rows="5"
 		>{{ $site->signature }}</textarea>
 	</div>
-	<div class="form-group">
-		<button class="btn btn-primary">Save</button>
-		<a href="/sites" class="btn btn-default">Back</a>
-	</div>

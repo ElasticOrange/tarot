@@ -30,7 +30,6 @@ class SiteController extends Controller
     public function create()
     {
         $site = new Site;
-
         return view('site/create', ['site' => $site]);
     }
 
@@ -68,7 +67,9 @@ class SiteController extends Controller
      */
     public function edit($site)
     {
-        return view('site/edit', ['site' => $site]);
+        $infocosts = $site->infocosts()->orderBy('country')->orderBy('active', 'desc')->orderBy('default', 'desc')->get();
+
+        return view('site/edit', ['site' => $site, 'infocosts' => $infocosts]);
     }
 
     /**

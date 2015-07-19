@@ -20,4 +20,8 @@ class Site extends Model
 		'signature',
 		'active'
 	];
+
+	public function infocosts() {
+		return $this->hasMany('App\Infocost');
+	}
 }

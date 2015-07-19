@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class SiteRequest extends Request
+class InfocostRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,11 @@ class SiteRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3',
-            'url' => 'required|url',
+            'country' => 'required|string',
+            'telephone' => 'required|string|min:3',
+            'infocost' => 'required|string|min:3',
             'active' => 'boolean',
-            'sender' => 'string|min:3',
-            'email' => 'email',
-            'subject' => 'string|min:3',
-            'signature' => 'string'
+            'default' => 'boolean'
         ];
     }
 }

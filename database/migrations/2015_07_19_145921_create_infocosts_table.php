@@ -14,7 +14,7 @@ class CreateInfocostsTable extends Migration
     {
         Schema::create('infocosts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('siteId')->unsigned();
+            $table->integer('site_id')->unsigned();
             $table->string('country', 30);
             $table->string('telephone', 20);
             $table->string('infocost', 1000);
@@ -22,7 +22,7 @@ class CreateInfocostsTable extends Migration
             $table->boolean('default');
             $table->timestamps();
 
-            $table  ->foreign('siteId')
+            $table  ->foreign('site_id')
                     ->references('id')
                     ->on('sites')
                     ->onDelete('cascade');
@@ -37,7 +37,7 @@ class CreateInfocostsTable extends Migration
     public function down()
     {
         Schema::table('infocosts', function (Blueprint $table) {
-            $table->dropForeign('infocosts_siteid_foreign');
+            $table->dropForeign('infocosts_site_id_foreign');
         });
 
         Schema::drop('infocosts');

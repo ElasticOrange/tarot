@@ -37,6 +37,7 @@ function hideSuccessMessage() {
 }
 
 function showSuccessMessage(caption) {
+	hideErrorMessage();
 	$successBox.find('.caption').html(caption);
 	$successBox.removeClass('hidden');
 
@@ -51,6 +52,7 @@ function hideErrorMessage() {
 }
 
 function showErrorMessage(caption) {
+	hideSuccessMessage();
 	$errorBox.find('.caption').html(caption);
 	$errorBox.removeClass('hidden');
 

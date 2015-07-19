@@ -14,7 +14,7 @@
 				class="form-control"
 				name="url"
 				value="{{ $site->url }}"
-				placeholder="Ex: www.sitename.com"
+				placeholder="Ex: http://sitename.com/..."
 		/>
 	</div>
 	<div class="form-group">

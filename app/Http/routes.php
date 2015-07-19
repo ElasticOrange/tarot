@@ -14,25 +14,10 @@
 
 Route::resource('sites', 'SiteController');
 
-/*
-// Create
-Route::get('sites/create', 'SiteController@create');
+Route::resource('sites.infocosts', 'InfocostsController');
 
-// Save site
-Route::put('sites', 'SiteController@store');
 
-// Read site
-Route::get('sites/{id}', 'SiteController@edit');
-
-// Delete
-Route::delete('sites/{id}', function () {
-    return view('site');
-});
-
-// List sites
-Route::get('sites', 'SiteController@index');
-*/
-
+//Route::get('infocosts/{site}', );
 
 
 

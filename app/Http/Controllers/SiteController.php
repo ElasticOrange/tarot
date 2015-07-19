@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\Requests\SiteRequest;
 use App\Http\Controllers\Controller;
 use App\Site;
 
@@ -40,13 +40,13 @@ class SiteController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(SiteRequest $request)
     {
         $input = $request->all();
 
         $newSite = Site::create($input);
 
-        return redirect('/sites/'.$newSite->id);
+        return $newSite;
     }
 
     /**
@@ -78,7 +78,7 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($site, Request $request)
+    public function update($site, SiteRequest $request)
     {
         $input = $request->all();
 
@@ -96,6 +96,6 @@ class SiteController extends Controller
     public function destroy($site)
     {
         $site->delete();
-        return redirect('/sites');
+        return true;
     }
 }

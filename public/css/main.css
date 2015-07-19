@@ -63,3 +63,11 @@ a.table-link {
 	color: inherit;
 	text-decoration: inherit;
 }
+
+.message-box {
+	position: fixed;
+	top : 10px;
+	left: 25%;
+	width: 50%;
+	z-index: 1001;
+}

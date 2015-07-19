@@ -1,6 +1,7 @@
-console.log('Js loaded');
+var $successBox, $errorBox, successBoxTimeout, errorBoxTimeout;
 
-var initActiveElements = function() {
+
+function initActiveElements() {
 
 	// Put toggle icon on .colapser elements
 	$('.colapser').each(function() {
@@ -20,7 +21,96 @@ var initActiveElements = function() {
 	});
 }
 
+function hideSuccessMessage() {
+	$successBox.addClass('hidden');
+	clearTimeout(successBoxTimeout);
+}
+
+function showSuccessMessage(caption) {
+	$successBox.find('.caption').html(caption);
+	$successBox.removeClass('hidden');
+
+	successBoxTimeout = setTimeout(function() {
+		hideSuccessMessage();
+	}, 5000);
+}
+
+function hideErrorMessage() {
+	$errorBox.addClass('hidden');
+	clearTimeout(errorBoxTimeout);
+}
+
+function showErrorMessage(caption) {
+	$errorBox.find('.caption').html(caption);
+	$errorBox.removeClass('hidden');
+
+	errorBoxTimeout = setTimeout(function() {
+		hideErrorMessage();
+	}, 10000);
+}
+
+function generateLaravelErrorList(errorList) {
+	if(!_.isPlainObject(errorList)) {
+		console.error('generateLaravelErrorList(): errorList is invalid', errorList);
+		return;
+	}
+
+	var resultHtml = '';
+
+	_.forOwn(errorList, function(messageList, formItem) {
+		if (!_.isArray(messageList)) {
+			console.error('generateLaravelErrorList(): messageList should be array', messageList, errorList, formItem);
+			return;
+		}
+
+		_.forEach(messageList, function(errorMessage) {
+			resultHtml += '<li>' + errorMessage + '</li>';
+		})
+	});
+
+	return '<ul>' + resultHtml + '</ul>';
+}
+
+function submitAjaxForm(form) {
+	var $form = $(form);
+	var data = $form.serialize();
+	var action = $form.attr('action') || window.document.location;
+	var method = $form.attr('method') || 'POST';
+
+	var request = $.ajax({
+		url: action,
+		method: method,
+		data: data,
+		dataType: 'json'
+	});
+
+	request.done(function(data) {
+		console.log('Ajax success: ', data);
+	});
+
+	request.fail(function(error) {
+		console.error('Ajax error: ', error.responseJSON);
+	});
+
+	return request;
+}
+
+function doAjaxCreate(form) {
+	var request = submitAjaxForm(form);
+
+	request.done(function() {
+		showSuccessMessage($(form).attr('success-message'));
+	});
+
+	request.fail(function(error) {
+		showErrorMessage(($(form).attr('error-message') || 'Error:') + '<br/>' + generateLaravelErrorList(error.responseJSON));
+	});
+}
+
 $(function(){
+	$successBox = $('.message-box.success');
+	$errorBox = $('.message-box.error');
+
 	if ($('#rich-editor').length) {
 		CKEDITOR.replace('rich-editor');
 	}
@@ -36,7 +126,6 @@ $(function(){
 		}
 
 	})
-
 
 	// When clicking on .email-title switch expand state of toggle icon
 	$(document).on('click', '.email-title', function() {
@@ -97,6 +186,20 @@ $(function(){
 
 		$this.html($a.html());
 	});
+
+	$(document).on('click', '.message-box.success', function(){
+		hideSuccessMessage();
+	});
+
+	$(document).on('click', '.message-box.error', function(){
+		hideErrorMessage();
+	});
+
+	$(document).on('submit', '[data-ajax-create=true]', function(ev) {
+		ev.preventDefault();
+		doAjaxCreate(this);
+	});
+
 
 	initActiveElements();
 });

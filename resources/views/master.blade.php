@@ -18,6 +18,7 @@
 		            @yield('content')
 				</div>
 			</div>
+			@include('_messageboxes')
         </div>
 
         <div class="overlay hidden">
@@ -25,5 +26,7 @@
 
         @yield('boxes')
 	</body>
+
+
 	@include('javascripts')
 </html>

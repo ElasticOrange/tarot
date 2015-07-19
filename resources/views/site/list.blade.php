@@ -39,9 +39,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			<?php $rowIndex = 1 ?>
 			@foreach ($sites as $site)
 				<tr href="/sites/{{ $site->id }}">
-					<td>1</td>
+					<td>{{$rowIndex++}}</td>
 					<td>{{ $site->name }}</td>
 					<td class="hidden-xs">{{ $site->url }}</td>
 					<td> {!! $site->active ? '<span class="glyphicon glyphicon-ok"></span>' : '' !!}</td>

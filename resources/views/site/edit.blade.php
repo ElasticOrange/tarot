@@ -10,7 +10,13 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<pagetitle>Website</pagetitle>
-			<form class="form" action="/sites/{{$site->id}}" method="post">
+			<form 	class="form"
+					action="/sites/{{$site->id}}"
+					method="post"
+					data-ajax="true"
+					success-message="Site informations updated!"
+					error-message="Site update error"
+			>
 				<input type="hidden" name="_method" value="PUT"/>
 				@include('site/form')
 				<div class="form-group">

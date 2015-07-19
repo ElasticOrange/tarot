@@ -84,7 +84,7 @@ class SiteController extends Controller
 
         $site->update($input);
 
-        return view('site/edit', ['site' => $site]);
+        return $site;
     }
 
     /**

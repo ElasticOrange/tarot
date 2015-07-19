@@ -124,7 +124,7 @@ function fillPlaceholdersInString(string, data) {
 	return resultString;
 }
 
-function submitAjaxForm(form) {
+function submitGenericAjaxForm(form) {
 	var $form = $(form);
 	var data = $form.serialize();
 	var action = $form.attr('action') || window.document.location;
@@ -148,14 +148,14 @@ function submitAjaxForm(form) {
 	return request;
 }
 
-function doAjaxCreate(form) {
-	var request = submitAjaxForm(form);
+function submitAjaxForm(form) {
+	var request = submitGenericAjaxForm(form);
 
 	var $form = $(form);
 
 	request.done(function(data) {
 		if (!_.isPlainObject(data)) {
-			console.error('doAjaxCreate(): ajax create did not receive the created item', data);
+			console.error('submitAjaxForm(): ajax create did not receive the created item', data);
 			return;
 		}
 
@@ -178,6 +178,7 @@ function doAjaxCreate(form) {
 		showErrorMessage(message);
 	});
 }
+
 
 $(function(){
 	$successBox = $('.message-box.success');
@@ -267,9 +268,9 @@ $(function(){
 		hideErrorMessage();
 	});
 
-	$(document).on('submit', '[data-ajax-create=true]', function(ev) {
+	$(document).on('submit', 'form[data-ajax=true]', function(ev) {
 		ev.preventDefault();
-		doAjaxCreate(this);
+		submitAjaxForm(this);
 	});
 
 

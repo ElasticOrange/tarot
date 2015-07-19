@@ -16,8 +16,10 @@ Route::resource('sites', 'SiteController');
 
 Route::resource('sites.infocosts', 'InfocostsController');
 
-
-//Route::get('infocosts/{site}', );
+Route::controllers([
+        'auth' => 'Auth\AuthController',
+        'password' => 'Auth\PasswordController'
+    ]);
 
 
 

@@ -21,6 +21,16 @@ function initActiveElements() {
 	});
 }
 
+function redirect(url, timeout) {
+	if (!timeout) {
+		timeout = 1;
+	}
+
+	setTimeout(function() {
+		window.document.location = url;
+	} , timeout);
+}
+
 function hideSuccessMessage() {
 	$successBox.addClass('hidden');
 	clearTimeout(successBoxTimeout);
@@ -71,6 +81,49 @@ function generateLaravelErrorList(errorList) {
 	return '<ul>' + resultHtml + '</ul>';
 }
 
+function getKeyFromPlaceholder(placeholder) {
+	if (!_.isString(placeholder)) {
+		console.error('getKeyFromPlaceholder(): placeholder is not string', placeholder);
+		return;
+	}
+
+	if ((placeholder[0] !== '{') || (placeholder.substr(-1) !== '}')) {
+		console.error('getKeyFromPlaceholder(): placeholder is not of form {key}', placeholder);
+		return placeholder;
+	}
+
+	return placeholder.replace(/[{}]/g, '');
+};
+
+function fillPlaceholdersInString(string, data) {
+	if(!_.isString(string)) {
+		console.error('fillPlaceholdersInString(): string parameter should be of string type', string);
+		return;
+	}
+
+	if (!_.isPlainObject(data)) {
+		console.error('fillPlaceholdersInString(): data should be an object', data);
+		return string;
+	}
+
+	var placeholders = string.match(/\{([a-z0-9\-_]+)\}/gi);
+	var resultString = string;
+
+	if (!placeholders.length) {
+		return resultString;
+	}
+
+	_.forEach(placeholders, function(placeholder) {
+		var regex = new RegExp(placeholder, 'g');
+		var key = getKeyFromPlaceholder(placeholder);
+		if (placeholder && data[key]) {
+			resultString = resultString.replace(regex, data[key]);
+		}
+	});
+
+	return resultString;
+}
+
 function submitAjaxForm(form) {
 	var $form = $(form);
 	var data = $form.serialize();
@@ -98,12 +151,31 @@ function submitAjaxForm(form) {
 function doAjaxCreate(form) {
 	var request = submitAjaxForm(form);
 
-	request.done(function() {
-		showSuccessMessage($(form).attr('success-message'));
+	var $form = $(form);
+
+	request.done(function(data) {
+		if (!_.isPlainObject(data)) {
+			console.error('doAjaxCreate(): ajax create did not receive the created item', data);
+			return;
+		}
+
+		var successMessage = $form.attr('success-message');
+		if (successMessage) {
+ 			showSuccessMessage(successMessage);
+		}
+
+		var successUrl = $form.attr('success-url');
+
+		if (successUrl) {
+			redirect(fillPlaceholdersInString(successUrl, data), 1000);
+		}
 	});
 
 	request.fail(function(error) {
-		showErrorMessage(($(form).attr('error-message') || 'Error:') + '<br/>' + generateLaravelErrorList(error.responseJSON));
+		var title = '<strong>' + ($(form).attr('error-message') || 'Error:')  + '</strong><br/>'
+		var message = title + generateLaravelErrorList(error.responseJSON);
+
+		showErrorMessage(message);
 	});
 }
 
@@ -149,7 +221,7 @@ $(function(){
 		var href = $this.parents('tr').attr('href');
 
 		if (href) {
-			window.document.location = href;
+			redirect(href);
 		}
 	})
 

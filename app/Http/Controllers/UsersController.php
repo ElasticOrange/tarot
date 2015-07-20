@@ -48,8 +48,13 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
         $input = $request->all();
+        $password = str_random(40);
 
-        $newUser = User::create($input);
+        $newUser = new User;
+        $newUser->fill($input);
+        $newUser->password = bcrypt($password);
+
+        $newUser->save();
 
         return $newUser;
     }

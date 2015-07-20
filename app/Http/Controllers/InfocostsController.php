@@ -108,7 +108,7 @@ class InfocostsController extends Controller
     public function destroy($site, $infocost)
     {
         $infocost->delete();
-        return true;
+        return redirect('sites/' . $site->id);
     }
 
 

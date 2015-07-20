@@ -29,6 +29,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $router->model('sites', 'App\Site');
         $router->model('infocosts', 'App\Infocost');
+        $router->model('users', 'App\User');
     }
 
     /**

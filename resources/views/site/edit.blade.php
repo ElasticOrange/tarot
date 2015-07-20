@@ -21,13 +21,11 @@
 				@include('site/form')
 				<div class="form-group">
 					<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-					<button class="btn-danger btn"
-							type="submit"
-							name="_method"
-							value="DELETE"
-							data-confirm="Are you sure you want to delete this site?"
-					><span class="glyphicon glyphicon-remove"></span> Delete</button>
-					<a href="/sites" class="btn btn-default"><span class="glyphicon glyphicon-list"></span>  Back</a>
+					<a 	class="btn-danger btn"
+						href="/sites/{{$site->id}}/delete"
+						data-confirm="Are you sure you want to delete this site?"
+					><span class="glyphicon glyphicon-remove"></span> Delete</a>
+					<a href="/sites" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> Back</a>
 				</div>
 
 			</form>

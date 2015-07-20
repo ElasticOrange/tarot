@@ -10,7 +10,11 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<pagetitle>User profile</pagetitle>
-			<form class="form">
+			<form 	class="form"
+					action="/auth/register"
+					method="post"
+			>
+				<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 				<div class="form-group">
 					<label>Name</label>
 					<input 	type="text"

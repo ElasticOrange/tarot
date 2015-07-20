@@ -24,4 +24,9 @@ class Site extends Model
 	public function infocosts() {
 		return $this->hasMany('App\Infocost');
 	}
+
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
 }

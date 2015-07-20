@@ -12,14 +12,16 @@
 */
 
 
+Route::get('/sites/{sites}/delete', 'SiteController@destroy');
 Route::resource('sites', 'SiteController');
 
+Route::get('/sites/{sites}/infocosts/{infocosts}/delete', 'InfocostsController@destroy');
 Route::resource('sites.infocosts', 'InfocostsController');
 
-Route::controllers([
-        'auth' => 'Auth\AuthController',
-        'password' => 'Auth\PasswordController'
-    ]);
+Route::get('/users/{users}/delete', 'UsersController@destroy');
+Route::resource('users', 'UsersController');
+
+
 
 
 
@@ -44,14 +46,6 @@ Route::get('profile', function () {
 });
 
 
-
-Route::get('users', function () {
-    return view('users');
-});
-
-Route::get('users/item/{id?}', function () {
-    return view('user');
-});
 
 Route::get('templates/question', function () {
     return view('question-templates');

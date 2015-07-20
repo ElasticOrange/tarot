@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\SiteRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use App\Site;
+use App\User;
 
-class SiteController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class SiteController extends Controller
      */
     public function index()
     {
-        $sites = Site::all();
+        $users = User::all();
 
-        return view('site/list', ['sites' => $sites]);
+        return view('user/list', ['users' => $users, 'userTypes' => User::getUserTypes()]);
     }
 
     /**
@@ -29,8 +29,14 @@ class SiteController extends Controller
      */
     public function create()
     {
-        $site = new Site;
-        return view('site/create', ['site' => $site]);
+        $user = new User;
+        $sites = \App\Site::active()->get();
+
+        return view('user/create', [
+            'user' => $user,
+            'userTypes' => $user->getUserTypes(),
+            'sites' => $sites
+        ]);
     }
 
     /**
@@ -39,13 +45,13 @@ class SiteController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(SiteRequest $request)
+    public function store(UserRequest $request)
     {
         $input = $request->all();
 
-        $newSite = Site::create($input);
+        $newUser = User::create($input);
 
-        return $newSite;
+        return $newUser;
     }
 
     /**
@@ -54,9 +60,9 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($site)
+    public function show($user)
     {
-        return $this->edit($site);
+        return $this->edit($user);
     }
 
     /**
@@ -65,11 +71,14 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($site)
+    public function edit($user)
     {
-        $infocosts = $site->infocosts()->orderBy('country')->orderBy('active', 'desc')->orderBy('default', 'desc')->get();
-
-        return view('site/edit', ['site' => $site, 'infocosts' => $infocosts]);
+        $sites = \App\Site::active()->get();
+        return view('user/edit', [
+                'user' => $user,
+                'userTypes' => $user->getUserTypes(),
+                'sites' => $sites
+            ]);
     }
 
     /**
@@ -79,13 +88,13 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($site, SiteRequest $request)
+    public function update($user, UserRequest $request)
     {
         $input = $request->all();
 
-        $site->update($input);
+        $user->update($input);
 
-        return $site;
+        return $user;
     }
 
     /**
@@ -94,9 +103,9 @@ class SiteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($site)
+    public function destroy($user)
     {
-        $site->delete();
-        return redirect('sites');
+        $user->delete();
+        return redirect('users');
     }
 }

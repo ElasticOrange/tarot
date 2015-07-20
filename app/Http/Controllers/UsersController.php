@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\UserRequest;
@@ -48,13 +49,17 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
         $input = $request->all();
-        $password = str_random(40);
+        $password = str_random(10);
 
         $newUser = new User;
         $newUser->fill($input);
         $newUser->password = bcrypt($password);
 
-        $newUser->save();
+        $result = $newUser->save();
+
+        if ($newUser->id) {
+            $this->sendNewUserEmail($newUser, $password);
+        }
 
         return $newUser;
     }
@@ -112,5 +117,20 @@ class UsersController extends Controller
     {
         $user->delete();
         return redirect('users');
+    }
+
+    private function sendNewUserEmail($user, $password)
+    {
+
+
+        Mail::send('emails.usernew',
+            [
+                'user' => $user,
+                'password' => $password
+            ],
+            function ($m) use ($user) {
+                $m->to($user->email, $user->name)->sender('admin@tarot.com', 'Tarot Administrator')->from('admin@tarot.com')->subject('Your Tarot account!');
+            }
+        );
     }
 }

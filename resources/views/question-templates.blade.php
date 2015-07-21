@@ -8,7 +8,7 @@
 
 	<div class="row">
 		<div class="col-sm-3">
-			@include('site-selector')
+			@include('_siteselector')
 		</div>
 		<div class="col-sm-6">
 			<pagetitle>Question answer templates</pagetitle>

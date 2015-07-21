@@ -15,7 +15,8 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">Reset password</div>
 					<div class="panel-body main-panel">
-						<form class="form form-horizontal" action="/auth/login" method="post">
+						@include('_errors')
+						<form class="form form-horizontal" action="/password/email" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 							<input type="hidden" name="password"/>
 							<div class="form-group">
@@ -30,6 +31,7 @@
 							<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-4">
 									<button type="submit" class="btn btn-primary">Send password reset link</button>
+							        <a class="" href="/auth/login">Back to login</a>
 								</div>
 							</div>
 						</form>

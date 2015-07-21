@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/home', function() {
+    return redirect('/');
+});
+
 
 Route::get('/sites/{sites}/delete', 'SiteController@destroy');
 Route::resource('sites', 'SiteController');
@@ -26,6 +30,14 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('profile', 'UsersController@profile');
 Route::post('profile', 'UsersController@updateProfile');
+
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+
+
 
 Route::get('/', function () {
     return view('questions');

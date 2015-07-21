@@ -28,6 +28,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('profile', 'UsersController@updateProfile');
 
 
+
+
+
+
     Route::get('/', function () {
         return view('questions');
     });
@@ -43,9 +47,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('clients', function () {
         return view('clients');
     });
-
-
-
 
     Route::get('templates/question', function () {
         return view('question-templates');

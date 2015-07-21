@@ -15,6 +15,8 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">Welcome! Please login</div>
 					<div class="panel-body main-panel">
+
+						@include('_errors')
 						<form class="form form-horizontal" action="/auth/login" method="post">
 							<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 							<input type="hidden" name="password"/>

@@ -11,7 +11,7 @@
 		<div class="col-sm-6">
 			<pagetitle>User profile</pagetitle>
 			<form 	class="form"
-					action="/users/1"
+					action="/users/{{$user->id}}"
 					method="post"
 					data-ajax="true"
 					success-message="User informations updated!"

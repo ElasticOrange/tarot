@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Mail;
 use Hash;
 use Illuminate\Http\Request;
-
-use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\User;
 use Validator;
@@ -48,8 +46,9 @@ class UsersController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
+        $this->validateUserInput($request);
         $input = $request->all();
         $password = str_random(10);
 
@@ -100,8 +99,9 @@ class UsersController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($user, UserRequest $request)
+    public function update($user, Request $request)
     {
+        $this->validateUserInput($request, $user);
         $input = $request->all();
 
         $user->update($input);
@@ -143,13 +143,7 @@ class UsersController extends Controller
     public function updateProfile(Request $request) {
         $loggedUser = $request->user();
 
-        $this->validate($request, [
-                'name' => 'required|string|min:3',
-                'email' => "required|email|unique:users,email,".$loggedUser->id,
-                'password' => 'required|min:3|',
-                'newpassword' => 'string|min:3',
-                'reppassword' => 'same:newpassword'
-            ]);
+        $this->validateUserInput($request, $loggedUser);
 
         $input = $request->all();
 
@@ -158,13 +152,27 @@ class UsersController extends Controller
         }
 
         $loggedUser->fill($input);
-        if (isset($input['newpassword'])) {
+        if (isset($input['newpassword']) && $input['newpassword']) {
             $loggedUser->password = $input['newpassword'];
         }
 
         $loggedUser->save();
 
         return $loggedUser->toArray();
+    }
+
+    private function validateUserInput(Request $request, $user = null) {
+
+        $rules = [
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users,email'.($user ? ','.$user->id : ''),
+            'type' => 'numeric|min:1',
+            'password' => 'string|min:5',
+            'newpassword' => 'string|min:5',
+            'reppassword' => 'same:newpassword'
+        ];
+
+        return $this->validate($request, $rules);
     }
 }
 

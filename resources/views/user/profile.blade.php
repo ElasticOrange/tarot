@@ -61,7 +61,8 @@
 					/>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-primary" type="submit">Save</button>
+					<button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+					<a class="btn btn-warning" href="/auth/logout" data-confirm="Are you sure you want to Logout?"><span class="glyphicon glyphicon-off"></span> Logout</a>
 				</div>
 			</form>
 		</div>

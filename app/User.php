@@ -27,7 +27,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $fillable = [
         'name',
         'email',
-        'password',
         'type',
         'active'
     ];
@@ -47,5 +46,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             4.=> 'Guest'
 
         ];
+    }
+
+    public function setPasswordAttribute($password) {
+        $this->attributes['password'] = bcrypt($password);
     }
 }

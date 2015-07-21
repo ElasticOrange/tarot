@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Mail;
+use Hash;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\User;
-
+use Validator;
+use Response;
 class UsersController extends Controller
 {
     /**
@@ -53,7 +55,7 @@ class UsersController extends Controller
 
         $newUser = new User;
         $newUser->fill($input);
-        $newUser->password = bcrypt($password);
+        $newUser->password = $password;
 
         $result = $newUser->save();
 
@@ -121,8 +123,6 @@ class UsersController extends Controller
 
     private function sendNewUserEmail($user, $password)
     {
-
-
         Mail::send('emails.usernew',
             [
                 'user' => $user,
@@ -133,4 +133,38 @@ class UsersController extends Controller
             }
         );
     }
+
+    public function profile(Request $request) {
+        if ($user = $request->user()) {
+            return view('user/profile', ['user' => $user]);
+        }
+    }
+
+    public function updateProfile(Request $request) {
+        $loggedUser = $request->user();
+
+        $this->validate($request, [
+                'name' => 'required|string|min:3',
+                'email' => "required|email|unique:users,email,".$loggedUser->id,
+                'password' => 'required|min:3|',
+                'newpassword' => 'string|min:3',
+                'reppassword' => 'same:newpassword'
+            ]);
+
+        $input = $request->all();
+
+        if (!Hash::check($input['password'], $loggedUser->password)) {
+            return response(json_encode(['password' => ['Incorrect password']]), 403);
+        }
+
+        $loggedUser->fill($input);
+        if (isset($input['newpassword'])) {
+            $loggedUser->password = $input['newpassword'];
+        }
+
+        $loggedUser->save();
+
+        return $loggedUser->toArray();
+    }
 }
+

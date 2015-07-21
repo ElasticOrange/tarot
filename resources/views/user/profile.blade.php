@@ -10,30 +10,37 @@
 	<div class="row">
 		<div class="col-sm-6">
 			<pagetitle>My account</pagetitle>
-			<form class="form">
+			<form 	class="form"
+					action=""
+					method="post"
+					data-ajax="true"
+					success-message="Profile updated successfuly!"
+					error-message="Error updating profile"
+			>
+				<input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 				<div class="form-group">
 					<label>Name</label>
 					<input 	type="text"
 							class="form-control"
 							name="name"
-							value=""
+							value="{{$user->name}}"
 							placeholder="Ex: John Doe"
 					/>
 				</div>
 				<div class="form-group">
 					<label>Email</label>
-					<input 	type="text"
+					<input 	type="email"
 							class="form-control"
-							name="name"
-							value=""
+							name="email"
+							value="{{$user->email}}"
 							placeholder="Ex: johndoe@example.com"
 					/>
 				</div>
 				<div class="form-group">
-					<label>Old password</label>
+					<label>Current password</label>
 					<input 	type="password"
 							class="form-control"
-							name="name"
+							name="password"
 							value=""
 					/>
 				</div>
@@ -41,7 +48,7 @@
 					<label>New password</label>
 					<input 	type="password"
 							class="form-control"
-							name="name"
+							name="newpassword"
 							value=""
 					/>
 				</div>
@@ -49,12 +56,12 @@
 					<label>Repeat new password</label>
 					<input 	type="password"
 							class="form-control"
-							name="name"
+							name="reppassword"
 							value=""
 					/>
 				</div>
 				<div class="form-group">
-					<button class="btn btn-primary">Save</button>
+					<button class="btn btn-primary" type="submit">Save</button>
 				</div>
 			</form>
 		</div>

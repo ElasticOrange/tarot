@@ -21,9 +21,11 @@ Route::resource('sites.infocosts', 'InfocostsController');
 Route::get('/users/{users}/delete', 'UsersController@destroy');
 Route::resource('users', 'UsersController');
 
-
-
-
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('profile', 'UsersController@profile');
+Route::post('profile', 'UsersController@updateProfile');
 
 Route::get('/', function () {
     return view('questions');
@@ -41,9 +43,6 @@ Route::get('clients', function () {
     return view('clients');
 });
 
-Route::get('profile', function () {
-    return view('profile');
-});
 
 
 

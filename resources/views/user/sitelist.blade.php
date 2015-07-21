@@ -8,11 +8,12 @@
 		@foreach($sites as $site)
 			<tr>
 				<td>
-					<div class="checkbox">
+					<div class="checkbox" >
 						<label>
 							<input 	type="checkbox"
-									name=""
-									value=""
+									name="sites[]"
+									value="{{$site->id}}"
+									{!! in_array($site->id, $userSiteIds) ? 'checked="checked"' : '' !!}
 							/>{{$site->name}}
 						</label>
 					</div>

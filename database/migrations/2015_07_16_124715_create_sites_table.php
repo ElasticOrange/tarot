@@ -24,6 +24,14 @@ class CreateSitesTable extends Migration
             $table->boolean('active');
             $table->timestamps();
         });
+
+        Schema::create('site_user', function(Blueprint $table) {
+            $table->integer('site_id')->unsigned()->index();
+            $table->foreign('site_id')->references('id')->on('sites')->onDelete('cascade');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -33,6 +41,7 @@ class CreateSitesTable extends Migration
      */
     public function down()
     {
+        Schema::drop('site_user');
         Schema::drop('sites');
     }
 }

@@ -47,4 +47,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         ];
     }
+
+    public function sites() {
+        return $this->belongsToMany('\App\Site')->withTimestamps();
+    }
 }

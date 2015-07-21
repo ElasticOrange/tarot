@@ -14,7 +14,7 @@ Route::get('/home', function() {
     return redirect('/');
 });
 
-Route::group(['middleware' => 'auth'], function(){
+//Route::group(['middleware' => 'auth'], function(){
     Route::get('/sites/{sites}/delete', 'SiteController@destroy');
     Route::resource('sites', 'SiteController');
 
@@ -75,7 +75,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 
 
-});
+//});
 
 
 

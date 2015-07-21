@@ -20,12 +20,14 @@
 			>
 				@include('user/form')
 
+				@include('user/sitelist')
+
 				<div class="form-group">
-					<button class="btn btn-primary">Save</button>
+					<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+					<a class="btn-default btn" href="/users"><span class="glyphicon glyphicon-list"></span> Back</a>
 				</div>
 			</form>
 
-			@include('user/sitelist')
 		</div>
 	</div>
 

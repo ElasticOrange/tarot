@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Mail;
 use Hash;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
 use Validator;
 use Response;
+use App\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 class UsersController extends Controller
 {
     /**
@@ -36,6 +37,7 @@ class UsersController extends Controller
         return view('user/create', [
             'user' => $user,
             'userTypes' => $user->getUserTypes(),
+            'userSiteIds' => $user->sites()->lists('id')->toArray(),
             'sites' => $sites
         ]);
     }
@@ -50,6 +52,7 @@ class UsersController extends Controller
     {
         $this->validateUserInput($request);
         $input = $request->all();
+
         $password = str_random(10);
 
         $newUser = new User;
@@ -58,9 +61,16 @@ class UsersController extends Controller
 
         $result = $newUser->save();
 
-        if ($newUser->id) {
-            $this->sendNewUserEmail($newUser, $password);
+        // TODO return error
+        if (!$newUser->id) {
+            return 'Error: cannot save user to database';
         }
+
+        if (isset($input['sites'])) {
+            $newUser->sites()->sync($input['sites']);
+        }
+
+        $this->sendNewUserEmail($newUser, $password);
 
         return $newUser;
     }
@@ -88,6 +98,7 @@ class UsersController extends Controller
         return view('user/edit', [
                 'user' => $user,
                 'userTypes' => $user->getUserTypes(),
+                'userSiteIds' => $user->sites()->lists('id')->toArray(),
                 'sites' => $sites
             ]);
     }
@@ -105,6 +116,10 @@ class UsersController extends Controller
         $input = $request->all();
 
         $user->update($input);
+
+        if (isset($input['sites'])) {
+            $user->sites()->sync($input['sites']);
+        }
 
         return $user;
     }

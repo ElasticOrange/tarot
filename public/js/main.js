@@ -275,6 +275,10 @@ $(function(){
 		submitAjaxForm(this);
 	});
 
+	$(document).on('change', '[data-submit-on-change=true]', function() {
+		$this = $(this);
+		$this.parents('form').submit();
+	});
 
 	initActiveElements();
 });

@@ -51,4 +51,18 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     public function sites() {
         return $this->belongsToMany('\App\Site')->withTimestamps();
     }
+
+    public function currentSiteId() {
+        $currentSiteId = session('currentSiteId');
+
+        if (!$currentSiteId) {
+            $firstSite = $this->sites()->first();
+
+            if ($firstSite->id) {
+                $currentSiteId = $firstSite->id;
+            }
+        }
+
+        return $currentSiteId;
+    }
 }

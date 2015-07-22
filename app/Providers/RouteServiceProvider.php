@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Contracts\Auth\Guard;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -31,8 +32,12 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('infocosts', 'App\Infocost');
         $router->model('users', 'App\User');
 
+
         view()->composer('_siteselector', function($view) {
-            $view->with('loggedUserSites', \Auth::user()->sites()->lists('name', 'id')->toArray());
+            $view->with([
+                'loggedUserSites' => \Auth::user()->sites()->lists('name', 'id')->toArray(),
+                'currentSiteId' => \Auth::user()->currentSiteId()
+            ]);
         });
     }
 

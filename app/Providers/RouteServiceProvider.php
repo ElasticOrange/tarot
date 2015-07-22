@@ -31,7 +31,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('sites', 'App\Site');
         $router->model('infocosts', 'App\Infocost');
         $router->model('users', 'App\User');
-
+        $router->model('templates', 'App\Template');
 
         view()->composer('_siteselector', function($view) {
             $view->with([

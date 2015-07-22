@@ -14,7 +14,7 @@
 					action="/sites/{{$site->id}}"
 					method="post"
 					data-ajax="true"
-					success-message="Site informations updated!"
+					success-message="Site updated successfully!"
 					error-message="Site update error"
 			>
 				<input type="hidden" name="_method" value="PUT"/>

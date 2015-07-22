@@ -28,8 +28,12 @@ Route::get('/home', function() {
     Route::post('profile', 'UsersController@updateProfile');
 
 
+    Route::get('/templates/{templateCategory}', 'TemplatesController@redirect');
+    Route::get('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@index')->where('templateCategory', '[A-Za-z]+');;
+    Route::get('/sites/{sites}/templates/{templateCategory}/create', 'TemplatesController@create');
+    Route::resource('sites.templates', 'TemplatesController', ['except' => ['index', 'create']]);
 
-    //Route::post('/templates/question', '');
+
 
 
     Route::get('/', function () {
@@ -48,21 +52,7 @@ Route::get('/home', function() {
         return view('clients');
     });
 
-    Route::get('templates/question', function () {
-        return view('question-templates');
-    });
 
-    Route::get('templates/question/item', function () {
-        return view('question-template');
-    });
-
-    Route::get('templates/email', function () {
-        return view('email-templates');
-    });
-
-    Route::get('templates/email/item', function () {
-        return view('email-template');
-    });
 
     Route::get('settings', function () {
         return view('settings');

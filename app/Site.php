@@ -33,4 +33,8 @@ class Site extends Model
     public function users() {
         return $this->belongsToMany('\App\User')->withTimestamps();
     }
+
+    public function templates() {
+        return $this->hasMany('\App\Template');
+    }
 }

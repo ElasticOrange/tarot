@@ -21,6 +21,40 @@ function initActiveElements() {
 	});
 }
 
+function insertAtCaret(areaId,text) {
+    var txtarea = document.getElementById(areaId);
+    var scrollPos = txtarea.scrollTop;
+    var strPos = 0;
+    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+        "ff" : (document.selection ? "ie" : false ) );
+    if (br == "ie") {
+        txtarea.focus();
+        var range = document.selection.createRange();
+        range.moveStart ('character', -txtarea.value.length);
+        strPos = range.text.length;
+    }
+    else if (br == "ff") strPos = txtarea.selectionStart;
+
+    var front = (txtarea.value).substring(0,strPos);
+    var back = (txtarea.value).substring(strPos,txtarea.value.length);
+    txtarea.value=front+text+back;
+    strPos = strPos + text.length;
+    if (br == "ie") {
+        txtarea.focus();
+        var range = document.selection.createRange();
+        range.moveStart ('character', -txtarea.value.length);
+        range.moveStart ('character', strPos);
+        range.moveEnd ('character', 0);
+        range.select();
+    }
+    else if (br == "ff") {
+        txtarea.selectionStart = strPos;
+        txtarea.selectionEnd = strPos;
+        txtarea.focus();
+    }
+    txtarea.scrollTop = scrollPos;
+}
+
 function redirect(url, timeout) {
 	if (!timeout) {
 		timeout = 1;
@@ -186,8 +220,8 @@ $(function(){
 	$successBox = $('.message-box.success');
 	$errorBox = $('.message-box.error');
 
-	if ($('#rich-editor').length) {
-		CKEDITOR.replace('rich-editor');
+	if ($('#rich_editor').length) {
+		CKEDITOR.replace('rich_editor');
 	}
 
 	$('.combobox').combobox();
@@ -279,6 +313,12 @@ $(function(){
 		$this = $(this);
 		$this.parents('form').submit();
 	});
+
+	$(document).on('click', '[data-insert-text]', function(ev) {
+		$this = $(this);
+console.log($this.attr('data-insert-text'));
+		CKEDITOR.instances.rich_editor.insertText($this.attr('data-insert-text'));
+	})
 
 	initActiveElements();
 });

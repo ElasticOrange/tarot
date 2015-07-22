@@ -2,7 +2,7 @@
 
 <?php $selected_menu_item = ''?>
 
-@section('title', ucfirst($template->category) + ' answer template')
+@section('title', ucfirst($template->category) . ' answer template')
 
 @section('content')
 

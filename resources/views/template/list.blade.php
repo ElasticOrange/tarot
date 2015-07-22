@@ -2,7 +2,7 @@
 
 <?php $selected_menu_item = ''?>
 
-@section('title', ucfirst($templateCategory).' templates list')
+@section('title', ucfirst($templateCategory) . ' templates list')
 
 @section('content')
 

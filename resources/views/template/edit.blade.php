@@ -9,7 +9,7 @@
 
 	<div class="row">
 		<div class="col-sm-12">
-			<pagetitle>Question answer templated</pagetitle>
+			<pagetitle>Question answer template</pagetitle>
 			<form 	class="form"
 					action="/sites/{{ $site->id }}/templates/{{ $template->id }}"
 					method="post"

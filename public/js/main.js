@@ -316,7 +316,6 @@ $(function(){
 
 	$(document).on('click', '[data-insert-text]', function(ev) {
 		$this = $(this);
-console.log($this.attr('data-insert-text'));
 		CKEDITOR.instances.rich_editor.insertText($this.attr('data-insert-text'));
 	})
 

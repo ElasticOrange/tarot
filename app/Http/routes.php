@@ -14,7 +14,7 @@ Route::get('/home', function() {
     return redirect('/');
 });
 
-//Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function(){
     Route::get('/sites/{sites}/delete', 'SiteController@destroy');
     Route::resource('sites', 'SiteController');
 
@@ -28,6 +28,7 @@ Route::get('/home', function() {
     Route::post('profile', 'UsersController@updateProfile');
 
 
+    Route::post('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@changeSite')->where('templateCategory', '[A-Za-z]+');;
     Route::get('/templates/{templateCategory}', 'TemplatesController@redirect');
     Route::get('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@index')->where('templateCategory', '[A-Za-z]+');;
     Route::get('/sites/{sites}/templates/{templateCategory}/create', 'TemplatesController@create');
@@ -65,7 +66,7 @@ Route::get('/home', function() {
 
 
 
-//});
+});
 
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Http\Request;
 use App\Http\Requests\TemplateRequest;
 use App\Http\Controllers\Controller;
 
@@ -17,6 +19,18 @@ class TemplatesController extends Controller
         return redirect("/sites/$siteId/templates/$templateCategory");
     }
 
+    public function changeSite(Request $request, $site, $templateCategory)
+    {
+        $input = $request->all();
+        if (isset($input['siteId']) and $input['siteId'] > 0) {
+            $siteId = $input['siteId'];
+
+            if (\Auth::user()->setCurrentSiteId($siteId)) {
+                return redirect("/sites/$siteId/templates/$templateCategory");
+            }
+        }
+        return redirect("/sites/templates/$templateCategory");
+    }
     /**
      * Display a listing of the resource.
      *

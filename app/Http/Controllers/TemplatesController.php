@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests\TemplateRequest;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +24,7 @@ class TemplatesController extends Controller
      */
     public function index($site, $templateCategory)
     {
-        $templates = $site->templates()->active()->ofCategory($templateCategory)->get();
+        $templates = $site->templates()->ofCategory($templateCategory)->get();
 
         return view('template.list', [
             'templates' => $templates,
@@ -58,7 +56,7 @@ class TemplatesController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store($site, Request $request)
+    public function store($site, TemplateRequest $request)
     {
         $input = $request->all();
         $newTemplate = new \App\Template;
@@ -97,7 +95,7 @@ class TemplatesController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($site, $template, Request $request)
+    public function update($site, $template, TemplateRequest $request)
     {
         $input = $request->all();
 

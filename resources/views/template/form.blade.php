@@ -71,7 +71,7 @@
 						class="form-control"
 						rows="20"
 						id="rich-editor"
-			></textarea>
+			>{{ $template->content }}</textarea>
 		</div>
 	</div>
 </div>

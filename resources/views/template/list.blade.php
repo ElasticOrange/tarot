@@ -28,7 +28,7 @@
 
 	<div class="row">
 		<div class="col-sm-12">
-			<a class="btn btn-primary" href="/sites/{{$site->id}}/templates/question/create"><span class="glyphicon glyphicon-plus"></span> Add new</a>
+			<a class="btn btn-primary" href="/sites/{{$site->id}}/templates/{{$templateCategory}}/create"><span class="glyphicon glyphicon-plus"></span> Add new</a>
 			<button class="btn btn-danger" type="button"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 		</div>
 	</div>

@@ -49,7 +49,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     public function setPasswordAttribute($value) {
-        $this->password = bcrypt($value);
+        $this->attributes['password'] = bcrypt($value);
     }
 
     public function sites() {

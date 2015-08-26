@@ -58,6 +58,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         if (!$currentSiteId) {
             $firstSite = $this->sites()->first();
 
+            if (!$firstSite) {
+                return false;
+            }
+
             if ($firstSite->id) {
                 $currentSiteId = $firstSite->id;
             }

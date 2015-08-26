@@ -45,9 +45,11 @@
 				</tr>
 			</thead>
 			<tbody>
+				<?php $row = 0;?>
 				@foreach($templates as $template)
+					<?php $row++;?>
 					<tr href="/sites/{{$site->id}}/templates/{{ $template->id }}">
-						<td>1</td>
+						<td>{{ $row }}</td>
 						<td class="prevent-href"><input type="checkbox" name="id[]" value="{{ $template->id }}"/></td>
 						<td>{{ $template->name }}</td>
 						<td>{{ $template->type }}</td>

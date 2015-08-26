@@ -99,4 +99,21 @@ class SiteController extends Controller
         $site->delete();
         return redirect('sites');
     }
+
+    public function change(Request $request) {
+        $referrer = $request->server('HTTP_REFERER');
+        $input = $request->all();
+
+        if (isset($input['siteId']) and $input['siteId'] > 0) {
+            $siteId = $input['siteId'];
+
+            $redirect_url = preg_replace('/(.*\/sites)\/([0-9]*)(.*)/', '$1/'.$siteId.'$3' ,$referrer);
+
+            \Auth::user()->setCurrentSiteId($siteId);
+
+            return redirect($redirect_url);
+        }
+
+        return redirect($referrer);
+    }
 }

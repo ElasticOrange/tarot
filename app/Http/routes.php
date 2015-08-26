@@ -15,6 +15,8 @@ Route::get('/home', function() {
 });
 
 Route::group(['middleware' => 'auth'], function(){
+
+    Route::post('/sites/change', 'SiteController@change');
     Route::get('/sites/{sites}/delete', 'SiteController@destroy');
     Route::resource('sites', 'SiteController');
 
@@ -35,7 +37,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('sites.templates', 'TemplatesController', ['except' => ['index', 'create']]);
 
 
-
+    Route::get('/clients', 'ClientsController@redirect');
+    Route::resource('sites.clients', 'ClientsController');
 
     Route::get('/', function () {
         return view('questions');
@@ -48,12 +51,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('emails', function () {
         return view('emails');
     });
-
-    Route::get('clients', function () {
-        return view('clients');
-    });
-
-
 
     Route::get('settings', function () {
         return view('settings');

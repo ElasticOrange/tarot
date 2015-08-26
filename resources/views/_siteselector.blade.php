@@ -1,5 +1,5 @@
 @if(count($loggedUserSites))
-	<form class="form" method="post">
+	<form class="form" action="/sites/change" method="post">
 		<div class="form-group">
 			{!! csrf_field() !!}
 			<select class="form-control" name="siteId" data-submit-on-change="true">

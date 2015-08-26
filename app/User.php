@@ -75,7 +75,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
 
     public function setCurrentSiteId($siteId) {
-        if ($this->sites()->lists('id')->contains($siteId)) {
+        if ($this->sites()->lists('listid')->contains($siteId)) {
             session(['currentSiteId' => $siteId]);
             return true;
         }

@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Site extends Model
 {
+	protected $table = 'email_lists';
 	use SoftDeletes;
+
+	protected $primaryKey = 'listid';
 
 	protected $dates = ['deleted_at'];
 
@@ -20,6 +23,30 @@ class Site extends Model
 		'signature',
 		'active'
 	];
+
+	public function getIdAttribute() {
+		return $this->listid;
+	}
+
+	public function setIdAttribute($value) {
+		return $this->listid = $value;
+	}
+
+	public function getEmailAttribute() {
+		return $this->owneremail;
+	}
+
+	public function setEmailAttribute($value) {
+		return $this->owneremail = $value;
+	}
+
+	public function getSenderAttribute() {
+		return $this->ownername;
+	}
+
+	public function setSenderAttribute($value) {
+		return $this->ownername = $value;
+	}
 
 	public function infocosts() {
 		return $this->hasMany('App\Infocost');

@@ -29,7 +29,7 @@ class Site extends Model
 	}
 
 	public function setIdAttribute($value) {
-		return $this->listid = $value;
+		return $this->attributes['listid'] = $value;
 	}
 
 	public function getEmailAttribute() {
@@ -37,7 +37,7 @@ class Site extends Model
 	}
 
 	public function setEmailAttribute($value) {
-		return $this->owneremail = $value;
+		return $this->attributes['owneremail'] = $value;
 	}
 
 	public function getSenderAttribute() {
@@ -45,7 +45,7 @@ class Site extends Model
 	}
 
 	public function setSenderAttribute($value) {
-		return $this->ownername = $value;
+		return $this->attributes['ownername'] = $value;
 	}
 
 	public function infocosts() {

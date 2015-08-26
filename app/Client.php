@@ -31,6 +31,11 @@ class Client extends Model
         return $this->belongsToMany('App\ClientField', 'email_subscribers_data', 'subscriberid', 'fieldid')->withPivot('data');
     }
 
+    public function site() {
+        return $this->belongsTo('App\Site', 'listid', 'listid');
+    }
+
+
     public function getProperties() {
     	$data = $this->data()->with('field')->get();
 

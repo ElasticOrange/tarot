@@ -64,4 +64,9 @@ class Site extends Model
     public function templates() {
         return $this->hasMany('\App\Template');
     }
+
+    public function clients() {
+        return $this->hasMany('\App\Client', 'listid', 'listid');
+    }
+
 }

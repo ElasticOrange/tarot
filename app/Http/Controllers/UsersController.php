@@ -57,7 +57,7 @@ class UsersController extends Controller
 
         $newUser = new User;
         $newUser->fill($input);
-        $newUser->password = bcrypt($password);
+        $newUser->password = $password;
 
         $result = $newUser->save();
 
@@ -168,7 +168,7 @@ class UsersController extends Controller
 
         $loggedUser->fill($input);
         if (isset($input['newpassword']) && $input['newpassword']) {
-            $loggedUser->password = bcrypt($input['newpassword']);
+            $loggedUser->password = $input['newpassword'];
         }
 
         $loggedUser->save();

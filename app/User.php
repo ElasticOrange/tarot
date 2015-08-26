@@ -48,6 +48,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         ];
     }
 
+    public function setPasswordAttribute($value) {
+        $this->password = bcrypt($value);
+    }
+
     public function sites() {
         return $this->belongsToMany('\App\Site')->withTimestamps();
     }

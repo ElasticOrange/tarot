@@ -21,7 +21,7 @@ class UserTableSeeder extends Seeder
         	'active' => 1,
 
         ]);
-        $newUser->password = bcrypt('admin');
+        $newUser->password = 'admin';
 
         $result = $newUser->save();
 

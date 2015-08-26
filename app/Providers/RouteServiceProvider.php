@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
 
         view()->composer('_siteselector', function($view) {
             $view->with([
-                'loggedUserSites' => \Auth::user()->sites()->lists('name', 'id')->toArray(),
+                'loggedUserSites' => \Auth::user()->sites()->lists('name', 'listid')->toArray(),
                 'currentSiteId' => \Auth::user()->currentSiteId()
             ]);
         });

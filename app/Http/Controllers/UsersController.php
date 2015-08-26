@@ -37,7 +37,7 @@ class UsersController extends Controller
         return view('user/create', [
             'user' => $user,
             'userTypes' => $user->getUserTypes(),
-            'userSiteIds' => $user->sites()->lists('id')->toArray(),
+            'userSiteIds' => $user->sites()->lists('listid')->toArray(),
             'sites' => $sites
         ]);
     }
@@ -98,7 +98,7 @@ class UsersController extends Controller
         return view('user/edit', [
                 'user' => $user,
                 'userTypes' => $user->getUserTypes(),
-                'userSiteIds' => $user->sites()->lists('id')->toArray(),
+                'userSiteIds' => $user->sites()->lists('listid')->toArray(),
                 'sites' => $sites
             ]);
     }

@@ -14,7 +14,7 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('site_id')->unsigned();
+            $table->integer('site_id')->index();
             $table->string('category', 20);
             $table->string('name', 100);
             $table->string('type', 100);
@@ -24,9 +24,10 @@ class CreateTemplatesTable extends Migration
             $table->timestamps();
 
             $table  ->foreign('site_id')
-                    ->references('id')
-                    ->on('sites')
+                    ->references('listid')
+                    ->on('email_lists')
                     ->onDelete('cascade');
+
         });
     }
 

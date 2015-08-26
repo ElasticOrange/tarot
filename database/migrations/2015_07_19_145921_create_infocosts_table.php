@@ -14,7 +14,7 @@ class CreateInfocostsTable extends Migration
     {
         Schema::create('infocosts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('site_id')->unsigned();
+            $table->integer('site_id');
             $table->string('country', 30);
             $table->string('telephone', 20);
             $table->string('infocost', 1000);
@@ -22,9 +22,11 @@ class CreateInfocostsTable extends Migration
             $table->boolean('default');
             $table->timestamps();
 
+            $table->index('site_id');
+
             $table  ->foreign('site_id')
-                    ->references('id')
-                    ->on('sites')
+                    ->references('listid')
+                    ->on('email_lists')
                     ->onDelete('cascade');
         });
     }

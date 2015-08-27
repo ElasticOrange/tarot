@@ -22,6 +22,11 @@ class ClientField extends Model
     public function values() {
         return $this->hasMany('\App\ClientData', 'fieldid', 'fieldid');
     }
+
+    static public function getByName($name) {
+    	$instance = new static;
+    	return $instance->where('name', $name)->first();
+    }
 }
 
 /*

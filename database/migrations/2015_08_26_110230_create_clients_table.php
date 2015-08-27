@@ -13,6 +13,11 @@ class CreateClientsTable extends Migration
     public function up()
     {
         Schema::table('email_list_subscribers', function (Blueprint $table) {
+            $table->string('partnerName');
+            $table->string('interest');
+            $table->boolean('ignore');
+            $table->boolean('problem');
+            $table->string('comment');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +32,11 @@ class CreateClientsTable extends Migration
     {
         Schema::table('email_list_subscribers', function (Blueprint $table) {
             $table->dropColumn([
+                'partnerName',
+                'interest',
+                'ignore',
+                'problem',
+                'comment',
                 'deleted_at',
                 'created_at',
                 'updated_at'

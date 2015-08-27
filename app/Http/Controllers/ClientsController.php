@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\ClientRequest;
 use App\Http\Controllers\Controller;
 
 class ClientsController extends Controller
@@ -60,9 +61,9 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($site, $client)
     {
-        //
+        return $this->edit($site, $client);
     }
 
     /**
@@ -71,9 +72,9 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($site, $client)
     {
-        //
+        return view('client/edit', ['site' => $site, 'client' => $client]);
     }
 
     /**
@@ -83,9 +84,13 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update($site, $client, ClientRequest $request)
     {
-        //
+        $input = $request->all();
+
+
+        $client->update($input);
+        return $client;
     }
 
     /**

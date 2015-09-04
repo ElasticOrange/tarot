@@ -6,6 +6,38 @@ use Illuminate\Console\Command;
 use PhpImap\Mailbox as ImapMailbox;
 use PhpImap\IncomingMail;
 use App\Email as Email;
+use App\Attachment as Attachment;
+
+
+function withError($message, $var) {
+    echo $message.'\n';
+
+    if ($var) {
+        print_r($var);
+    }
+
+    return false;
+}
+
+function getFileNameFromPath($path) {
+    preg_match ( '/.*\/(.+)/' , $path, $matches);
+
+    if (!empty($matches)) {
+        return $matches[1];
+    }
+
+    return $path;
+}
+
+function getFolderPathFromPath($path) {
+    preg_match ( '/(.*\/).+/' , $path, $matches);
+
+    if (!empty($matches)) {
+        return $matches[1];
+    }
+
+    return '';
+}
 
 class GetEmails extends Command
 {
@@ -33,9 +65,36 @@ class GetEmails extends Command
         parent::__construct();
     }
 
+
+    private function saveAttachmentToDb($attachment, $mailId) {
+        if (!is_object($attachment)) {
+            return withError('saveAttachmentToDb: attachment is not object', $attachment);
+        }
+
+        if (!($mailId > 0)) {
+            return withError('saveAttachmentToDb: mail id is not integer', $mailId);
+        }
+
+        $attach = new Attachment;
+
+        $data = [
+            'file' => getFileNameFromPath($attachment->filePath),
+            'folder' => getFolderPathFromPath($attachment->filePath),
+            'email_id' => $mailId
+        ];
+
+        $attach->fill($data);
+
+        if (!$attach->save()) {
+            return withError('saveAttachmentToDb: could not save attachment to DB');
+        }
+
+        return true;
+    }
+
     private function saveMailToDb($mail) {
         if (!$mail) {
-            return false;
+            return withError('saveMailToDb: mail is not object', $mail);
         }
 
         $email = new Email;
@@ -51,7 +110,16 @@ class GetEmails extends Command
             'html_content' => ($mail->textHtml ? $mail->textHtml : ''),
             'text_content' => ($mail->textPlain ? $mail->textPlain : '')
         ]);
-        $email->save();
+
+        if (!$email->save()) {
+            return withError("Could not save mail to db");
+        }
+
+        if (count($mail->getAttachments())) {
+            foreach($mail->getAttachments() as $attachment) {
+                $this->saveAttachmentToDb($attachment, $email->id);
+            }
+        }
 
         return true;
     }
@@ -88,6 +156,7 @@ class GetEmails extends Command
      */
     public function handle()
     {
+
         //$mailbox = new ImapMailbox('{pop.mail.yahoo.com:995/service=pop3/ssl/notls/novalidate-cert}INBOX', 'test_tarot@yahoo.com', 't32tt4r0t', './public/attachments');
 
         $mailbox = new ImapMailbox('{imap.mail.yahoo.com:993/service=imap/ssl/notls/novalidate-cert}INBOX', 'test_tarot@yahoo.com', 't32tt4r0t', './public/attachments');
@@ -118,6 +187,8 @@ class GetEmails extends Command
                 echo('Mail exists '.$mail->fromAddress.': '.$mail->subject."\n");
                 continue;
             }
+
+            echo('Saving mail '.$mail->fromAddress.': '.$mail->subject.' '.$mail->date."\n");
 
             if ($this->saveMailToDb($mail)) {
                 $mailbox->markMailAsRead($mailId);

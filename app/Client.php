@@ -149,8 +149,26 @@ class Client extends Model
         }
     }
 
+    public function createProperties() {
+        $fields = \App\ClientField::all();
+
+        if ($fields->isEmpty()) {
+            return false;
+        }
+
+        foreach ($fields as $key => $field) {
+            $this->properties[$field->name] = $field->defaultvalue;
+        }
+
+        return true;
+    }
+
     public function parseData() {
         $properties = $this->getProperties();
+
+        if ($properties->isEmpty()) {
+            return $this->createProperties();
+        }
 
         foreach ($properties as $property) {
             if (empty($this->properties[$property->field->name])) {
@@ -159,6 +177,8 @@ class Client extends Model
         }
         $this->fixName();
         $this->fixFirstLastName();
+
+        return true;
     }
 
     public function setProperty($propertyName, $value) {

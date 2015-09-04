@@ -182,7 +182,11 @@ class Client extends Model
 
 
     public function getEmailAttribute() {
-        return $this->attributes['emailaddress'];
+        if (array_key_exists('emailaddress', $this->attributes)) {
+            return $this->attributes['emailaddress'];
+        }
+
+        return '';
     }
 
     public function setEmailAttribute($value) {

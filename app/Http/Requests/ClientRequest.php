@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Http\Request as HttpRequest;
 use App\Http\Requests\Request;
+use App\Client as Client;
 
 class ClientRequest extends Request
 {
@@ -21,9 +22,9 @@ class ClientRequest extends Request
      *
      * @return array
      */
-    public function rules()
+    public function rules(HttpRequest $request)
     {
-        return [
+        $rules = [
             'email' => 'required|string|email',
             'firstName' => 'required|string|min:2',
             'lastName' => 'string',
@@ -36,5 +37,21 @@ class ClientRequest extends Request
             'problem' => 'boolean',
             'comment' => 'string'
         ];
+
+        $emailaddress = $this->input('email');
+        $site = $this->route('sites');
+
+        if (empty($emailaddress) or (!is_string($emailaddress)) or (!$site)) {
+            return $rules;
+        }
+
+        if (!$this->client or ($this->client->emailaddress != $emailaddress)) {
+            $client = Client::byEmailAndSite($emailaddress, $site->id);
+            if ($client) {
+                $rules['email'] = 'required|string|email|unique:email_list_subscribers,emailaddress';
+            }
+        }
+
+        return $rules;
     }
 }

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\ClientRequest;
 use App\Http\Controllers\Controller;
 use App\Client as Client;
+
 class ClientsController extends Controller
 {
 
@@ -41,7 +42,9 @@ class ClientsController extends Controller
      */
     public function create($site)
     {
-        $client = new Client;
+        // Passing siteid to new clients creates valid client fields for that site->form
+        $client = new Client(['listid' => $site->id]);
+
         return view('client.create', ['site' => $site, 'client' => $client]);
     }
 
@@ -51,11 +54,18 @@ class ClientsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(ClientRequest $request)
+    public function store($site, ClientRequest $request)
     {
+
         $input = $request->all();
 
-        $client = Client::create($input);
+        $input['listid'] = $site->id;
+
+        $client = new Client(['listid' => $site->id]);
+
+        $client->fill($input);
+
+        $client->save();
 
         return $client;
     }

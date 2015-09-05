@@ -49,7 +49,7 @@ class Site extends Model
 	}
 
 	public function infocosts() {
-		return $this->hasMany('App\Infocost');
+		return $this->hasMany('App\infocosts');
 	}
 
     public function scopeActive($query)
@@ -71,5 +71,16 @@ class Site extends Model
 
     public function forms() {
 		return $this->belongsToMany('App\Form', 'email_form_lists', 'listid', 'formid');
+	}
+
+	// returns fields for the first form of the site (it may have more than one form)
+	public function fields() {
+		$form = $this->forms->first();
+
+		if (!$form) {
+			return false;
+		}
+
+		return $form->fields();
 	}
 }

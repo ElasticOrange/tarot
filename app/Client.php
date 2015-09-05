@@ -37,7 +37,8 @@ class Client extends Model
         'country',
         'ignore',
         'problem',
-        'comment'
+        'comment',
+        'listid'
     ];
 
     public function data() {
@@ -58,6 +59,11 @@ class Client extends Model
             $result = $this->saveProperties();
         }
         return $result;
+    }
+
+    static public function byEmailAndSite($email, $siteId) {
+        $instance = new static;
+        return $instance->where('emailaddress', $email)->where('listid', $siteId)->first();
     }
 
     public function update(array $attributes = array()) {
@@ -150,7 +156,14 @@ class Client extends Model
     }
 
     public function createProperties() {
-        $fields = \App\ClientField::all();
+        $clientSite = $this->site()->first();
+
+        if ($clientSite) {
+            $fields = $clientSite->fields()->get();
+        }
+        else {
+            $fields = \App\ClientField::all();
+        }
 
         if ($fields->isEmpty()) {
             return false;

@@ -20,6 +20,7 @@
 							method="post"
 							data-ajax="true"
 							success-message="Client created successfully"
+							success-url="/sites/{{ $site->id }}/clients/{id}"
 							error-message="Error saving client"
 					>
 						@include('client.form')

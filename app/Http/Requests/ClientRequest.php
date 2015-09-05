@@ -40,12 +40,12 @@ class ClientRequest extends Request
 
         $emailaddress = $this->input('email');
         $site = $this->route('sites');
+        $client = $this->route('clients');
 
         if (empty($emailaddress) or (!is_string($emailaddress)) or (!$site)) {
             return $rules;
         }
-
-        if (!$this->client or ($this->client->emailaddress != $emailaddress)) {
+        if (!$client or ($client->emailaddress != $emailaddress)) {
             $client = Client::byEmailAndSite($emailaddress, $site->id);
             if ($client) {
                 $rules['email'] = 'required|string|email|unique:email_list_subscribers,emailaddress';

@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\ClientField;
 use App\ClientData;
+
+function getDomainFromEmailAddress($emailAddress) {
+    $domain = preg_match('/.+(\@.+\..+)/', $emailAddress, $matches);
+
+    if (empty($matches)) {
+        return false;
+    }
+
+    return $matches[1];
+}
+
 class Client extends Model
 {
 	protected $table = 'email_list_subscribers';
@@ -54,6 +65,28 @@ class Client extends Model
     }
 
     public function save(array $options = array()) {
+        $this->domainname = getDomainFromEmailAddress($this->emailaddress);
+
+        if (!$this->format) {
+            $this->format = 'h';
+        }
+
+        if ($this->confirmed === null) {
+            $this->confirmed = 1;
+        }
+
+        if (!$this->confirmdate) {
+            $this->confirmdate = time();
+        }
+
+        if (!$this->subscribedate) {
+            $this->subscribedate = time();
+        }
+
+        if (!$this->formid) {
+            $this->formid = $this->site()->first()->forms()->first()->id;
+        }
+
         $result = parent::save($options);
         if ($result) {
             $result = $this->saveProperties();
@@ -160,6 +193,9 @@ class Client extends Model
 
         if ($clientSite) {
             $fields = $clientSite->fields()->get();
+            if (!$fields->isEmpty()) {
+                $this->formid = $clientSite->forms()->first()->id;
+            }
         }
         else {
             $fields = \App\ClientField::all();

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\ClientRequest;
 use App\Http\Controllers\Controller;
-
+use App\Client as Client;
 class ClientsController extends Controller
 {
 
@@ -39,9 +39,10 @@ class ClientsController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($site)
     {
-        //
+        $client = new Client;
+        return view('client.create', ['site' => $site, 'client' => $client]);
     }
 
     /**
@@ -50,9 +51,13 @@ class ClientsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $input = $request->all();
+
+        $client = Client::create($input);
+
+        return $client;
     }
 
     /**

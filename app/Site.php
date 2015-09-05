@@ -69,4 +69,7 @@ class Site extends Model
         return $this->hasMany('\App\Client', 'listid', 'listid');
     }
 
+    public function forms() {
+		return $this->belongsToMany('App\Form', 'email_form_lists', 'listid', 'formid');
+	}
 }

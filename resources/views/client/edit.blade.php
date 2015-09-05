@@ -28,7 +28,7 @@
 
 						<div class="form-group">
 							<div class="col-sm-12">
-								<button class="btn btn-primary">Save</button>
+								<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
 							</div>
 						</div>
 					</form>
@@ -105,7 +105,7 @@
 						</tbody>
 					</table>
 					<div class="form-group">
-						<button class="btn btn-primary">Save</button>
+						<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
 					</div>
 				</div>
 			</div>

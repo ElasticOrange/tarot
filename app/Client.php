@@ -64,9 +64,20 @@ class Client extends Model
         return $this->belongsTo('App\Site', 'listid', 'listid');
     }
 
-    public function save(array $options = array()) {
-        $this->domainname = getDomainFromEmailAddress($this->emailaddress);
+    public function hasSite() {
+        if ($this->listid > 0) {
+            return true;
+        }
 
+        return false;
+    }
+
+    public function getSite() {
+        return $this->site()->first();
+    }
+
+    public function setDefaultAttributes() {
+        $this->domainname = getDomainFromEmailAddress($this->emailaddress);
         if (!$this->format) {
             $this->format = 'h';
         }
@@ -84,7 +95,20 @@ class Client extends Model
         }
 
         if (!$this->formid) {
-            $this->formid = $this->site()->first()->forms()->first()->id;
+            $this->formid = $this->getSite()->getForm()->id;
+        }
+
+        return true;
+    }
+
+    public function save(array $options = array()) {
+        if (!$this->hasSite()) {
+            dd('Client does not have site set!');
+            return false;
+        }
+
+        if (!$this->setDefaultAttributes()) {
+            return false;
         }
 
         $result = parent::save($options);
@@ -117,6 +141,7 @@ class Client extends Model
             \Log::error('Client->saveProperty: trying to save not set property', ['propertyName' => $propertyName]);
             return false;
         }
+
         $properties = $this->getProperties();
         $saved = false;
 
@@ -161,6 +186,9 @@ class Client extends Model
     	return $this->dbProperties;
     }
 
+    public function getAllFields() {
+        return \App\ClientField::all();
+    }
 
     public function fixName() {
         if (empty($this->fullName)) {
@@ -188,18 +216,22 @@ class Client extends Model
         }
     }
 
-    public function createProperties() {
-        $clientSite = $this->site()->first();
+    public function setFormFromSite() {
+        $site_form = $this->site()->first()->getForm();
+        $this->formid = $site_form->id;
+        return true;
+    }
 
-        if ($clientSite) {
-            $fields = $clientSite->fields()->get();
-            if (!$fields->isEmpty()) {
-                $this->formid = $clientSite->forms()->first()->id;
-            }
+    public function getFields() {
+        if (!$this->fieldid) {
+            $this->setFormFromSite();
         }
-        else {
-            $fields = \App\ClientField::all();
-        }
+
+        return $this->fields()->get();
+    }
+
+    public function createProperties() {
+        $fields = $this->getFields();
 
         if ($fields->isEmpty()) {
             return false;
@@ -346,11 +378,10 @@ class Client extends Model
 
         // copy attributes
         foreach ($this->attributes as $attribute => $value) {
-            if (in_array( $attribute, ['listid', 'subscriberid', 'created_at', 'modified_at', 'deleted_at'])) {
+            if (in_array( $attribute, ['listid', 'subscriberid', 'created_at', 'updated_at', 'deleted_at'])) {
                 continue;
             }
-
-            $client->$attribute = $value;
+            $client->setAttribute($attribute, $value);
         }
 
         // copy properties

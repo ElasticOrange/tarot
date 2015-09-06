@@ -169,16 +169,16 @@ class ClientsController extends Controller
 
         $sites_with_client = $this->getSitesWithClientByEmail($client->email);
 
-        foreach ($sites_with_client as $site) {
-            if (in_array($site->id, $subscribe_to_site_ids)) {
-                $this->subscribeClientToSite($client, $site);
+        foreach ($sites_with_client as $site_wc) {
+            if (in_array($site_wc->id, $subscribe_to_site_ids)) {
+                $this->subscribeClientToSite($client, $site_wc);
             }
             else {
-                $this->unsubscribeClientToSite($client, $site);
+                $this->unsubscribeClientToSite($client, $site_wc);
 
             }
         }
 
-        return true;
+        return redirect()->action('ClientsController@show', [$site, $client]);
     }
 }

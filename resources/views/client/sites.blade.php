@@ -1,5 +1,5 @@
 <h3>Client subscriptions</h3>
-<form action="/sites/{{ $site->id }}/clients/{{ $client->id }}/subscribe" method="post" data-ajax="true">
+<form action="/sites/{{ $site->id }}/clients/{{ $client->id }}/subscribe" method="post">
 	{!! csrf_field() !!}
 	<table class="table table-striped">
 		<thead>

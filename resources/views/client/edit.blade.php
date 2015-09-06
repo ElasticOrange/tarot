@@ -29,6 +29,7 @@
 						<div class="form-group">
 							<div class="col-sm-12">
 								<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+								<a href="/sites/{{ $site->id }}/clients" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> Back</a>
 							</div>
 						</div>
 					</form>

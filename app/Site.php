@@ -73,6 +73,10 @@ class Site extends Model
 		return $this->belongsToMany('App\Form', 'email_form_lists', 'listid', 'formid');
 	}
 
+	public function getForm() {
+		return $this->forms()->first();
+	}
+
 	// returns fields for the first form of the site (it may have more than one form)
 	public function fields() {
 		$form = $this->forms->first();

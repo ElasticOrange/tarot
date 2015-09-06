@@ -17,4 +17,8 @@ class Form extends Model
 	public function fields() {
 		return $this->belongsToMany('App\ClientField', 'email_form_customfields', 'formid', 'fieldid');
 	}
+
+	public function getIdAttribute() {
+		return $this->formid;
+	}
 }

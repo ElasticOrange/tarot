@@ -83,4 +83,8 @@ class Site extends Model
 
 		return $form->fields();
 	}
+
+	public function getClientByEmail($email) {
+		return $this->clients()->where('emailaddress', $email)->first();
+	}
 }

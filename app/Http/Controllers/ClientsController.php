@@ -81,6 +81,14 @@ class ClientsController extends Controller
         return $this->edit($site, $client);
     }
 
+    public function getSitesWithClientByEmail($email) {
+        $sites_with_client = \Auth::user()->sites()->with(['clients' => function($query) use ($email) {
+            $query->where('emailaddress', $email);
+        }])->get();
+
+        return $sites_with_client;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -89,7 +97,20 @@ class ClientsController extends Controller
      */
     public function edit($site, $client)
     {
-        return view('client/edit', ['site' => $site, 'client' => $client]);
+        $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
+
+
+        if (!$sites_with_client->isEmpty()) {
+            foreach($sites_with_client as $key => $site_wc) {
+                if (!$site_wc->clients->isEmpty() and ($site_wc->clients->first()->isSubscribed())) {
+                    $site_wc->hasUserSubscribed = true;
+                }
+                else {
+                    $site_wc->hasUserSubscribed = false;
+                }
+            }
+        }
+        return view('client/edit', ['site' => $site, 'client' => $client, 'sites_with_client' => $sites_with_client]);
     }
 
     /**
@@ -117,5 +138,47 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function subscribeClientToSite($client, $site) {
+        $site_client = $site->getClientByEmail($client->email);
+
+        if (!$site_client) {
+            $site_client = $client->getClone($site->id);
+        }
+
+        $site_client->setAsSubscribed();
+        $site_client->save();
+        return true;
+    }
+
+    public function unsubscribeClientToSite($client, $site) {
+        $site_client = $site->getClientByEmail($client->email);
+
+        if ($site_client) {
+            $site_client->setAsUnsubscribed();
+            $site_client->save();
+        }
+
+        return true;
+    }
+
+
+    public function subscribe($site, $client, Request $request) {
+        $subscribe_to_site_ids = $request->input('siteids');
+
+        $sites_with_client = $this->getSitesWithClientByEmail($client->email);
+
+        foreach ($sites_with_client as $site) {
+            if (in_array($site->id, $subscribe_to_site_ids)) {
+                $this->subscribeClientToSite($client, $site);
+            }
+            else {
+                $this->unsubscribeClientToSite($client, $site);
+
+            }
+        }
+
+        return true;
     }
 }

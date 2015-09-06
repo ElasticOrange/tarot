@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function(){
         return view('settings');
     });
 
-
+    Route::post('/sites/{sites}/clients/{clients}/subscribe', 'ClientsController@subscribe');
     Route::get('client', function () {
         return view('client');
     });

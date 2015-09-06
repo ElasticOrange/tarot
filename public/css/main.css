@@ -51,6 +51,10 @@ table.table td, table.table th {
 	cursor: pointer;
 }
 
+table.table td.bold {
+	font-weight: 900;
+}
+
 .email-title {
 	font-weight: bold;
 }

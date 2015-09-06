@@ -332,4 +332,41 @@ class Client extends Model
     public function setInterestAttribute($value) {
         return $this->setProperty('Interest', $value);
     }
+
+    public function isSubscribed() {
+        if ($this->unsubscribed === "0") {
+            return true;
+        };
+
+        return false;
+    }
+
+    public function getClone($site_id) {
+        $client = new Client(['listid' => $site_id]);
+
+        // copy attributes
+        foreach ($this->attributes as $attribute => $value) {
+            if (in_array( $attribute, ['listid', 'subscriberid', 'created_at', 'modified_at', 'deleted_at'])) {
+                continue;
+            }
+
+            $client->$attribute = $value;
+        }
+
+        // copy properties
+        $this->parseData();
+        foreach ($this->properties as $property => $value) {
+            $client->setProperty($property, $value);
+        }
+
+        return $client;
+    }
+
+    public function setAsSubscribed() {
+        $this->unsubscribed = 0;
+    }
+
+    public function setAsUnsubscribed() {
+        $this->unsubscribed = 1;
+    }
 }

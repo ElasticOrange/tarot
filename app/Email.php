@@ -18,6 +18,10 @@ class Email extends Model
 		'text_content'
 	];
 
+	public function attachments() {
+		return $this->hasMany('\App\Attachment','email_id', 'id');
+	}
+
 	static public function forEmailAddress($email) {
 		$instance = new static;
 

@@ -73,7 +73,8 @@ function initEmailsLoader() {
 		var emailParams = {
 			id: email.id,
 			date: email.sent_at,
-			sender: email.from_name
+			sender: email.from_name,
+			attachments: email.attachments
 		}
 
 		if (email.sent == 1) {

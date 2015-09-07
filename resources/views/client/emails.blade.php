@@ -25,7 +25,20 @@
 				>On <%= date %> <%=sender %> wrote</a>
 				<div class="email-body collapse"
 					 id="email-<%= id %>"
-				><%= email %></div>
+				>
+					<%= email %>
+					<div class="attachments">
+					<%
+						if (attachments) {
+							_.forEach(attachments, function(attachment) {
+					%>
+								<a href="/attachments/<%= attachment.file %>" target="_window"><span class="glyphicon glyphicon-file"></span><%= attachment.file %></a>
+					<%
+							});
+						}
+					%>
+					</div>
+				</div>
 			</div>
 		</script>
 

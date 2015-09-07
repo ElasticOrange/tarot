@@ -186,7 +186,7 @@ class ClientsController extends Controller
     public function lastEmails($site, $client, $emailCount = 5) {
         $userEmail = $client->email;
 
-        $emails = Email::forEmailAddress($userEmail)->limit($emailCount)->latest()->get();
+        $emails = Email::forEmailAddress($userEmail)->limit($emailCount)->latest()->with('attachments')->get();
 
         return $emails;
     }

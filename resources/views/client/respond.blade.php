@@ -71,7 +71,7 @@
 			<div class="form-group">
 			 	<textarea 	name="response"
 			 				class="form-control"
-			 				id="rich-editor"
+			 				id="rich_editor"
 			 	></textarea>
 			</div>
 			<div class="">

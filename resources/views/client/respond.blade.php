@@ -12,18 +12,9 @@
 				<span class="caret"></span>
 			</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				<li><a href="#">Love male template 1</a></li>
-				<li><a href="#">Love male template 2</a></li>
-				<li><a href="#">Love male template 3</a></li>
-				<li><a href="#">Love male template 4</a></li>
-				<li><a href="#">Money template 1</a></li>
-				<li><a href="#">Money template 2</a></li>
-				<li><a href="#">Money template 3</a></li>
-				<li><a href="#">Money template 4</a></li>
-				<li><a href="#">Love female template 1</a></li>
-				<li><a href="#">Love female template 2</a></li>
-				<li><a href="#">Love female template 3</a></li>
-				<li><a href="#">Love female template 4</a></li>
+				@foreach($templates as $template)
+					<li><a href="#" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }}</a></li>
+				@endforeach
 			</ul>
 		</div>
 	</div>
@@ -31,38 +22,29 @@
 
 <div class="row">
 	<div class="col-sm-2 visible-lg-block">
-		<div class="btn-group-vertical">
-			<button class="btn btn-default">Love male template 1</button>
-			<button class="btn btn-default">Love male template 2</button>
-			<button class="btn btn-default">Love male template 3</button>
-			<button class="btn btn-default">Love male template 4</button>
-			<button class="btn btn-default">Money template 1</button>
-			<button class="btn btn-default">Money template 2</button>
-			<button class="btn btn-default">Money template 3</button>
+		<div class="btn-group-vertical template-button-group">
+
+			<?php $index = 0; ?>
+			@foreach($templates as $template)
+				<button class="btn btn-default" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }} </button>
+
+				<?php $index++ ?>
+
+				@if ($index >= (count($templates) / 2))
 		</div>
 	</div>
 	<div class="col-sm-2 visible-lg-block">
-		<div class="btn-group-vertical">
-			<button class="btn btn-default">Love female template 1</button>
-			<button class="btn btn-default">Love female template 2</button>
-			<button class="btn btn-default">Love female template 3</button>
-			<button class="btn btn-default">Love female template 4</button>
+		<div class="btn-group-vertical template-button-group">
+				@endif
+			@endforeach
 		</div>
 	</div>
 
 	<div class="col-md-3 visible-md-block">
-		<div class="btn-group-vertical">
-			<button class="btn btn-default">Love male template 1</button>
-			<button class="btn btn-default">Love male template 2</button>
-			<button class="btn btn-default">Love male template 3</button>
-			<button class="btn btn-default">Love male template 4</button>
-			<button class="btn btn-default">Money template 1</button>
-			<button class="btn btn-default">Money template 2</button>
-			<button class="btn btn-default">Money template 3</button>
-			<button class="btn btn-default">Love female template 1</button>
-			<button class="btn btn-default">Love female template 2</button>
-			<button class="btn btn-default">Love female template 3</button>
-			<button class="btn btn-default">Love female template 4</button>
+		<div class="btn-group-vertical template-button-group">
+			@foreach($templates as $template)
+				<button class="btn btn-default" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }} </button>
+			@endforeach
 		</div>
 	</div>
 

@@ -75,3 +75,11 @@ a.table-link {
 	width: 50%;
 	z-index: 1001;
 }
+
+button[template-id] {
+	width: 100%;
+}
+
+.template-button-group {
+	width: 100%;
+}

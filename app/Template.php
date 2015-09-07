@@ -36,4 +36,8 @@ class Template extends Model
     public function scopeOfCategory($query, $category) {
         return $query->where('category', strtolower($category));
     }
+
+    public function scopeOfSite($query, $siteId) {
+        return $query->where('site_id', $siteId);
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Requests\ClientRequest;
 use App\Http\Controllers\Controller;
 use App\Client as Client;
 use App\Email as Email;
+use App\Template as Template;
 
 class ClientsController extends Controller
 {
@@ -77,9 +78,9 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($site, $client)
+    public function show($site, $client, $templateCategory = 'email')
     {
-        return $this->edit($site, $client);
+        return $this->edit($site, $client, $templateCategory);
     }
 
     public function getSitesWithClientByEmail($email) {
@@ -96,7 +97,7 @@ class ClientsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($site, $client)
+    public function edit($site, $client, $templateCategory = 'email')
     {
         $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
 
@@ -111,7 +112,9 @@ class ClientsController extends Controller
                 }
             }
         }
-        return view('client/edit', ['site' => $site, 'client' => $client, 'sites_with_client' => $sites_with_client]);
+
+        $templates = Template::active()->ofCategory($templateCategory)->ofSite($site->id)->get();
+        return view('client/edit', ['site' => $site, 'client' => $client, 'sites_with_client' => $sites_with_client, 'templates' =>$templates]);
     }
 
     /**

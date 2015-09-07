@@ -21,6 +21,139 @@ function initActiveElements() {
 	});
 }
 
+function initEmailsLoader() {
+	var emailsContainer = $('#user-emails');
+	if (!emailsContainer.length) {
+		return false;
+	}
+
+	var emailTemplateContent = $('#email-container-template').html();
+	var emailTemplate = _.template(emailTemplateContent);
+	var urlTemplateContent = emailsContainer.attr('href').replace('emailCount', '<%= emailCount %>');
+	var urlTemplate = _.template(urlTemplateContent);
+	var countSelector = $('#email-count-selector');
+	var emails = {};
+	var validEmailStructure = {
+		id: '',
+		from_email: '',
+		from_name: '',
+		to_email: '',
+		to_name: '',
+		text_content: '',
+		html_content: '',
+		sent: ''
+	}
+
+	var isValidEmail = function(email) {
+		if (!hasStructure(email, validEmailStructure)) {
+			return false;
+		}
+		return true;
+	}
+
+	var emailExists = function(email) {
+		if (!isValidEmail(email)) {
+			return withError(['emailExists: email is not valid', email]);
+		}
+
+		if (emails[email.id]) {
+			return true;
+		}
+
+		return false;
+	}
+
+	var transformEmailBody = function(content) {
+		content = content.replace(/(\n)/g, '<br/>');
+
+		return content;
+	}
+
+	var generateEmailElement = function(email) {
+		var emailParams = {
+			id: email.id,
+			date: email.sent_at,
+			sender: email.from_name
+		}
+
+		if (email.sent == 1) {
+			emailParams.email = email.html_content;
+		}
+		else {
+			if (_.isEmpty(email.text_content)) {
+				email.text_content = stripTags(email.html_content);
+			}
+			emailParams.email = transformEmailBody(email.text_content);
+		}
+
+		return $(emailTemplate(emailParams));
+	}
+
+	var getEmailElement = function(email) {
+		return $('[aria-controls=email-' + email.id + ']');
+	}
+
+	var insertNewEmail = function(email, afterEmail) {
+		if (emailExists(email)) {
+			return false;
+		}
+
+		emails[email.id] = email;
+
+		if (afterEmail === undefined) {
+			emailsContainer.prepend(generateEmailElement(email));
+		}
+		else {
+			var existingEmailElement = getEmailElement(afterEmail);
+			existingEmailElement.before(generateEmailElement(email));
+		}
+
+		return true;
+	}
+
+	var updateEmails = function(newEmails) {
+		if (!_.isArray(newEmails)) {
+			console.error('updateEmails: Emails is not array',newEmails);
+			return false;
+		}
+
+		var previousEmail;
+
+		_.forEach(newEmails, function(newEmail) {
+			insertNewEmail(newEmail, previousEmail);
+			previousEmail = newEmail;
+		});
+		initActiveElements();
+	}
+
+	var retrieveEmails = function() {
+			var emailCount = countSelector.val();
+			var url = urlTemplate({emailCount: emailCount});
+			var request = $.ajax({
+				url: url,
+				method: 'get',
+				dataType: 'json'
+			});
+
+			request.done(function(emails) {
+				console.log('Result', emails);
+				updateEmails(emails);
+			});
+		}
+
+
+	setInterval(
+		retrieveEmails,
+		10 * 1000
+	);
+
+	retrieveEmails();
+
+	countSelector.on('change', retrieveEmails);
+
+	return true;
+}
+
 function insertAtCaret(areaId,text) {
     var txtarea = document.getElementById(areaId);
     var scrollPos = txtarea.scrollTop;
@@ -320,4 +453,5 @@ $(function(){
 	})
 
 	initActiveElements();
+	initEmailsLoader();
 });

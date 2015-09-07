@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-sm-12">
+		<h3>Emails</h3>
+		<form class="form form-inline">
+			<label>View last</label>
+			<select name="emailcount"
+					class="form-control"
+					id="email-count-selector"
+			>
+				<option>5</option>
+				<option>10</option>
+				<option>25</option>
+				<option>50</option>
+			</select>
+			<label>/20 (Total)</label>
+		</form>
+
+		<script type="text/template" id="email-container-template">
+			<div class="email-container">
+				<a 	class="email-title colapser"
+					data-toggle="collapse"
+					href="#email-<%= id %>"
+					aria-expanded="false"
+					aria-controls="email-<%= id %>"
+				>On <%= date %> <%=sender %> wrote</a>
+				<div class="email-body collapse"
+					 id="email-<%= id %>"
+				><%= email %></div>
+			</div>
+		</script>
+
+		<div class="col-sm-12 emails-container well well-sm" id="user-emails" href="{{ action("ClientsController@lastEmails", [$site, $client, 'emailCount']) }}">
+		</div>
+	</div>
+</div>

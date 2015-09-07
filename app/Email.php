@@ -17,4 +17,12 @@ class Email extends Model
 		'html_content',
 		'text_content'
 	];
+
+	static public function forEmailAddress($email) {
+		$instance = new static;
+
+		$result = $instance->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
+
+		return $result;
+	}
 }

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Requests\ClientRequest;
 use App\Http\Controllers\Controller;
 use App\Client as Client;
+use App\Email as Email;
 
 class ClientsController extends Controller
 {
@@ -180,5 +181,13 @@ class ClientsController extends Controller
         }
 
         return redirect()->action('ClientsController@show', [$site, $client]);
+    }
+
+    public function lastEmails($site, $client, $emailCount = 5) {
+        $userEmail = $client->email;
+
+        $emails = Email::forEmailAddress($userEmail)->limit($emailCount)->latest()->get();
+
+        return $emails;
     }
 }

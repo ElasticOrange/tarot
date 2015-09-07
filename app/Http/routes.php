@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     Route::get('/clients', 'ClientsController@redirect');
+    Route::get('/sites/{sites}/clients/{clients}/lastEmails/{emailCount}', 'ClientsController@lastEmails');
     Route::resource('sites.clients', 'ClientsController');
 
     Route::get('/', function () {

@@ -285,3 +285,30 @@ function stripTags(html)
    tmp.innerHTML = html;
    return tmp.textContent || tmp.innerText || "";
 }
+
+function isValidDate(date) {
+    if (date instanceof Date) {
+        return true;
+    }
+
+    return false;
+}
+
+function diffDates(date1, date2) {
+    if (!isValidDate(date1)) {
+        return 0;
+    }
+
+    if (!isValidDate(date2)) {
+        return 0;
+    }
+
+    var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return diffDays;
+}
+
+function diffDatesInYears(date1, date2) {
+    return Math.trunc(diffDates(date1, date2) / 365);
+}

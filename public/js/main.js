@@ -137,7 +137,6 @@ function initEmailsLoader() {
 			});
 
 			request.done(function(emails) {
-				console.log('Result', emails);
 				updateEmails(emails);
 			});
 		}
@@ -153,6 +152,62 @@ function initEmailsLoader() {
 	countSelector.on('change', retrieveEmails);
 
 	return true;
+}
+
+function getValuesForTemplate() {
+	var birthDateText =  $('input[name=birthDate]').val();
+	var birthDate = new Date(birthDateText);
+	var age = diffDatesInYears(new Date(), birthDate);
+
+	var country = $('input[name=country]').val();
+	var infocostsForCountry = _.filter(infocosts, {country: country});
+	var infocost;
+	if (!_.isEmpty(infocostsForCountry)) {
+		var infocost = infocostsForCountry[0];
+	}
+
+	var result = {
+		'client-first-name' : $('input[name=firstName]').val(),
+		'client-last-name' :  $('input[name=lastName]').val(),
+		'client-partner-name' :  $('input[name=partnerName]').val(),
+		'client-gender' :  $('select[name=gender]').val(),
+		'client-interest' :  $('input[name=interest]').val(),
+		'client-age' : age,
+		'client-birth-date' : birthDate.getDay() + '-' + birthDate.getMonth() + '-' + birthDate.getFullYear(),
+		'site-default-infocost' : (infocost ? infocost.infocost : ''),
+		'site-default-country' : '',
+		'site-default-name' : currentSite.ownername,
+		'site-default-url' : currentSite.url,
+		'site-default-sender' : currentSite.owneremail
+	}
+
+	return result;
+}
+
+function insertValuesInTemplate(content) {
+	var values = getValuesForTemplate();
+
+	_.forEach(values, function(value, key) {
+		var placeHolder = '%%%' + key + '%%%';
+		var regEx = new RegExp(placeHolder, 'g');
+		content = content.replace(regEx, value);
+	});
+
+	return content;
+}
+
+function loadTemplateInEditor(templateId) {
+	var requestUrl = '/sites/'+ currentSite.listid + '/templates/' + templateId + '/get';
+	var request = $.ajax({
+		url: requestUrl,
+		method: 'get'
+	});
+
+	request.done(function(templateBody) {
+		templateBody = insertValuesInTemplate(templateBody);
+
+		CKEDITOR.instances.rich_editor.setData(templateBody);
+	});
 }
 
 function insertAtCaret(areaId,text) {
@@ -452,6 +507,11 @@ $(function(){
 		$this = $(this);
 		CKEDITOR.instances.rich_editor.insertText($this.attr('data-insert-text'));
 	})
+
+	$(document).on('click', '[template-id]', function() {
+		var templateId =$(this).attr('template-id');
+		loadTemplateInEditor(templateId);
+	});
 
 	initActiveElements();
 	initEmailsLoader();

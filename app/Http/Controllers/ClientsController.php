@@ -114,7 +114,16 @@ class ClientsController extends Controller
         }
 
         $templates = Template::active()->ofCategory($templateCategory)->ofSite($site->id)->get();
-        return view('client/edit', ['site' => $site, 'client' => $client, 'sites_with_client' => $sites_with_client, 'templates' =>$templates]);
+
+        $infocosts = $site->infocosts()->active()->default()->get();
+
+        return view('client/edit', [
+            'site' => $site,
+            'client' => $client,
+            'sites_with_client' => $sites_with_client,
+            'templates' => $templates,
+            'infocosts' => $infocosts
+        ]);
     }
 
     /**

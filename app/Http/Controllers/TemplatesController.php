@@ -129,4 +129,8 @@ class TemplatesController extends Controller
         $infocost->delete();
         return redirect('sites/'. $site->id. '/templates/'.$template->category);
     }
+
+    public function get($site, $template) {
+        echo $template->content;
+    }
 }

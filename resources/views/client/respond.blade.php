@@ -63,3 +63,9 @@
 		</form>
 	</div>
 </div>
+<script type="text/javascript">
+	var currentSite = {!! $site !!}
+
+	var infocosts = {!! $infocosts !!};
+
+</script>

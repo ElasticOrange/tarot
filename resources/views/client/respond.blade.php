@@ -50,15 +50,37 @@
 
 	<div class="col-sm-12 col-lg-8 col-md-9">
 		<form class="form">
+			<div class="row">
+				<div class="col-md-2">
+					<label class="control-labels">Sender</label>
+				</div>
+				<div class="col-md-10">
+					<input class="form-control" type="text" name="sender"/>
+				</div>
+				<div class="col-md-2">
+					<label class="control-labels">Subject</label>
+				</div>
+				<div class="col-md-10">
+					<input class="form-control" type="text" name="subject"/>
+				</div>
+			</div>
+
 			<div class="form-group">
 			 	<textarea 	name="response"
 			 				class="form-control"
 			 				id="rich_editor"
 			 	></textarea>
 			</div>
+
 			<div class="">
 				<button class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span> Send response</button>
 				<button class="btn btn-info"><span class="glyphicon glyphicon-forward"></span> Next email</button>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="send_after_template_fill">
+						Automaticly send email
+					</label>
+				</div>
 			</div>
 		</form>
 	</div>

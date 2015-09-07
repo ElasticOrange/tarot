@@ -40,6 +40,34 @@
 			</div>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="messages">
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Client</h3>
+					<div class="col-md-3">
+						<strong>Name:</strong>
+						{{ $client->firstName }}
+						{{ $client->lastName }}
+						{{ ($client->gender == 'Female' ? '(F)' : '(M)') }}
+						{{ $client->country }}
+					</div>
+
+					<div class="col-md-2">
+						<strong>Partner:</strong>
+						{{ $client->partnerName }}
+					</div>
+
+					<div class="col-md-2">
+						<strong>Birth date:</strong>
+						{{ $client->birthDate }}
+					</div>
+
+					<div class="col-md-3">
+						<strong>Interest:</strong>
+						{{ $client->interest }}
+					</div>
+
+				</div>
+			</div>
 			@include('client.emails')
 			@include('client.respond')
 		</div>

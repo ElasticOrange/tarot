@@ -16,6 +16,9 @@ Route::get('/home', function() {
 
 Route::group(['middleware' => 'auth'], function(){
 
+    Route::post('/sites/{sites}/sendmail', 'EmailsController@sendMail');
+
+
     Route::post('/sites/change', 'SiteController@change');
     Route::get('/sites/{sites}/delete', 'SiteController@destroy');
     Route::resource('sites', 'SiteController');

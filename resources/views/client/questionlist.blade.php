@@ -34,7 +34,7 @@
 			<tbody>
 				<?php $rowIndex = 0; ?>
 				@foreach($clients as $client)
-					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}">
+					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}/question">
 						<td>{{ ++$rowIndex }}</td>
 						<td>{{ $client->fullName }}</td>
 						<td>{{ $client->email }}</td>

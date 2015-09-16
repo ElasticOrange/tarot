@@ -1,8 +1,34 @@
 var $successBox, $errorBox, successBoxTimeout, errorBoxTimeout;
 
+function initOnceActiveElements() {
+
+console.error('init active elements', $('.synchronize'));
+	$(document).on('blur', '[synchronize]',function() {
+		var $this =  $(this);
+		var self = this;
+		var name = $this.attr('synchronize');
+		var value = $this.val();
+		$('[synchronize="' + name + '"]').each(function() {
+			if (self == this) {
+				return;
+			}
+
+			var $this = $(this);
+			$this.val(value);
+			if (_.isEmpty($this.attr('name'))) {
+
+				var oldSync = $this.attr('synchronize');
+				$this.attr('synchronize', '');
+				$this.trigger('blur');
+				setTimeout(function() {
+					$this.attr('synchronize', oldSync);
+				}, 100)
+			}
+		});
+	});
+}
 
 function initActiveElements() {
-
 	// Put toggle icon on .colapser elements
 	$('.colapser').each(function() {
 		var icon = '<span class="glyphicon"></span>';
@@ -19,6 +45,7 @@ function initActiveElements() {
 
 		$this.removeClass('colapser');
 	});
+
 }
 
 function initEmailsLoader() {
@@ -515,4 +542,5 @@ $(function(){
 
 	initActiveElements();
 	initEmailsLoader();
+	initOnceActiveElements();
 });

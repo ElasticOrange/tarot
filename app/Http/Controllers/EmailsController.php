@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Http\Requests\EmailRequest;
 use App\Http\Controllers\Controller;
 use App\Email as Email;
 
@@ -32,5 +31,40 @@ class EmailsController extends Controller
     {
         $emails = Email::getUnrespondedEmailsForSite($site);
         return view('email/list', ['emails' => $emails, 'site' => $site]);
+    }
+
+    public function sendMail($site, EmailRequest $request) {
+
+        $input = $request->all();
+        $input['name'] = $input['email'];
+        $client = $site->clients()->emailAddress($input['email'])->first();
+
+        if ($client) {
+            $input['name'] = $client->fullName;
+        }
+
+
+        $emailData = [
+            'sent' => 1,
+            'from_email' => $site->email,
+            'from_name' => $input['sender'],
+            'to_email' => $input['email'],
+            'to_name' => $input['name'],
+            'subject' => $input['subject'],
+            'html_content' => $input['content'],
+            'text_content' => '',
+            'bounce' => 1
+
+        ];
+
+        $email = new Email($emailData);
+
+        $result = false;
+
+        if ($email->save()) {
+            $result = $email->send();
+        }
+
+        return $result;
     }
 }

@@ -12,7 +12,7 @@
 				<option>25</option>
 				<option>50</option>
 			</select>
-			<label>/20 (Total)</label>
+			<label> emails </label>
 		</form>
 
 		<script type="text/template" id="email-container-template">

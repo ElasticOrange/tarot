@@ -158,8 +158,6 @@ class ClientsController extends Controller
     public function update($site, $client, ClientRequest $request)
     {
         $input = $request->all();
-
-
         $client->update($input);
         return $client;
     }

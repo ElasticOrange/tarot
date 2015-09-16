@@ -399,7 +399,7 @@ class Client extends Model
     public function setCountryAttribute($value) {
         return $this->setProperty('Country', $value);
     }
-
+/*
     public function getInterestAttribute() {
         return $this->getProperty('Interest');
     }
@@ -407,7 +407,7 @@ class Client extends Model
     public function setInterestAttribute($value) {
         return $this->setProperty('Interest', $value);
     }
-
+*/
     public function isSubscribed() {
         if ($this->unsubscribed === "0") {
             return true;

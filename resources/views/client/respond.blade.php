@@ -49,8 +49,16 @@
 	</div>
 
 	<div class="col-sm-12 col-lg-8 col-md-9">
-		<form class="form">
+		<form 	class="form"
+				action="/sites/{{$site->id}}/sendmail"
+				method="post"
+				data-ajax="true"
+				success-message="Client updated successfully"
+				error-message="Error saving client"
+		>
 			<div class="row">
+				{!! csrf_field() !!}
+				<input type="hidden" name ="email" synchronize="email" value="{{ $client->email }}" />
 				<div class="col-md-2">
 					<label class="control-labels">Sender</label>
 				</div>
@@ -66,7 +74,7 @@
 			</div>
 
 			<div class="form-group">
-			 	<textarea 	name="response"
+			 	<textarea 	name="content"
 			 				class="form-control"
 			 				id="rich_editor"
 			 	></textarea>
@@ -74,7 +82,7 @@
 
 			<div class="">
 				<button class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span> Send response</button>
-				<button class="btn btn-info"><span class="glyphicon glyphicon-forward"></span> Next email</button>
+				<button class="btn btn-info" type="button"><span class="glyphicon glyphicon-forward"></span> Next email</button>
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="send_after_template_fill">

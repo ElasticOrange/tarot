@@ -39,13 +39,13 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     Route::get('/clients', 'ClientsController@redirect');
-    Route::get('/sites/{sites}/clients/{clients}/lastEmails/{emailCount}', 'ClientsController@lastEmails');
     Route::get('/sites/{sites}/clients/{clients}/{templateCategory}', 'ClientsController@show');
     Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '[A-Za-z0-9\@\.\_\-\#\$\~\&\*\,\;\=\:]+');
     Route::resource('sites.clients', 'ClientsController');
 
 
     Route::get('/sites/{sites}/emails/{emailType}', 'EmailsController@index')->where('emailType', '[A-Za-z]+');
+    Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails');
     Route::resource('sites.emails', 'EmailsController');
 
     Route::get('/', function () {

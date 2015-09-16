@@ -42,7 +42,7 @@
 			</div>
 		</script>
 
-		<div class="col-sm-12 emails-container well well-sm" id="user-emails" href="{{ action("ClientsController@lastEmails", [$site, $client, 'emailCount']) }}">
+		<div class="col-sm-12 emails-container well well-sm" id="user-emails" href="{{ action("EmailsController@lastEmails", [$site, $client->email, 'emailCount']) }}">
 		</div>
 	</div>
 </div>

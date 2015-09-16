@@ -11,6 +11,13 @@ use App\Email as Email;
 
 class EmailsController extends Controller
 {
+    public function lastEmails($site, $clientEmailAddress, $emailCount = 5) {
+        $emails = Email::forEmailAddress($clientEmailAddress)->limit($emailCount)->latest()->with('attachments')->get();
+
+        return $emails;
+    }
+
+
     /**
      * Display a listing of the resource.
      *

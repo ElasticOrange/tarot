@@ -18,6 +18,11 @@ class ClientsController extends Controller
 
         $client = Client::getBySiteAndEmailAddress($site->id, $emailAddress);
 
+        if (!$client) {
+            $client = new Client(['listid' => $site->id]);
+            $client->email = $emailAddress;
+        }
+
         return $this->show($site, $client);
     }
 
@@ -203,13 +208,5 @@ class ClientsController extends Controller
         }
 
         return redirect()->action('ClientsController@show', [$site, $client]);
-    }
-
-    public function lastEmails($site, $client, $emailCount = 5) {
-        $userEmail = $client->email;
-
-        $emails = Email::forEmailAddress($userEmail)->limit($emailCount)->latest()->with('attachments')->get();
-
-        return $emails;
     }
 }

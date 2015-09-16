@@ -15,6 +15,7 @@ class CreateClientsTable extends Migration
         Schema::table('email_list_subscribers', function (Blueprint $table) {
             $table->string('partnerName');
             $table->string('interest');
+            $table->boolean('questionAnswered');
             $table->boolean('ignore');
             $table->boolean('problem');
             $table->string('comment');
@@ -34,6 +35,7 @@ class CreateClientsTable extends Migration
             $table->dropColumn([
                 'partnerName',
                 'interest',
+                'questionAnswered',
                 'ignore',
                 'problem',
                 'comment',

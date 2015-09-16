@@ -28,21 +28,24 @@ class Email extends Model
 		return $this->belongsTo('\App\Client', 'from_email', 'emailaddress');
 	}
 
-	static public function scopeToEmail($query, $email) {
+	public function scopeToEmail($query, $email) {
 		return $query->where('to_email', $email);
 	}
 
-	static public function scopeReceived($query) {
+	public function scopeReceived($query) {
 		return $query->where('sent', 0);
 	}
 
-	static public function scopeUnresponded($query) {
+	public function scopeUnresponded($query) {
 		return $query->where('responded', 0);
 	}
 
+    public function scopeForEmailAddress($query, $email) {
+        return $query->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
+    }
+
 	static public function getUnrespondedEmailsForSite($site) {
         $instance = new static;
-
         $emails = $instance	->select(\DB::raw('*, count(id) as email_count'))
         					->received()
         					->unresponded()
@@ -53,12 +56,7 @@ class Email extends Model
 					            $query->where('listid', $site->id);
         					}])
         					->get();
-
         return $emails;
 	}
-
-    public function scopeForEmailAddress($query, $email) {
-        return $query->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
-    }
 
 }

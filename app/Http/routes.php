@@ -44,21 +44,22 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('sites.clients', 'ClientsController');
 
 
-    Route::get('/sites/{sites}/emails/{emailType}', 'EmailsController@index')->where('emailType', '[A-Za-z]+');
+    Route::get('/sites/{sites}/emails', 'EmailsController@index');
+    Route::get('/sites/{sites}/emails/questions', 'EmailsController@unrespondedQuestions');
     Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails');
-    Route::resource('sites.emails', 'EmailsController');
 
     Route::get('/', function () {
         return view('questions');
     });
 
     Route::get('questions', function () {
-        return view('questions');
+        $siteId = \Auth::user()->currentSiteId();
+        return redirect("/sites/$siteId/emails/questions");
     });
 
     Route::get('emails', function () {
         $siteId = \Auth::user()->currentSiteId();
-        return redirect("/sites/$siteId/emails/email");
+        return redirect("/sites/$siteId/emails");
     });
 
     Route::get('settings', function () {

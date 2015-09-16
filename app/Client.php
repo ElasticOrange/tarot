@@ -35,7 +35,7 @@ class Client extends Model
 		return $this->attributes['subscriberid'] = $value;
 	}
 
-	protected $dates = ['deleted_at'];
+	protected $dates = ['deleted_at', 'confirmdate'];
 
     protected $fillable = [
         'email',
@@ -91,6 +91,18 @@ class Client extends Model
     }
 
     public function scopeSite($query, $siteId) {
+        return $query->where('listid', $siteId);
+    }
+
+    public function scopeConfirmed($query) {
+        return $query->where('confirmed', 1);
+    }
+
+    public function scopeWithQuestionUnresponded($query) {
+        return $query->where('questionAnswered', 0);
+    }
+
+    public function scopeForSite($query, $siteId) {
         return $query->where('listid', $siteId);
     }
 
@@ -345,6 +357,15 @@ class Client extends Model
         return $this->setProperty('Gender', $value);
     }
 
+    public function getQuestionAttribute() {
+        return $this->getProperty('Please tell me your question and how I can reach you to send you your answer');
+    }
+
+    public function setQuestionAttribute($value) {
+        return $this->setProperty('Please tell me your question and how I can reach you to send you your answer', $value);
+    }
+
+
     public function getBirthDateAttribute() {
         $date = $this->getProperty('Birth Date');
 
@@ -418,4 +439,14 @@ class Client extends Model
     public function setAsUnsubscribed() {
         $this->unsubscribed = 1;
     }
+
+    static public function getClientsWithUnrespondedQuestionsForSite($site) {
+        if (!$site) {
+            return false;
+        }
+        $instance = new static;
+        $clients = $instance->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->get();
+        return $clients;
+    }
+
 }

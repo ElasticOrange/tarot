@@ -31,10 +31,13 @@
 				@foreach($sites as $site)
 					<tr>
 						<td>{{ ++$rowIndex }}</td>
-						<td> <strong>{{ $site->name }}</strong></td>
+						<td>
+							<a href="/sites/{{ $site->id }}/questions">
+								<strong>{{ $site->name }}</strong></td>
+							</a>
 						<td>
 							@if($site->clients->count())
-								<a  href="/sites/{{ $site->id }}/questions">
+								<a href="/sites/{{ $site->id }}/questions">
 									<span class="badge">{{ $site->clients->count() }}</span>
 								</a>
 							@endif

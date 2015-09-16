@@ -54,10 +54,25 @@
 						<td class="hidden-xs">{{ $client->gender }}</td>
 						<td>{{ $client->country }}</td>
 						<td class="hidden-xs">{{ $client->interest }}</td>
-						<td class="hidden-xs">[[to be implemented]]</td>
-						<td class="hidden-xs">[[to be implemented]]</td>
-						<td class="hidden-xs">[[to be implemented]]</td>
-						<td class="hidden-xs">[[to be implemented]]</td>
+						<td class="hidden-xs">
+							@if($client->emails->count())
+								{{ date('d-m-Y', $client->emails->first()->sent_at->timestamp) }}
+							@endif
+						</td>
+						<td class="hidden-xs">
+							@if($client->sentEmails->count())
+								{{ date('d-m-Y', $client->sentEmails->first()->sent_at->timestamp) }}
+							@endif</td>
+						<td class="hidden-xs">
+							@if($client->emails->count())
+								@if ($client->emails->count() > 20)
+									more than 20
+								@else
+									{{ $client->emails->count() }}
+								@endif
+							@endif
+						</td>
+						<td class="hidden-xs">{{$client->comment }}</td>
 					</tr>
 				@endforeach
 

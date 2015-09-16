@@ -60,6 +60,10 @@ class Client extends Model
         return $this->hasMany('\App\Email', 'from_email', 'emailaddress');
     }
 
+    public function sentEmails() {
+        return $this->hasMany('\App\Email', 'to_email', 'emailaddress');
+    }
+
     public function fields() {
         return $this->belongsToMany('App\ClientField', 'email_subscribers_data', 'subscriberid', 'fieldid')->withPivot('data');
     }

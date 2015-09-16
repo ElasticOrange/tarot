@@ -40,7 +40,15 @@ class ClientsController extends Controller
      */
     public function index($site)
     {
-        $clients = $site->clients()->with('data.field')->get();
+        $clients = $site->clients()
+                        ->with('data.field')
+                        ->with(['emails' => function($query) {
+                                return $query->limit(21);
+                            }])
+                        ->with(['sentEmails' => function($query) {
+                                return $query->limit(1);
+                            }])
+                        ->get();
 
         return view('client.list', [
             'site' => $site,

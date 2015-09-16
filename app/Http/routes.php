@@ -57,7 +57,8 @@ Route::group(['middleware' => 'auth'], function(){
     });
 
     Route::get('emails', function () {
-        return view('emails');
+        $siteId = \Auth::user()->currentSiteId();
+        return redirect("/sites/$siteId/emails/email");
     });
 
     Route::get('settings', function () {

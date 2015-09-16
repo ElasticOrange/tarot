@@ -30,7 +30,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('profile', 'UsersController@updateProfile');
 
 
-    Route::post('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@changeSite')->where('templateCategory', '[A-Za-z]+');;
+    Route::post('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@changeSite')->where('templateCategory', '[A-Za-z]+');
     Route::get('/templates/{templateCategory}', 'TemplatesController@redirect');
     Route::get('/sites/{sites}/templates/{templateCategory}', 'TemplatesController@index')->where('templateCategory', '[A-Za-z]+');;
     Route::get('/sites/{sites}/templates/{templateCategory}/create', 'TemplatesController@create');
@@ -41,7 +41,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/clients', 'ClientsController@redirect');
     Route::get('/sites/{sites}/clients/{clients}/lastEmails/{emailCount}', 'ClientsController@lastEmails');
     Route::get('/sites/{sites}/clients/{clients}/{templateCategory}', 'ClientsController@show');
+    Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '[A-Za-z0-9\@\.\_\-\#\$\~\&\*\,\;\=\:]+');
     Route::resource('sites.clients', 'ClientsController');
+
+
+    Route::get('/sites/{sites}/emails/{emailType}', 'EmailsController@index')->where('emailType', '[A-Za-z]+');
+    Route::resource('sites.emails', 'EmailsController');
 
     Route::get('/', function () {
         return view('questions');

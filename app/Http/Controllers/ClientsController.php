@@ -14,6 +14,13 @@ use App\Template as Template;
 class ClientsController extends Controller
 {
 
+    public function editClientByEmail($site, $emailAddress) {
+
+        $client = Client::getBySiteAndEmailAddress($site->id, $emailAddress);
+
+        return $this->show($site, $client);
+    }
+
     public function redirect()
     {
         $siteId = \Auth::user()->currentSiteId();
@@ -99,8 +106,11 @@ class ClientsController extends Controller
      */
     public function edit($site, $client, $templateCategory = 'email')
     {
-        $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
+        $sites_with_client = new \Illuminate\Database\Eloquent\Collection;
 
+        if ($client) {
+            $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
+        }
 
         if (!$sites_with_client->isEmpty()) {
             foreach($sites_with_client as $key => $site_wc) {

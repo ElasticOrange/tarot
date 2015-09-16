@@ -81,6 +81,12 @@
 						Automaticly send email
 					</label>
 				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="mark_as_responded">
+						Mark as responded
+					</label>
+				</div>
 			</div>
 		</form>
 	</div>

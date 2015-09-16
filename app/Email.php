@@ -18,6 +18,8 @@ class Email extends Model
 		'text_content'
 	];
 
+	protected $dates = ['created_at', 'updated_at', 'sent_at'];
+
 	public function attachments() {
 		return $this->hasMany('\App\Attachment','email_id', 'id');
 	}
@@ -28,5 +30,21 @@ class Email extends Model
 		$result = $instance->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
 
 		return $result;
+	}
+
+	static public function scopeReceived($query) {
+		return $query->where('sent', 0);
+	}
+
+	static public function scopeUnresponded($query) {
+		return $query->where('responded', 0);
+	}
+
+	static public function getUnrespondedEmails() {
+        $instance = new static;
+
+        $emails = $instance->select(\DB::raw('*, count(id) as email_count'))->received()->unresponded()->groupBy('from_email')->orderBy('sent_at', 'desc')->get();
+
+        return $emails;
 	}
 }

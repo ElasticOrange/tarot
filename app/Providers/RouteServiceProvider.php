@@ -33,6 +33,7 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('users', 'App\User');
         $router->model('templates', 'App\Template');
         $router->model('clients', 'App\Client');
+        $router->model('emails', 'App\Email');
 
         view()->composer('_siteselector', function($view) {
             $view->with([

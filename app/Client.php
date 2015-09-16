@@ -76,6 +76,20 @@ class Client extends Model
         return $this->site()->first();
     }
 
+    static public function getBySiteAndEmailAddress($siteId, $emailAddress) {
+        $instance = new static;
+
+        return $instance->emailAddress($emailAddress)->site($siteId)->first();
+    }
+
+    public function scopeEmailAddress($query, $emailAddress) {
+        return $query->where('emailaddress', $emailAddress);
+    }
+
+    public function scopeSite($query, $siteId) {
+        return $query->where('listid', $siteId);
+    }
+
     public function setDefaultAttributes() {
         $this->domainname = getDomainFromEmailAddress($this->emailaddress);
         if (!$this->format) {

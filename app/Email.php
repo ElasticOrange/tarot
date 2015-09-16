@@ -44,17 +44,21 @@ class Email extends Model
         return $query->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
     }
 
+    public function scopeUnrespondedEmailsForSite($query, $site) {
+    	return $query->received()
+					->unresponded()
+					->toEmail($site->email)
+					->groupBy('from_email')
+					->with(['client' => function($query) use ($site) {
+			            $query->where('listid', $site->id);
+					}]);
+    }
+
 	static public function getUnrespondedEmailsForSite($site) {
         $instance = new static;
-        $emails = $instance	->select(\DB::raw('*, count(id) as email_count'))
-        					->received()
-        					->unresponded()
-        					->toEmail($site->email)
-        					->groupBy('from_email')
+        $emails = $instance	->unrespondedEmailsForSite($site)
+        					->select(\DB::raw('*, count(id) as email_count'))
         					->orderBy('sent_at', 'desc')
-        					->with(['client' => function($query) use ($site) {
-					            $query->where('listid', $site->id);
-        					}])
         					->get();
         return $emails;
 	}

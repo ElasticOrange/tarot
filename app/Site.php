@@ -77,6 +77,10 @@ class Site extends Model
 		return $this->forms()->first();
 	}
 
+    public function emails() {
+        return $this->hasMany('\App\Email', 'to_email', 'owneremail');
+    }
+
 	// returns fields for the first form of the site (it may have more than one form)
 	public function fields() {
 		$form = $this->forms->first();

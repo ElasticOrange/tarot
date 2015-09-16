@@ -45,16 +45,23 @@ Route::group(['middleware' => 'auth'], function(){
 
 
     Route::get('/sites/{sites}/emails', 'EmailsController@index');
-    Route::get('/sites/{sites}/emails/questions', 'EmailsController@unrespondedQuestions');
+    Route::get('/sites/{sites}/questions', 'EmailsController@unrespondedQuestions');
     Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails');
 
     Route::get('/', function () {
-        return view('questions');
+
+        $sites = \Auth::user()->sites()->with(['emails' => function($query) {
+            return $query->received()->unresponded();
+        }])->with(['clients' => function($query) {
+            return $query->confirmed()->withQuestionUnresponded();
+        }])->get();
+
+        return view('homepage', ['sites' => $sites]);
     });
 
     Route::get('questions', function () {
         $siteId = \Auth::user()->currentSiteId();
-        return redirect("/sites/$siteId/emails/questions");
+        return redirect("/sites/$siteId/questions");
     });
 
     Route::get('emails', function () {

@@ -47,7 +47,7 @@ table.table tbody tr:hover{
 	background-color: #eee;
 }
 
-table.table td, table.table th {
+table.table[href] td, table.table[href] th {
 	cursor: pointer;
 }
 

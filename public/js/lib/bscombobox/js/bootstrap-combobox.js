@@ -154,6 +154,7 @@
 
   , lookup: function (event) {
       this.query = this.$element.val();
+
       return this.process(this.source);
     }
 
@@ -246,6 +247,14 @@
   , toggle: function () {
     if (!this.disabled) {
       if (this.$container.hasClass('combobox-selected')) {
+        var val = this.$element.val();
+
+        if (this.source.indexOf(val) === -1) {
+          this.source.push(val);
+          this.options.items = this.source.length;
+        }
+
+
         this.clearTarget();
         this.triggerChange();
         this.clearElement();
@@ -253,7 +262,7 @@
         if (this.shown) {
           this.hide();
         } else {
-          this.clearElement();
+          //this.clearElement();
           this.lookup();
         }
       }
@@ -390,9 +399,9 @@
       this.focused = false;
       var val = this.$element.val();
       if (!this.selected && val !== '' ) {
-        this.$element.val('');
-        this.$source.val('').trigger('change');
-        this.$target.val('').trigger('change');
+        this.$source.val(val).trigger('change');
+        this.$target.val(val).trigger('change');
+        this.$container.addClass('combobox-selected');
       }
       if (!this.mousedover && this.shown) {setTimeout(function () { that.hide(); }, 200);}
     }

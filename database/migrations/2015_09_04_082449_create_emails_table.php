@@ -15,6 +15,7 @@ class CreateEmailsTable extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('sent'); //type
+            $table->boolean('responded');
             $table->string('from_email');
             $table->string('from_name');
             $table->string('to_email');

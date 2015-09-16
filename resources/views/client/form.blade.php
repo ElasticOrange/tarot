@@ -6,6 +6,7 @@
 				class="form-control"
 				name="email"
 				value="{{ $client->email }}"
+				synchronize="email"
 				placeholder="Ex: johndoe@example.com"
 		/>
 	</div>
@@ -16,6 +17,7 @@
 		<input 	type="text"
 				class="form-control"
 				name="firstName"
+				synchronize="firstName"
 				value="{{ $client->firstName }}"
 				placeholder="Ex: John"
 		/>
@@ -27,6 +29,7 @@
 		<input 	type="text"
 				class="form-control"
 				name="lastName"
+				synchronize="lastName"
 				value="{{ $client->lastName }}"
 				placeholder="Ex: Doe"
 		/>
@@ -38,6 +41,7 @@
 		<input 	type="text"
 				class="form-control"
 				name="partnerName"
+				synchronize="partnerName"
 				value="{{ $client->partnerName }}"
 				placeholder="Ex: Jane Doe"
 		/>
@@ -49,6 +53,7 @@
 		<input 	type="date"
 				class="form-control"
 				name="birthDate"
+				synchronize="birthDate"
 				value="{{ $client->birthDate }}"
 		/>
 	</div>
@@ -59,38 +64,37 @@
 
 		<select name="gender"
 				class="form-control"
+				synchronize="gender"
 		>
 			<option value="Female">Female</option>
 			<option value="Male" {{ ($client->gender == 'Male' ? 'selected="selected"' : '') }}>Male</option>
 		</select>
 	</div>
 </div>
-<div class="form-group">
+<!--div class="form-group">
 	<label class="col-xs-2 control-label">Interest</label>
 	<div class="col-xs-10">
-
-		<select name="interest"
-				class="form-control combobox"
-		>
-			<option></option>
-			<option>Love</option>
-			<option>Money</option>
-			<option>Luck</option>
-			<option>Carrier</option>
-		</select>
+		<?php
+			$combobox = [
+				'attributes' => 'class="form-control combobox" name="interest" synchronize="interest"',
+				'options' => ['Carrier', 'Love', 'Luck', 'Money'],
+				'selected' => $client->interest
+			];
+		?>
+		@include('_combobox', $combobox)
 	</div>
-</div>
+</div-->
 <div class="form-group">
 	<label class="col-xs-2 control-label">Country</label>
 	<div class="col-xs-10">
-		<select name="country"
-				class="form-control combobox"
-		>
-			<option></option>
-			<option>England</option>
-			<option>USA</option>
-			<option>Australia</option>
-		</select>
+		<?php
+			$combobox = [
+				'attributes' => 'class="form-control combobox" name="country" synchronize="country"',
+				'options' => ['Australia', 'England', 'USA'],
+				'selected' => $client->country
+			];
+		?>
+		@include('_combobox', $combobox)
 	</div>
 </div>
 <div class="checkbox">

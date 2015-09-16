@@ -106,6 +106,8 @@
     this.$element.attr('title', this.$source.attr('title'))
     this.$element.attr('class', this.$source.attr('class'))
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
+    this.$element.attr('synchronize', this.$source.attr('synchronize'))
+    this.$source.removeAttr('synchronize')
     this.$source.removeAttr('tabindex')
     if (this.$source.attr('disabled')!==undefined)
       this.disable();

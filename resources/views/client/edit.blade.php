@@ -47,35 +47,33 @@
 			@include('client.respond')
 		</div>
 
-	 	@if($client)
-			<div role="tabpanel" class="tab-pane" id="client-info">
-				<div class="row">
-					<div class="col-sm-6">
-						<h3>Client information</h3>
-						<form 	class="form form-horizontal"
-								action="/sites/{{ $site->id }}/clients/{{ $client->id }}"
-								method="post"
-								data-ajax="true"
-								success-message="Client updated successfully"
-								error-message="Error saving client"
-						>
-							<input type="hidden" name="_method" value="PUT"/>
-							@include('client.form')
+		<div role="tabpanel" class="tab-pane" id="client-info">
+			<div class="row">
+				<div class="col-sm-6">
+					<h3>Client information</h3>
+					<form 	class="form form-horizontal"
+							action="/sites/{{ $site->id }}/clients/{{ $client->id }}"
+							method="post"
+							data-ajax="true"
+							success-message="Client updated successfully"
+							error-message="Error saving client"
+					>
+						<input type="hidden" name="_method" value="PUT"/>
+						@include('client.form')
 
-							<div class="form-group">
-								<div class="col-sm-12">
-									<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
-									<a href="/sites/{{ $site->id }}/clients" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> Back</a>
-								</div>
+						<div class="form-group">
+							<div class="col-sm-12">
+								<button class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+								<a href="/sites/{{ $site->id }}/clients" class="btn btn-default"><span class="glyphicon glyphicon-list"></span> Back</a>
 							</div>
-						</form>
-					</div>
-					<div class="col-sm-6">
-					@include('client.sites')
-					</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-sm-6">
+				@include('client.sites')
 				</div>
 			</div>
-		@endif
+		</div>
  	</div>
 
 @endsection

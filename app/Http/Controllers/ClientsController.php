@@ -17,7 +17,6 @@ class ClientsController extends Controller
     public function editClientByEmail($site, $emailAddress) {
 
         $client = Client::getBySiteAndEmailAddress($site->id, $emailAddress);
-
         if (!$client) {
             $client = new Client(['listid' => $site->id]);
             $client->email = $emailAddress;

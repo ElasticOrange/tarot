@@ -46,7 +46,13 @@
 							@endif
 						</td>
 						<td>{{ $email->email_count }}</td>
-						<td>[[ to be implemented ]]</td>
+						<td>
+							@if($email->client)
+								{{ $email->client->comment }}
+							@else
+								<strong>Not subscribed to this site</strong>
+							@endif
+						</td>
 					</tr>
 				@endforeach
 			</tbody>

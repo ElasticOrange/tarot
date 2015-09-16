@@ -24,12 +24,12 @@ class Email extends Model
 		return $this->hasMany('\App\Attachment','email_id', 'id');
 	}
 
-	static public function forEmailAddress($email) {
-		$instance = new static;
+	public function client() {
+		return $this->belongsTo('\App\Client', 'from_email', 'emailaddress');
+	}
 
-		$result = $instance->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
-
-		return $result;
+	static public function scopeToEmail($query, $email) {
+		return $query->where('to_email', $email);
 	}
 
 	static public function scopeReceived($query) {
@@ -40,11 +40,25 @@ class Email extends Model
 		return $query->where('responded', 0);
 	}
 
-	static public function getUnrespondedEmails() {
+	static public function getUnrespondedEmailsForSite($site) {
         $instance = new static;
 
-        $emails = $instance->select(\DB::raw('*, count(id) as email_count'))->received()->unresponded()->groupBy('from_email')->orderBy('sent_at', 'desc')->get();
+        $emails = $instance	->select(\DB::raw('*, count(id) as email_count'))
+        					->received()
+        					->unresponded()
+        					->toEmail($site->email)
+        					->groupBy('from_email')
+        					->orderBy('sent_at', 'desc')
+        					->with(['client' => function($query) use ($site) {
+					            $query->where('listid', $site->id);
+        					}])
+        					->get();
 
         return $emails;
 	}
+
+    public function scopeForEmailAddress($query, $email) {
+        return $query->where('from_email', $email)->orWhere('to_email', $email)->orderBy('sent_at', 'asc');
+    }
+
 }

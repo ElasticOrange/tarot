@@ -40,7 +40,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/clients', 'ClientsController@redirect');
     Route::get('/sites/{sites}/clients/{clients}/{templateCategory}', 'ClientsController@show');
-    Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '[A-Za-z0-9\@\.\_\-\#\$\~\&\*\,\;\=\:]+');
+    Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+@[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+');
     Route::resource('sites.clients', 'ClientsController');
 
 

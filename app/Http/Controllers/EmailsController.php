@@ -29,7 +29,7 @@ class EmailsController extends Controller
 dd($emailType);
         }
 
-        $emails = Email::getUnrespondedEmails();
+        $emails = Email::getUnrespondedEmailsForSite($site);
 
         return view('email/list', ['emails' => $emails, 'site' => $site]);
     }

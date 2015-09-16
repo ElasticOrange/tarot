@@ -3,20 +3,17 @@
 <?php $selected_menu_item = ''?>
 
 @section('title', 'User edit')
-
 @section('content')
 
 	<ul class="nav nav-tabs" role="tablist">
 	    <li role="presentation" class="active"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-		@if($client)
-	    	<li role="presentation"><a href="#client-info" aria-controls="client-info" role="tab" data-toggle="tab">Client information</a></li>
-	    @endif
+    	<li role="presentation"><a href="#client-info" aria-controls="client-info" role="tab" data-toggle="tab">Client information</a></li>
  	</ul>
 
 
  	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="messages">
-			@if($client)
+			@if($client->id)
 				<div class="row">
 					<div class="col-md-12">
 						<h3>Client</h3>

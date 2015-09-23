@@ -7,6 +7,40 @@ use App\Http\Requests\EmailRequest;
 use App\Http\Controllers\Controller;
 use App\Email as Email;
 
+function getNextClient($collection, $currentClient = null) {
+    if (!$collection) {
+        return false;
+    }
+
+    if ($collection->isEmpty()) {
+        return false;
+    }
+
+    if (!$currentClient) {
+        return $collection[0];
+    }
+
+    $result = null;
+
+    $selectNext = false;
+    foreach ($collection as $index => $item) {
+        if ($selectNext) {
+            $result = $item;
+            $selectNext = false;
+            break;
+        }
+
+        if ($item->id === $currentClient->id) {
+            $selectNext = true;
+        }
+    }
+
+    if ($selectNext) {
+        $result = $collection[0];
+    }
+
+    return $result;
+}
 
 class EmailsController extends Controller
 {
@@ -20,6 +54,18 @@ class EmailsController extends Controller
     public function unrespondedQuestions($site) {
         $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
         return view('client/questionlist', ['site' => $site, 'clients' => $clients]);
+    }
+
+    public function nextQuestionForSite($site, $currentClient = null) {
+        $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
+
+        $client = getNextClient($clients, $currentClient);
+
+        if (!$client) {
+            return redirect()->action('EmailsController@unrespondedQuestions', [$site]);
+        }
+
+        return redirect("/sites/$site->id/clients/$client->id/question");
     }
 
     /**

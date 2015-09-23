@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::get('/sites/{sites}/emails', 'EmailsController@index');
     Route::get('/sites/{sites}/questions', 'EmailsController@unrespondedQuestions');
+    Route::get('/sites/{sites}/nextquestion/{clients?}', 'EmailsController@nextQuestionForSite');
     Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails');
 
     Route::get('/', function () {

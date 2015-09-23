@@ -453,4 +453,12 @@ class Client extends Model
         return $clients;
     }
 
+    static public function getClientWithUnrespondedQuestionsForSite($site) {
+        if (!$site) {
+            return false;
+        }
+        $instance = new static;
+        $clients = $instance->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->first();
+        return $clients;
+    }
 }

@@ -82,7 +82,9 @@
 
 			<div class="">
 				<button class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span> Send response</button>
-				<a class="btn btn-info" href="/sites/{{ $site->id }}/nextquestion/{{ $client->id }}"><span class="glyphicon glyphicon-forward"></span> Next email</a>
+				@if($nextUrl)
+					<a class="btn btn-info" href="{{ $nextUrl }}"><span class="glyphicon glyphicon-forward"></span> Next email</a>
+				@endif
 				<div class="checkbox">
 					<label>
 						<input type="checkbox" id="send_after_template_fill">

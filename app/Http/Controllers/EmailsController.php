@@ -20,27 +20,41 @@ function getNextClient($collection, $currentClient = null) {
         return $collection[0];
     }
 
-    $result = null;
-
-    $selectNext = false;
     foreach ($collection as $index => $item) {
-        if ($selectNext) {
-            $result = $item;
-            $selectNext = false;
-            break;
-        }
-
-        if ($item->id === $currentClient->id) {
-            $selectNext = true;
+        if ($item->confirmdate->timestamp < $currentClient->confirmdate->timestamp) {
+            return $item;
         }
     }
 
-    if ($selectNext) {
-        $result = $collection[0];
-    }
-
-    return $result;
+    return $collection[0];
 }
+
+
+function getNextEmail($collection, $currentEmail = null) {
+    if (!$collection) {
+        return false;
+    }
+
+    if ($collection->isEmpty()) {
+        return false;
+    }
+
+    if (!$currentEmail) {
+        return $collection[0];
+    }
+
+    foreach ($collection as $index => $item) {
+        if (!$item->client) {
+            continue;
+        }
+        if ($item->sent_at->timestamp < $currentEmail->sent_at->timestamp) {
+            return $item;
+        }
+    }
+
+    return $collection[0];
+}
+
 
 class EmailsController extends Controller
 {
@@ -53,10 +67,13 @@ class EmailsController extends Controller
 
     public function unrespondedQuestions($site) {
         $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
-        return view('client/questionlist', ['site' => $site, 'clients' => $clients]);
+        return view('client/questionlist', [
+            'site' => $site,
+            'clients' => $clients
+        ]);
     }
 
-    public function nextQuestionForSite($site, $currentClient = null) {
+    public function nextQuestionForSite($site, $currentClient) {
         $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
 
         $client = getNextClient($clients, $currentClient);
@@ -66,6 +83,15 @@ class EmailsController extends Controller
         }
 
         return redirect("/sites/$site->id/clients/$client->id/question");
+    }
+
+    public function nextUnrespondedClientForSite($site, $currentClient = null) {
+        $emails = Email::getUnrespondedEmailsForSite($site);
+
+        $clientLastEmail = $currentClient->getFirstUnrespondedEmail();
+
+        $nextEmail = getNextEmail($emails, $clientLastEmail);
+        return redirect("/sites/$site->id/clients/".$nextEmail->client->id);
     }
 
     /**

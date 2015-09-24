@@ -461,4 +461,8 @@ class Client extends Model
         $clients = $instance->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->first();
         return $clients;
     }
+
+    public function getFirstUnrespondedEmail() {
+        return $this->emails()->unresponded()->first();
+    }
 }

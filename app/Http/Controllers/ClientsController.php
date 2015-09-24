@@ -139,12 +139,27 @@ class ClientsController extends Controller
 
         $infocosts = $site->infocosts()->active()->default()->get();
 
+        $nextUrl = null;
+
+        if ($client->confirmdate) {
+            if ($templateCategory === 'question') {
+               $clientConfirmDate = $client->confirmdate->timestamp;
+               $nextUrl = "/sites/$site->id/nextquestion/$client->id";
+            }
+
+            if ($templateCategory === 'email') {
+               $clientConfirmDate = $client->confirmdate->timestamp;
+               $nextUrl = "/sites/$site->id/nextemail/$client->id";
+            }
+        }
+
         return view('client/edit', [
             'site' => $site,
             'client' => $client,
             'sites_with_client' => $sites_with_client,
             'templates' => $templates,
-            'infocosts' => $infocosts
+            'infocosts' => $infocosts,
+            'nextUrl' => $nextUrl
         ]);
     }
 

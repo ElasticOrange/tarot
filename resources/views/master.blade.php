@@ -21,12 +21,15 @@
 			@include('_messageboxes')
         </div>
 
-        <div class="overlay hidden">
+        <div id="loader" class="overlay" style="display: none">
+        	<div class="loader-background"></div>
+        	<div class="loader-container">
+        		<img src="/images/ajax-loader.gif" width="100px"/>
+        	</div>
         </div>
 
         @yield('boxes')
 	</body>
-
 
 	@include('javascripts')
 </html>

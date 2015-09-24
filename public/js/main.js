@@ -1,8 +1,16 @@
 var $successBox, $errorBox, successBoxTimeout, errorBoxTimeout;
+var loaderTimeoutHandle;
+
+var LOADER_DELAY = 200;
+
+function trace() {
+	console.error(arguments);
+}
 
 function initOnceActiveElements() {
 
-console.error('init active elements', $('.synchronize'));
+	trace('initOnceActiveElements');
+
 	$(document).on('blur', '[synchronize]',function() {
 		var $this =  $(this);
 		var self = this;
@@ -25,6 +33,44 @@ console.error('init active elements', $('.synchronize'));
 				}, 100)
 			}
 		});
+	});
+
+	$('#mark_as_responded').change(onMarkAsResponded);
+}
+
+function showLoader() {
+	loaderTimeout = setTimeout(function() {
+		$('#loader').show();
+		loaderTimeout = undefined;
+	}, LOADER_DELAY);
+}
+
+function hideLoader() {
+	clearTimeout(loaderTimeout);
+	loaderTimeout = undefined;
+	$('#loader').hide();
+}
+
+function onMarkAsResponded() {
+	var $this = $(this);
+	var url = $this.attr('client-id');
+
+	if ($this.prop('checked')) {
+		url = $this.attr('mark-url');
+	}
+	else {
+		url = $this.attr('unmark-url');
+	}
+
+	showLoader();
+	var request = $.ajax({
+		url: url,
+		method: 'get',
+		dataType: 'json'
+	});
+
+	request.always(function() {
+		hideLoader();
 	});
 }
 

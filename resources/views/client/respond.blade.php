@@ -91,12 +91,15 @@
 						Automaticly send email
 					</label>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="mark_as_responded">
-						Mark as responded
-					</label>
-				</div>
+
+				@if($client->id)
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="mark_as_responded" mark-url="/sites/{{ $site->id }}/markresponded/{{ $client->id }}" unmark-url="/sites/{{ $site->id }}/markunresponded/{{ $client->id }}">
+							Mark as responded
+						</label>
+					</div>
+				@endif
 			</div>
 		</form>
 	</div>

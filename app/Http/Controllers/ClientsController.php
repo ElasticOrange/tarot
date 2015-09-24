@@ -163,6 +163,21 @@ class ClientsController extends Controller
         ]);
     }
 
+    public function markClientEmailsAsResponded($site, $client) {
+        if (!$client) {
+            return false;
+        }
+        return ['result' => $client->markEmailsAsResponded()];
+    }
+
+
+    public function markClientLastEmailAsUnresponded($site, $client) {
+        if (!$client) {
+            return false;
+        }
+        return ['result' => $client->markLastEmailAsUnresponded()];
+    }
+
     /**
      * Update the specified resource in storage.
      *

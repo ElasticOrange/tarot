@@ -25,7 +25,16 @@
 						>
 							{!! csrf_field() !!}
 							<input type="hidden" name="_method" value="PUT"/>
-							<h3>Client</h3>
+							<h3>
+								Client
+								@if($sites_with_client && ($sites_with_client->count() > 1))
+									<span class="glyphicon glyphicon-duplicate" title="Client is registered on more than one site"></span>
+								@endif
+
+								@if($client && ($client->problem))
+									<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
+								@endif
+							</h3>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-3">

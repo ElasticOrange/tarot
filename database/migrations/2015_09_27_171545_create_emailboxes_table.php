@@ -17,13 +17,13 @@ class CreateEmailboxesTable extends Migration
             $table->string('name', 100);
             $table->string('smtpServer', 100);
             $table->integer('smtpPort');
-            $table->string('smtpEncription', 100);
+            $table->string('smtpEncryption', 100);
             $table->string('smtpUsername', 100);
             $table->string('smtpPassword', 100);
             $table->string('imapServer', 100);
             $table->integer('imapPort');
             $table->string('imapProtocol', 100);
-            $table->string('imapEncription', 100);
+            $table->string('imapEncryption', 100);
             $table->string('imapFolder', 100);
             $table->string('imapUsername', 100);
             $table->string('imapPassword', 100);

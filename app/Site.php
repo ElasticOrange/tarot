@@ -21,7 +21,8 @@ class Site extends Model
 		'sender',
 		'subject',
 		'signature',
-		'active'
+		'active',
+		'emailbox_id'
 	];
 
 	public function getIdAttribute() {

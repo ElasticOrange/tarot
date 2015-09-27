@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SiteRequest;
 use App\Http\Controllers\Controller;
 use App\Site;
+use App\Emailbox as Emailbox;
 
 class SiteController extends Controller
 {
@@ -69,7 +70,13 @@ class SiteController extends Controller
     {
         $infocosts = $site->infocosts()->orderBy('country')->orderBy('active', 'desc')->orderBy('default', 'desc')->get();
 
-        return view('site/edit', ['site' => $site, 'infocosts' => $infocosts]);
+        $emailboxes = Emailbox::orderBy('name')->get();
+
+        return view('site/edit', [
+            'site' => $site,
+            'infocosts' => $infocosts,
+            'emailboxes' => $emailboxes
+        ]);
     }
 
     /**

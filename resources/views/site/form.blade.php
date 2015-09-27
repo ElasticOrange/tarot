@@ -55,6 +55,20 @@
 		/>
 	</div>
 	<div class="form-group">
+		<label>Email box</label>
+		<select
+				class="form-control"
+				name="emailbox_id"
+		>
+			<option value="">None</option>
+			@foreach($emailboxes as $emailbox)
+				<option value="{{ $emailbox->id }}"
+						{{ ($site->emailbox_id == $emailbox->id) ? 'selected="selected"' : '' }}
+				>{{ $emailbox->name }}</option>
+			@endforeach
+		</select>
+	</div>
+	<div class="form-group">
 		<label>Signature</label>
 		<textarea
 				class="form-control"

@@ -30,7 +30,8 @@ class SiteRequest extends Request
             'sender' => 'string|min:3',
             'email' => 'email',
             'subject' => 'string|min:3',
-            'signature' => 'string'
+            'signature' => 'string',
+            'emailbox_id' => 'integer|min:1'
         ];
     }
 }

@@ -27,6 +27,16 @@ class CreateEmailboxesTable extends Migration
             $table->string('imapFolder', 100);
             $table->string('imapUsername', 100);
             $table->string('imapPassword', 100);
+            $table->string('comment', 1000);
+            $table->timestamps();
+        });
+
+
+        Schema::create('emailbox_site', function(Blueprint $table) {
+            $table->integer('emailbox_id')->unsigned()->index();
+            $table->foreign('emailbox_id')->references('id')->on('emailboxes')->onDelete('cascade');
+            $table->integer('site_id')->index();
+            $table->foreign('site_id')->references('listid')->on('email_lists')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -38,6 +48,7 @@ class CreateEmailboxesTable extends Migration
      */
     public function down()
     {
+        Schema::drop('emailbox_site');
         Schema::drop('emailboxes');
     }
 }

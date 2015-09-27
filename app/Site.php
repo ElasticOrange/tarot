@@ -73,6 +73,10 @@ class Site extends Model
 		return $this->belongsToMany('App\Form', 'email_form_lists', 'listid', 'formid');
 	}
 
+	public function emailbox() {
+		return $this->belongsTo('App\Emailbox', 'emailbox_id');
+	}
+
 	public function getForm() {
 		return $this->forms()->first();
 	}

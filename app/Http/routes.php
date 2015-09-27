@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/sites/{sites}/nextemail/{clients?}', 'EmailsController@nextUnrespondedClientForSite');
     Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails');
 
+    Route::get('/emailboxes/{emailboxes}/delete', 'EmailboxController@destroy');
+    Route::resource('emailboxes', 'EmailboxController');
+
     Route::get('/', function () {
 
         $sites = \Auth::user()->sites()->with(['emails' => function($query) {

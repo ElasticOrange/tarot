@@ -16,6 +16,7 @@ class AddColumnsToEmailLists extends Migration
             $table->string('url', 200);
             $table->string('subject', 100);
             $table->string('signature', 1000);
+            $table->integer('emailbox_id');
             $table->boolean('active');
             $table->softDeletes();
             $table->timestamps();

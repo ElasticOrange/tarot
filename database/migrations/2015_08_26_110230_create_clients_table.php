@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->boolean('problem');
             $table->string('comment');
             $table->softDeletes();
+            $table->dateTime('opened_at');
             $table->timestamps();
         });
     }
@@ -39,6 +40,7 @@ class CreateClientsTable extends Migration
                 'ignore',
                 'problem',
                 'comment',
+                'opened_at',
                 'deleted_at',
                 'created_at',
                 'updated_at'

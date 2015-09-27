@@ -44,6 +44,7 @@ class AddColumnsToEmailLists extends Migration
                 'url',
                 'subject',
                 'signature',
+                'emailbox_id',
                 'active',
                 'deleted_at',
                 'created_at',

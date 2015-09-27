@@ -21,7 +21,8 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Settings <span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="/sites">Sites</a></li>
+						<li><a href="/emailboxes">Email boxes</a><li>
+						<li><a href="/sites">Sites</a><li>
 						<li><a href="/users">Users</a></li>
 						<li><a href="/templates/question">Question templates</a></li>
 						<li><a href="/templates/email">Email templates</a></li>

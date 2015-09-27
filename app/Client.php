@@ -21,21 +21,23 @@ class Client extends Model
 {
 	protected $table = 'email_list_subscribers';
 	use SoftDeletes;
+
+
     protected $properties = [];
     protected $dbProperties; // client data, array of values + fields loaded by getProperties()
 
-	protected $primaryKey = 'subscriberid';
+    protected $primaryKey = 'subscriberid';
 
 
-	public function getIdAttribute() {
-		return $this->subscriberid;
-	}
+    public function getIdAttribute() {
+        return $this->subscriberid;
+    }
 
-	public function setIdAttribute($value) {
-		return $this->attributes['subscriberid'] = $value;
-	}
+    public function setIdAttribute($value) {
+        return $this->attributes['subscriberid'] = $value;
+    }
 
-	protected $dates = ['deleted_at', 'confirmdate'];
+    protected $dates = ['opened_at', 'deleted_at', 'created_at', 'updated_at', 'confirmdate'];
 
     protected $fillable = [
         'email',

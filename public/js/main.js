@@ -1,4 +1,4 @@
-var $successBox, $errorBox, successBoxTimeout, errorBoxTimeout;
+var $successBox, $errorBox, $warningBox, successBoxTimeout, errorBoxTimeout;
 var loaderTimeoutHandle;
 
 var LOADER_DELAY = 200;
@@ -357,6 +357,17 @@ function showErrorMessage(caption) {
 	}, 10000);
 }
 
+function hideWarningMessage() {
+	$warningBox.addClass('hidden');
+}
+
+function showWarningMessage(caption) {
+	hideWarningMessage();
+	$warningBox.find('.caption').html(caption);
+	$warningBox.removeClass('hidden');
+}
+
+
 function generateLaravelErrorList(errorList) {
 	if(!_.isPlainObject(errorList)) {
 		console.error('generateLaravelErrorList(): errorList is invalid', errorList);
@@ -481,6 +492,15 @@ function submitAjaxForm(form) {
 $(function(){
 	$successBox = $('.message-box.success');
 	$errorBox = $('.message-box.error');
+	$warningBox = $('.message-box.warning');
+	$warningBox.click(function() {
+		hideWarningMessage();
+	});
+
+
+	if ($('#alert-client-opened-too-soon').length) {
+		showWarningMessage('This client has been opened by somebody else less than a minute ago!');
+	}
 
 	if ($('#rich_editor').length) {
 		CKEDITOR.replace('rich_editor');

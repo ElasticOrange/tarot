@@ -139,8 +139,16 @@ class ClientsController extends Controller
 
         $infocosts = $site->infocosts()->active()->default()->get();
 
-        $nextUrl = null;
+        $alertClientOpenedToSoon = false;
+        $now = time();
+        if ( 60 > $now - $client->opened_at->timestamp) {
+            $alertClientOpenedToSoon = true;
+        }
 
+        $client->opened_at = $client->opened_at->now();
+        $client->save();
+
+        $nextUrl = null;
         if ($client->confirmdate) {
             if ($templateCategory === 'question') {
                $clientConfirmDate = $client->confirmdate->timestamp;
@@ -159,7 +167,8 @@ class ClientsController extends Controller
             'sites_with_client' => $sites_with_client,
             'templates' => $templates,
             'infocosts' => $infocosts,
-            'nextUrl' => $nextUrl
+            'nextUrl' => $nextUrl,
+            'alertClientOpenedToSoon' => $alertClientOpenedToSoon
         ]);
     }
 

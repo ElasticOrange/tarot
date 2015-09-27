@@ -10,7 +10,6 @@
     	<li role="presentation"><a href="#client-info" aria-controls="client-info" role="tab" data-toggle="tab">Client information</a></li>
  	</ul>
 
-
  	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="messages">
 			@if($client->id)
@@ -154,5 +153,9 @@
 			</div>
 		</div>
  	</div>
+
+ 	@if($alertClientOpenedToSoon)
+ 		<div id="alert-client-opened-too-soon"></div>
+ 	@endif
 
 @endsection

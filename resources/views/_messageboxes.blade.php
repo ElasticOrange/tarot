@@ -12,3 +12,11 @@
 		<span class="caption"></span>
 	</div>
 </div>
+
+
+<div class="message-box warning hidden">
+	<div class="alert-warning alert">
+		<span class="glyphicon glyphicon-exclamation-sign"></span>
+		<span class="caption"></span>
+	</div>
+</div>

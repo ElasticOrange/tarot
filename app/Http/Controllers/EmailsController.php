@@ -135,6 +135,10 @@ class EmailsController extends Controller
             $result = $email->send();
         }
 
+        if ($result) {
+            Email::markEmailsToSiteAsResponded($input['email'], $site);
+        }
+
         return ['result' => $result];
     }
 }

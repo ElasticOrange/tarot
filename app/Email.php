@@ -39,12 +39,20 @@ class Email extends Model
 		return $this->belongsTo('\App\Client', 'from_email', 'emailaddress');
 	}
 
-	public function fromSite() {
+	public function siteSender() {
 		return $this->belongsTo('\App\Site', 'from_email', 'owneremail');
 	}
 
-	public function toSite() {
+	public function siteReceiver() {
 		return $this->belongsTo('\App\Site', 'to_email', 'owneremail');
+	}
+
+	public function scopeToSite($query, $site) {
+		return $this->where('to_email', $site->email);
+	}
+
+	public function scopeFromSite($query, $site) {
+		return $this->where('from_email', $site->email);
 	}
 
 	public function scopeToEmail($query, $email) {
@@ -61,6 +69,10 @@ class Email extends Model
 
     public function scopeForEmailAddress($query, $email) {
         return $query->where('from_email', $email)->orWhere('to_email', $email);
+    }
+
+    public function scopeFromEmailAddress($query, $email) {
+        return $query->where('from_email', $email);
     }
 
     public function scopeNotBounced($query) {
@@ -88,7 +100,7 @@ class Email extends Model
 
 	public function send() {
 
-		$site = $this->fromSite()->first();
+		$site = $this->siteSender()->first();
 		if (!$site || !is_object($site)) {
 			return withError('Email::send(): email sender does not correspond to any site: '.$this->from_email);
 		}
@@ -121,6 +133,33 @@ class Email extends Model
 
         if (!$result) {
         	return withError('Email::send(): Email not send for site $site->name with emailbox $mailbox->name, email:', $this->attributes);
+        }
+
+        return $result;
+	}
+
+	static public function markEmailsToSiteAsResponded($senderEmailAddress, $site) {
+		if (!is_string($senderEmailAddress)) {
+			return false;
+		}
+
+		if (!$site || !$site->email) {
+			return false;
+		}
+
+		$instance = new static;
+
+        $allClientsEmailToSite = $instance->fromEmailAddress($senderEmailAddress)->toSite($site)->unresponded()->get();
+
+        if (!$allClientsEmailToSite || $allClientsEmailToSite->isEmpty()) {
+        	return false;
+        }
+
+        $result = true;
+
+        foreach($allClientsEmailToSite as $email) {
+        	$email->responded = 1;
+        	$result = $email->save();
         }
 
         return $result;

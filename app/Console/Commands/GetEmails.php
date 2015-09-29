@@ -118,13 +118,12 @@ class GetEmails extends Command
         }
 
         $email = new Email;
-
         $email->fill([
             'sent' => 0,
             'from_email' => ($mail->fromAddress ? $mail->fromAddress : ''),
             'from_name' => ($mail->fromName ? $mail->fromName : ''),
-            'to_email' => (current($mail->to) ? current($mail->to) : ''),
-            'to_name' => (key($mail->to) ? key($mail->to) : ''),
+            'to_email' => (key($mail->to) ? key($mail->to) : ''),
+            'to_name' => (current($mail->to) ? current($mail->to) : ''),
             'subject' => ($mail->subject ? $mail->subject : ''),
             'sent_at' => $mail->date,
             'html_content' => ($mail->textHtml ? $mail->textHtml : ''),
@@ -151,7 +150,7 @@ class GetEmails extends Command
         }
 
         $fromEmail = ($mail->fromAddress ? $mail->fromAddress : '');
-        $toEmail = (current($mail->to) ? current($mail->to) : '');
+        $toEmail = (key($mail->to) ? key($mail->to) : '');
         $sentAt = ($mail->date ? $mail->date : '');
         $subject = ($mail->subject ? $mail->subject : '');
 

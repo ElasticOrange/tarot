@@ -75,6 +75,15 @@ class Email extends Model
         return $query->where('from_email', $email)->orWhere('to_email', $email);
     }
 
+    static public function scopeForEmailAddressAndSite($query, $email, $site) {
+        return $query->where(function($query) use ($email, $site) {
+        	return $query->where('from_email', $email)->where('to_email', $site->email);
+        })->orWhere(function($query) use ($email, $site) {
+        	return $query->where('from_email', $site->email)->where('to_email', $email);
+        });
+    }
+
+
     public function scopeFromEmailAddress($query, $email) {
         return $query->where('from_email', $email);
     }

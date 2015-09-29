@@ -140,13 +140,16 @@ class ClientsController extends Controller
         $infocosts = $site->infocosts()->active()->default()->get();
 
         $alertClientOpenedToSoon = false;
-        $now = time();
-        if ( 60 > $now - $client->opened_at->timestamp) {
-            $alertClientOpenedToSoon = true;
-        }
 
-        $client->opened_at = $client->opened_at->now();
-        $client->save();
+        if ($client and $client->opened_at) {
+            $now = time();
+            if ( 60 > $now - $client->opened_at->timestamp) {
+                $alertClientOpenedToSoon = true;
+            }
+
+            $client->opened_at = $client->opened_at->now();
+            $client->save();
+        }
 
         $nextUrl = null;
         if ($client->confirmdate) {

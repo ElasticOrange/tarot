@@ -137,6 +137,6 @@ class EmailsController extends Controller
             $result = $email->send();
         }
 
-        return $result;
+        return ['result' => $result];
     }
 }

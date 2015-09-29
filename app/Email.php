@@ -8,6 +8,11 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
+function withError($message, $var = null) {
+    $logMessage = $message.($var !== null ? print_r($var, true) : '');
+    //echo $logMessage."\n";
+    Log::error($logMessage);
+}
 
 class Email extends Model
 {
@@ -79,14 +84,18 @@ class Email extends Model
 	public function send() {
 
 		$site = $this->fromSite()->first();
-
-		if (!$site) {
-			return false;
+		if (!$site || !is_object($site)) {
+			return withError('Email::send(): email sender does not correspond to any site: '.$this->from_email);
 		}
 
-        $transport = Swift_SmtpTransport::newInstance('smtp.mail.yahoo.com', 465, 'ssl')
-                                        ->setUsername('test_tarot@yahoo.com')
-                                        ->setPassword('t35t_t4rot');
+		$mailbox = $site->getEmailbox();
+		if (!$mailbox || !is_object($mailbox)) {
+			return withError('Email::send(): site $site->name does not have mailbox set!');
+		}
+
+        $transport = Swift_SmtpTransport::newInstance($mailbox->smtpServer, $mailbox->smtpPort, $mailbox->smtpEncryption)
+                                        ->setUsername($mailbox->smtpUsername)
+                                        ->setPassword($mailbox->smtpPassword);
 
         $mailer = Swift_Mailer::newInstance($transport);
 
@@ -94,7 +103,7 @@ class Email extends Model
         $message = Swift_Message::newInstance($this->subject)
                   ->setFrom(array($this->from_email => $this->from_name))
                   ->setTo(array($this->to_email => $this->to_name))
-                  ->setBody($this->html_content);
+                  ->setBody($this->html_content, 'text/html');
 
         // Send the message
         $result = $mailer->send($message);
@@ -103,6 +112,10 @@ class Email extends Model
         	$this->sent_at = date('Y-m-d H:i:s');
         	$this->bounce = 0;
         	$this->save();
+        }
+
+        if (!$result) {
+        	return withError('Email::send(): Email not send for site $site->name with emailbox $mailbox->name, email:', $this->attributes);
         }
 
         return $result;

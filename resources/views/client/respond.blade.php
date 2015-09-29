@@ -53,8 +53,8 @@
 				action="/sites/{{$site->id}}/sendmail"
 				method="post"
 				data-ajax="true"
-				success-message="Client updated successfully"
-				error-message="Error saving client"
+				success-message="Message sent successfully"
+				error-message="Error seding message"
 		>
 			<div class="row">
 				{!! csrf_field() !!}
@@ -63,13 +63,21 @@
 					<label class="control-labels">Sender</label>
 				</div>
 				<div class="col-md-10">
-					<input class="form-control" type="text" name="sender"/>
+					<input 	class="form-control"
+							type="text"
+							name="sender"
+							value="{{ $site->sender }}"
+					/>
 				</div>
 				<div class="col-md-2">
 					<label class="control-labels">Subject</label>
 				</div>
 				<div class="col-md-10">
-					<input class="form-control" type="text" name="subject"/>
+					<input 	class="form-control"
+							type="text"
+							name="subject"
+							value="{{ $site->subject }}"
+					/>
 				</div>
 			</div>
 

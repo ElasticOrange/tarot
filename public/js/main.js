@@ -267,6 +267,7 @@ function getValuesForTemplate() {
 		'client-age' : age,
 		'client-birth-date' : birthDate.getDay() + '-' + birthDate.getMonth() + '-' + birthDate.getFullYear(),
 		'site-default-infocost' : (infocost ? infocost.infocost : ''),
+		'site-default-telephone' : (infocost ? infocost.telephone : ''),
 		'site-default-country' : '',
 		'site-default-name' : currentSite.ownername,
 		'site-default-url' : currentSite.url,

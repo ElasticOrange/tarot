@@ -59,6 +59,7 @@
 							<li><a href="#" data-insert-text="%%%client-age%%%">Age</a></li>
 							<li><a href="#" data-insert-text="%%%client-birth-date%%%">Date of birth</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-infocost%%%">Info cost</a></li>
+							<li><a href="#" data-insert-text="%%%site-default-telephone%%%">Telephone</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-country%%%">Country</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-name%%%">Site name</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-url%%%">Site URL</a></li>

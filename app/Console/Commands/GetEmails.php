@@ -121,11 +121,11 @@ class GetEmails extends Command
 
         $email->fill([
             'sent' => 0,
-            'from_email' => $mail->fromAddress,
-            'from_name' => $mail->fromName,
+            'from_email' => ($mail->fromAddress ? $mail->fromAddress : ''),
+            'from_name' => ($mail->fromName ? $mail->fromName : ''),
             'to_email' => (current($mail->to) ? current($mail->to) : ''),
             'to_name' => (key($mail->to) ? key($mail->to) : ''),
-            'subject' => $mail->subject,
+            'subject' => ($mail->subject ? $mail->subject : ''),
             'sent_at' => $mail->date,
             'html_content' => ($mail->textHtml ? $mail->textHtml : ''),
             'text_content' => ($mail->textPlain ? $mail->textPlain : '')

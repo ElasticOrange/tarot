@@ -7,17 +7,37 @@ use PhpImap\Mailbox as ImapMailbox;
 use PhpImap\IncomingMail;
 use App\Email as Email;
 use App\Attachment as Attachment;
+use Log;
 
+function log($message, $var = null) {
+    $logMessage = $message.($var !== null ? print_r($var, true) : '');
+
+    echo $logMessage."\n";
+
+    Log::info($logMessage);
+}
+
+function warn($message, $var = null) {
+    $logMessage = $message.($var !== null ? print_r($var, true) : '');
+
+    echo $logMessage."\n";
+
+    Log::warning($logMessage);
+}
+
+function error($message, $var = null) {
+    $logMessage = $message.($var !== null ? print_r($var, true) : '');
+
+    echo $logMessage."\n";
+
+    Log::error($logMessage);
+}
 
 function withError($message, $var) {
-    echo $message.'\n';
-
-    if ($var) {
-        print_r($var);
-    }
-
+    error($message, $var);
     return false;
 }
+
 
 function getFileNameFromPath($path) {
     preg_match ( '/.*\/(.+)/' , $path, $matches);
@@ -93,7 +113,7 @@ class GetEmails extends Command
     }
 
     private function saveMailToDb($mail) {
-        if (!$mail) {
+        if (!is_object($mail)) {
             return withError('saveMailToDb: mail is not object', $mail);
         }
 
@@ -149,6 +169,80 @@ class GetEmails extends Command
         return true;
     }
 
+    public function getMailboxReceiveString($mailbox) {
+        $server = $mailbox->imapServer.':'.$mailbox->imapPort;
+
+        $service = '';
+        if ($mailbox->imapProtocol == 'imap') {
+            $service = '/service=imap';
+        }
+        else if ($mailbox->imapProtocol == 'pop') {
+            $service = '/service=pop3';
+        }
+
+        $encryption = '';
+        if ($mailbox->imapEncryption == 'ssl') {
+            $encryption = '/ssl/notls/novalidate-cert';
+        }
+        else if ($mailbox->imapEncryption == 'tls') {
+            $encryption = '/ssl/tls/novalidate-cert';
+        }
+
+        $string = '{'.$server.$service.$encryption.'}'.$mailbox->imapFolder;
+
+        return $string;
+    }
+
+    public function getEmailsFromMailbox($emailbox) {
+        if (!$emailbox || !is_object($emailbox)) {
+            return false;
+        }
+
+        $mailboxString = $this->getMailboxReceiveString($emailbox);
+
+        log('Connecting to mailbox '.$mailboxString.' '.$emailbox->imapUsername);
+
+        $mailbox = new ImapMailbox($mailboxString, $emailbox->imapUsername, $emailbox->imapPassword, './public/attachments');
+
+        if (!$mailbox) {
+            return withError('getEmailsFromMailbox: could not connect to mailbox', $emailbox);
+        }
+
+        $mailIds = $mailbox->searchMailBox('SEEN'); //UNSEEN
+
+        if (!count($mailIds)) {
+            log("No emails found");
+            return false;
+        }
+
+        foreach ($mailIds as $key => $mailId) {
+            $mail = $mailbox->getMail($mailId);
+            $errs = imap_errors(); //prevent errors (exceptions) from parsing emails
+
+            if (count($errs)) {
+                print_r($errs);
+            }
+
+            if (!$mail) {
+                warn("Could not read email with id $mailId");
+                continue;
+            }
+
+            if ($this->emailExists($mail)) {
+                warn('Mail exists '.$mail->fromAddress.': '.$mail->subject);
+                continue;
+            }
+
+            log('Saving mail '.$mail->fromAddress.': '.$mail->subject.' '.$mail->date);
+
+            if ($this->saveMailToDb($mail)) {
+                $mailbox->markMailAsRead($mailId);
+            }
+        }
+
+        log("Done");
+    }
+
     /**
      * Execute the console command.
      *
@@ -156,45 +250,18 @@ class GetEmails extends Command
      */
     public function handle()
     {
+        $sites = \App\Site::where('active', '1')->get();
 
-        //$mailbox = new ImapMailbox('{pop.mail.yahoo.com:995/service=pop3/ssl/notls/novalidate-cert}INBOX', 'test_tarot@yahoo.com', 't32tt4r0t', './public/attachments');
-
-        $mailbox = new ImapMailbox('{imap.mail.yahoo.com:993/service=imap/ssl/notls/novalidate-cert}INBOX', 'test_tarot@yahoo.com', 't35t_t4rot', './public/attachments');
-
-        $mails = array();
-
-        $mailIds = $mailbox->searchMailBox('SEEN'); //UNSEEN
-
-        if (!count($mailIds)) {
-            echo("No emails found! \n");
-            return false;
+        if (!$sites || $sites->isEmpty()) {
+            return withError('Error: There are no active sites!');
         }
 
-        foreach ($mailIds as $key => $mailId) {
-            $mail = $mailbox->getMail($mailId);
-            $errs = imap_errors(); //prevent errors from parsing emails
+        foreach ($sites as $site) {
+            $mailbox = $site->getEmailbox();
 
-            if (count($errs)) {
-                print_r($errs);
-            }
+            log('Getting email for site: '.$site->name);
 
-            if (!$mail) {
-                echo "Could not read email with id $mailId \n";
-                continue;
-            }
-
-            if ($this->emailExists($mail)) {
-                echo('Mail exists '.$mail->fromAddress.': '.$mail->subject."\n");
-                continue;
-            }
-
-            echo('Saving mail '.$mail->fromAddress.': '.$mail->subject.' '.$mail->date."\n");
-
-            if ($this->saveMailToDb($mail)) {
-                $mailbox->markMailAsRead($mailId);
-            }
+            $this->getEmailsFromMailbox($mailbox);
         }
-
-        echo "\nDone\n";
     }
 }

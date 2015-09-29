@@ -100,4 +100,8 @@ class Site extends Model
 	public function getClientByEmail($email) {
 		return $this->clients()->where('emailaddress', $email)->first();
 	}
+
+	public function getEmailbox() {
+		return $this->emailbox()->first();
+	}
 }

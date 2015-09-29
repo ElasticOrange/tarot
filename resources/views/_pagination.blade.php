@@ -1,4 +1,4 @@
-<div class="row">
+<!--div class="row">
 	<div class="col-sm-6">
 		<nav>
 		  <ul class="pagination no-margins">
@@ -35,4 +35,4 @@
 			</div>
 		</form>
 	</div>
-</div>
+</div-->

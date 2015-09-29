@@ -16,6 +16,8 @@ class Template extends Model
 		'category',
 		'type',
 		'content',
+        'subject',
+        'sender_name',
 		'active'
 	];
 

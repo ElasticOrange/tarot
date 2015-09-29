@@ -1,8 +1,12 @@
 
 <div class="row">
 	<div class="col-sm-6">
+		{!! csrf_field() !!}
+		<input 	type="hidden"
+				name="category"
+				value="{{ $template->category }}"
+		/>
 		<div class="form-group">
-			{!! csrf_field() !!}
 			<label>Name</label>
 			<input 	type="text"
 					class="form-control"
@@ -12,16 +16,30 @@
 			/>
 		</div>
 		<div class="form-group">
-			<input 	type="hidden"
-					name="category"
-					value="{{ $template->category }}"
-			/>
 			<label>Type</label>
 			<input 	type="text"
 					class="form-control"
 					name="type"
 					value="{{ $template->type }}"
 					placeholder="Ex: Template type"
+			/>
+		</div>
+		<div class="form-group">
+			<label>Sender name</label>
+			<input 	type="text"
+					class="form-control"
+					name="sender_name"
+					value="{{ $template->sender_name }}"
+					placeholder="Ex: John Doe"
+			/>
+		</div>
+		<div class="form-group">
+			<label>Subject</label>
+			<input 	type="text"
+					class="form-control"
+					name="subject"
+					value="{{ $template->subject }}"
+					placeholder="Ex: Here is your reading"
 			/>
 		</div>
 		<div class="form-group">
@@ -70,7 +88,7 @@
 			</div>
 			<textarea 	name="content"
 						class="form-control"
-						rows="20"
+						rows="40"
 						id="rich_editor"
 			>{{ $template->content }}</textarea>
 		</div>

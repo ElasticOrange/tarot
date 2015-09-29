@@ -293,13 +293,19 @@ function loadTemplateInEditor(templateId) {
 	var requestUrl = '/sites/'+ currentSite.listid + '/templates/' + templateId + '/get';
 	var request = $.ajax({
 		url: requestUrl,
-		method: 'get'
+		method: 'get',
+		dataType: 'json'
 	});
 
-	request.done(function(templateBody) {
-		templateBody = insertValuesInTemplate(templateBody);
-
+	request.done(function(template) {
+		templateBody = insertValuesInTemplate(template.content);
 		CKEDITOR.instances.rich_editor.setData(templateBody);
+		if ( ! _.isEmpty(template.sender_name)) {
+ 			$('input[name=sender]').val(template.sender_name);
+		}
+		if ( ! _.isEmpty(template.subject)) {
+ 			$('input[name=subject]').val(template.subject);
+		}
 	});
 }
 

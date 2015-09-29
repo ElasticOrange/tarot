@@ -18,6 +18,8 @@ class CreateTemplatesTable extends Migration
             $table->string('category', 20);
             $table->string('name', 100);
             $table->string('type', 100);
+            $table->string('subject', 1000);
+            $table->string('sender_name', 1000);
             $table->mediumtext('content');
             $table->boolean('active');
             $table->softDeletes();

@@ -42,4 +42,18 @@ class Template extends Model
     public function scopeOfSite($query, $siteId) {
         return $query->where('site_id', $siteId);
     }
+
+    public function getAllTypes() {
+        $site = $this->site()->first();
+
+        $allTemplateTypes = $site->templates()->ofCategory($this->category)->select('type')->distinct()->get();
+
+        if (! $allTemplateTypes) {
+            return [];
+        }
+
+        $templateTypes = $allTemplateTypes->pluck('type', 'type');
+
+        return $templateTypes;
+    }
 }

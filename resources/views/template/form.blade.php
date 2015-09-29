@@ -17,12 +17,14 @@
 		</div>
 		<div class="form-group">
 			<label>Type</label>
-			<input 	type="text"
-					class="form-control"
-					name="type"
-					value="{{ $template->type }}"
-					placeholder="Ex: Template type"
-			/>
+			<?php
+				$combobox = [
+					'attributes' => 'class="form-control combobox" name="type"',
+					'options' => $templateTypes->toArray(),
+					'selected' => $template->type
+				];
+			?>
+			@include('_combobox', $combobox)
 		</div>
 		<div class="form-group">
 			<label>Sender name</label>

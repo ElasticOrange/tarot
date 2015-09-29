@@ -57,10 +57,14 @@ class TemplatesController extends Controller
         $newTemplate = new \App\Template;
 
         $newTemplate->category = $templateCategory;
+        $newTemplate->site_id = $site->id;
+
+        $templateTypes = $newTemplate->getAllTypes();
 
         return view('template.create', [
             'template' => $newTemplate,
             'site' => $site,
+            'templateTypes' => $templateTypes
         ]);
     }
 
@@ -99,7 +103,9 @@ class TemplatesController extends Controller
      */
     public function edit($site, $template)
     {
-        return view('template.edit', ['site' => $site, 'template' => $template]);
+        $templateTypes = $template->getAllTypes();
+
+        return view('template.edit', ['site' => $site, 'template' => $template, 'templateTypes' => $templateTypes]);
     }
 
     /**

@@ -176,7 +176,7 @@ class ClientsController extends Controller
         if (!$client) {
             return false;
         }
-        return ['result' => $client->markEmailsAsResponded()];
+        return ['result' => $client->markEmailsAsResponded($site)];
     }
 
 
@@ -184,7 +184,7 @@ class ClientsController extends Controller
         if (!$client) {
             return false;
         }
-        return ['result' => $client->markLastEmailAsUnresponded()];
+        return ['result' => $client->markLastEmailAsUnresponded($site)];
     }
 
     /**

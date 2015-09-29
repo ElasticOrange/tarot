@@ -468,16 +468,16 @@ class Client extends Model
         return $this->emails()->unresponded()->first();
     }
 
-    public function getUnrespondedEmails() {
-        return $this->emails()->unresponded()->get();
+    public function getUnrespondedEmails($site) {
+        return $this->emails()->unresponded()->toSite($site)->get();
     }
 
-    public function getLastEmail() {
-        return $this->emails()->orderBy('sent_at', 'dest')->first();
+    public function getLastEmail($site) {
+        return $this->emails()->toSite($site)->orderBy('sent_at', 'dest')->first();
     }
 
-    public function markEmailsAsResponded() {
-        $unrespondedEmails = $this->getUnrespondedEmails();
+    public function markEmailsAsResponded($site) {
+        $unrespondedEmails = $this->getUnrespondedEmails($site);
 
         if (!$unrespondedEmails or $unrespondedEmails->isEmpty()) {
             return false;
@@ -491,8 +491,8 @@ class Client extends Model
         return true;
     }
 
-    public function markLastEmailAsUnresponded() {
-        $lastEmail = $this->getLastEmail();
+    public function markLastEmailAsUnresponded($site) {
+        $lastEmail = $this->getLastEmail($site);
 
         if (!$lastEmail) {
             return false;

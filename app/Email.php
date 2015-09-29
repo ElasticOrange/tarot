@@ -55,6 +55,10 @@ class Email extends Model
 		return $this->where('from_email', $site->email);
 	}
 
+	public function scopeForSite($query, $site) {
+		return $this->where('from_email', $site->email)->orWhere('to_email', $site->email);
+	}
+
 	public function scopeToEmail($query, $email) {
 		return $query->where('to_email', $email);
 	}

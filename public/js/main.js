@@ -526,6 +526,11 @@ $(function(){
 		CKEDITOR.replace('rich_editor');
 	}
 
+	if ($('#rich_editor2').length) {
+		CKEDITOR.replace('rich_editor2');
+	}
+
+
 	$('.combobox').combobox();
 	console.log('Done', $('.combobox').length);
 

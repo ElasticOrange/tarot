@@ -71,8 +71,18 @@
 	<div class="form-group">
 		<label>Signature</label>
 		<textarea
+				id="rich_editor2"
 				class="form-control"
 				name="signature"
+				rows="5"
+		>{{ $site->signature }}</textarea>
+	</div>
+	<div class="form-group">
+		<label>Unsubscribe</label>
+		<textarea
+				id="rich_editor"
+				class="form-control"
+				name="unsubscribe"
 				rows="5"
 		>{{ $site->signature }}</textarea>
 	</div>

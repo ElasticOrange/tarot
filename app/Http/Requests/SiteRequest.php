@@ -31,6 +31,7 @@ class SiteRequest extends Request
             'email' => 'email',
             'subject' => 'string|min:3',
             'signature' => 'string',
+            'unsubscribe' => 'string',
             'emailbox_id' => 'integer|min:1'
         ];
     }

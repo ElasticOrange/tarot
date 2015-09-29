@@ -164,7 +164,7 @@ function initEmailsLoader() {
 	}
 
 	var getEmailElement = function(email) {
-		return $('[aria-controls=email-' + email.id + ']');
+		return $('[email-id=' + email.id + ']');
 	}
 
 	var insertNewEmail = function(email, afterEmail) {
@@ -179,10 +179,21 @@ function initEmailsLoader() {
 		}
 		else {
 			var existingEmailElement = getEmailElement(afterEmail);
-			existingEmailElement.before(generateEmailElement(email));
+			existingEmailElement.after(generateEmailElement(email));
 		}
 
 		return true;
+	}
+
+	var removeEmail = function(email) {
+		if (!isValidEmail(email)) {
+			return withError('removeEmail(): Email is not valid', email);
+		}
+
+		if (emails[email.id]) {
+			delete emails[email.id];
+			getEmailElement(email).remove();
+		}
 	}
 
 	var updateEmails = function(newEmails) {
@@ -191,8 +202,16 @@ function initEmailsLoader() {
 			return false;
 		}
 
-		var previousEmail;
+		// delete emails that are not in the newEmails
+		var newEmailIds = _.pluck(newEmails, 'id');
+		_.forEach(emails, function(email) {
+			if (_.includes(newEmailIds, email.id)) {
+				return;
+			}
+			removeEmail(email);
+		});
 
+		var previousEmail;
 		_.forEach(newEmails, function(newEmail) {
 			insertNewEmail(newEmail, previousEmail);
 			previousEmail = newEmail;

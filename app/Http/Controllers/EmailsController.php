@@ -59,8 +59,7 @@ function getNextEmail($collection, $currentEmail = null) {
 class EmailsController extends Controller
 {
     public function lastEmails($site, $clientEmailAddress, $emailCount = 5) {
-        $emails = Email::forEmailAddress($clientEmailAddress)->limit($emailCount)->latest()->with('attachments')->get();
-
+        $emails = Email::forEmailAddress($clientEmailAddress)->latest()->notBounced()->limit($emailCount)->with('attachments')->get();
         return $emails;
     }
 
@@ -126,7 +125,6 @@ class EmailsController extends Controller
             'html_content' => $input['content'],
             'text_content' => '',
             'bounce' => 1
-
         ];
 
         $email = new Email($emailData);

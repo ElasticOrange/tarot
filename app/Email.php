@@ -25,7 +25,8 @@ class Email extends Model
 		'subject',
 		'sent_at',
 		'html_content',
-		'text_content'
+		'text_content',
+		'bounce'
 	];
 
 	protected $dates = ['created_at', 'updated_at', 'sent_at'];
@@ -59,7 +60,11 @@ class Email extends Model
 	}
 
     public function scopeForEmailAddress($query, $email) {
-        return $query->where('from_email', $email)->orWhere('to_email', $email)->orderBy('id', 'asc');
+        return $query->where('from_email', $email)->orWhere('to_email', $email);
+    }
+
+    public function scopeNotBounced($query) {
+    	return $query->where('bounce', 0);
     }
 
     public function scopeUnrespondedEmailsForSite($query, $site) {

@@ -16,7 +16,7 @@
 		</form>
 
 		<script type="text/template" id="email-container-template">
-			<div class="email-container">
+			<div class="email-container" email-id="<%= id %>">
 				<a 	class="email-title colapser"
 					data-toggle="collapse"
 					href="#email-<%= id %>"

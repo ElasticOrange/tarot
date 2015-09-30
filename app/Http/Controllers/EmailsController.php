@@ -20,8 +20,11 @@ function getNextClient($collection, $currentClient = null) {
         return $collection[0];
     }
 
+    $aMinuteAgo = time() - 60;
+
     foreach ($collection as $index => $item) {
-        if ($item->confirmdate->timestamp < $currentClient->confirmdate->timestamp) {
+        if (($item->confirmdate->timestamp < $currentClient->confirmdate->timestamp)
+        and ($item->opened_at->timestamp < $aMinuteAgo)) {
             return $item;
         }
     }

@@ -36,7 +36,6 @@
 					<th>Email</th>
 					<th class="hidden-xs">Gender</th>
 					<th>Country</th>
-					<th class="hidden-xs">Interests</th>
 					<th class="hidden-xs">Last email</th>
 					<th class="hidden-xs">Last response</th>
 					<th class="hidden-xs"># Emails</th>
@@ -49,11 +48,21 @@
 					<?php $row++;?>
 					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}">
 						<td>{{ $row }}</td>
-						<td>{{ $client->firstName }} {{$client->lastName }}</td>
+						<td>
+							{{ $client->firstName }} {{ $client->lastName }} {{ $client->fullName }}
+							@if($client->problem)
+								<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
+							@endif
+							@if($client->problem)
+								<span class="glyphicon glyphicon-ban-circle" title="Client is flagged as ignored"></span>
+							@endif
+							@if($client->unsubscribed)
+								<span class="glyphicon glyphicon-remove-sign" title="Client is unsubscribed"></span>
+							@endif
+						</td>
 						<td>{{ $client->emailaddress }}</td>
 						<td class="hidden-xs">{{ $client->gender }}</td>
 						<td>{{ $client->country }}</td>
-						<td class="hidden-xs">{{ $client->interest }}</td>
 						<td class="hidden-xs">
 							@if($client->emails->count())
 								{{ date('d-m-Y', $client->emails->first()->sent_at->timestamp) }}

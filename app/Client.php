@@ -112,6 +112,10 @@ class Client extends Model
         return $query->where('listid', $siteId);
     }
 
+    public function scopeIsActive($query) {
+        return $query->where('confirmed', 1)->where('ignore', 0)->where('unsubscribed', 0);
+    }
+
     public function setDefaultAttributes() {
         $this->domainname = getDomainFromEmailAddress($this->emailaddress);
         if (!$this->format) {
@@ -451,7 +455,7 @@ class Client extends Model
             return false;
         }
         $instance = new static;
-        $clients = $instance->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->get();
+        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->get();
         return $clients;
     }
 
@@ -460,7 +464,7 @@ class Client extends Model
             return false;
         }
         $instance = new static;
-        $clients = $instance->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->first();
+        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->first();
         return $clients;
     }
 

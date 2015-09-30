@@ -49,7 +49,6 @@ class ClientsController extends Controller
                                 return $query->limit(1);
                             }])
                         ->get();
-
         return view('client.list', [
             'site' => $site,
             'clients' => $clients

@@ -55,6 +55,8 @@
 				data-ajax="true"
 				success-message="Message sent successfully"
 				error-message="Error seding message"
+				success-function="onEmailSendSuccess"
+				id="send-email-form"
 		>
 			<div class="row">
 				{!! csrf_field() !!}
@@ -91,7 +93,7 @@
 			<div class="">
 				<button class="btn btn-primary"><span class="glyphicon glyphicon-share-alt"></span> Send response</button>
 				@if($nextUrl)
-					<a class="btn btn-info" href="{{ $nextUrl }}"><span class="glyphicon glyphicon-forward"></span> Next email</a>
+					<a class="btn btn-info" href="{{ $nextUrl }}" id="next-email"><span class="glyphicon glyphicon-forward"></span> Next email</a>
 				@endif
 				<div class="checkbox">
 					<label>

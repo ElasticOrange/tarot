@@ -124,10 +124,13 @@ class ClientsController extends Controller
             $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
         }
 
-        if (!$sites_with_client->isEmpty()) {
+        $subscribtionsCount = 0;
+
+        if ( ! $sites_with_client->isEmpty()) {
             foreach($sites_with_client as $key => $site_wc) {
                 if (!$site_wc->clients->isEmpty() and ($site_wc->clients->first()->isSubscribed())) {
                     $site_wc->hasUserSubscribed = true;
+                    $subscribtionsCount++;
                 }
                 else {
                     $site_wc->hasUserSubscribed = false;
@@ -168,6 +171,7 @@ class ClientsController extends Controller
             'site' => $site,
             'client' => $client,
             'sites_with_client' => $sites_with_client,
+            'subscribtionsCount' => $subscribtionsCount,
             'templates' => $templates,
             'infocosts' => $infocosts,
             'nextUrl' => $nextUrl,

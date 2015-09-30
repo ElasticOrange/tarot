@@ -1,6 +1,17 @@
 var $successBox, $errorBox, $warningBox, successBoxTimeout, errorBoxTimeout;
 var loaderTimeoutHandle;
 
+var hasLocalStorage = (function() {
+  try {
+  	var mod = '__localStorageTest';
+    localStorage.setItem(mod, mod);
+    localStorage.removeItem(mod);
+    return true;
+  } catch (exception) {
+    return false;
+  }
+}());
+
 var LOADER_DELAY = 200;
 
 function trace() {
@@ -36,6 +47,40 @@ function initOnceActiveElements() {
 	});
 
 	$('#mark_as_responded').change(onMarkAsResponded);
+
+	initAutoSend($('#send_after_template_fill'));
+
+}
+
+var shouldAutoSend = function() {
+	return false;
+}
+
+function initAutoSend($autoSendCheckbox) {
+	if (!hasLocalStorage) {
+		return withError(['initAutoSend(): localStorage is not available']);
+	}
+
+	if (!$autoSendCheckbox.length) {
+		return withError(['initAutoSend(): could not find auto send checkbox', $autoSendCheckbox]);
+	}
+
+	if (localStorage.getItem('autoSendStatus') === 'true') {
+		$autoSendCheckbox.prop('checked', true);
+	}
+
+	$autoSendCheckbox.change(function() {
+		if (shouldAutoSend()) {
+			localStorage.setItem('autoSendStatus', 'true');
+		}
+		else {
+			localStorage.setItem('autoSendStatus', 'false');
+		}
+	});
+
+	window.shouldAutoSend = function() {
+		return $autoSendCheckbox.prop('checked');
+	}
 }
 
 function showLoader() {
@@ -300,13 +345,25 @@ function loadTemplateInEditor(templateId) {
 	request.done(function(template) {
 		templateBody = insertValuesInTemplate(template.content);
 		CKEDITOR.instances.rich_editor.setData(templateBody);
+		$('#send-email-form').find('[name=content]').val(templateBody);
 		if ( ! _.isEmpty(template.sender_name)) {
  			$('input[name=sender]').val(template.sender_name);
 		}
 		if ( ! _.isEmpty(template.subject)) {
  			$('input[name=subject]').val(template.subject);
 		}
+
+		if (shouldAutoSend()) {
+			$('#send-email-form').submit();
+		}
 	});
+}
+
+function onEmailSendSuccess() {
+console.error('onEmailSendSuccess');
+	var href = $('#next-email').attr('href');
+
+	redirect(href, 1);
 }
 
 function insertAtCaret(areaId,text) {
@@ -465,6 +522,7 @@ function submitGenericAjaxForm(form) {
 	var action = $form.attr('action') || window.document.location;
 	var method = $form.attr('method') || 'POST';
 
+	showLoader();
 	var request = $.ajax({
 		url: action,
 		method: method,
@@ -478,6 +536,10 @@ function submitGenericAjaxForm(form) {
 
 	request.fail(function(error) {
 		console.error('Ajax error: ', error.responseJSON);
+	});
+
+	request.always(function() {
+		hideLoader();
 	});
 
 	return request;
@@ -503,6 +565,13 @@ function submitAjaxForm(form) {
 
 		if (successUrl) {
 			redirect(fillPlaceholdersInString(successUrl, data), 1000);
+		}
+		var successFunctionName = $form.attr('success-function');
+
+		if (successFunctionName) {
+			if (_.isFunction(window[successFunctionName])) {
+				window[successFunctionName]();
+			}
 		}
 	});
 

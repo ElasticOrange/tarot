@@ -151,6 +151,7 @@ function initEmailsLoader() {
 	var urlTemplate = _.template(urlTemplateContent);
 	var countSelector = $('#email-count-selector');
 	var emails = {};
+	var expandedFirstEmail = false;
 	var validEmailStructure = {
 		id: '',
 		from_email: '',
@@ -219,12 +220,20 @@ function initEmailsLoader() {
 
 		emails[email.id] = email;
 
+		var emailContent = $(generateEmailElement(email));
+
 		if (afterEmail === undefined) {
-			emailsContainer.prepend(generateEmailElement(email));
+			emailsContainer.prepend(emailContent);
 		}
 		else {
 			var existingEmailElement = getEmailElement(afterEmail);
-			existingEmailElement.after(generateEmailElement(email));
+			existingEmailElement.after(emailContent);
+		}
+		if (!expandedFirstEmail) {
+			emailContent.find('.email-title').removeClass('collapsed').attr('aria-expanded', 'true');
+			emailContent.find('.email-body').addClass('in').attr('aria-expanded', 'true');
+			updateExpandedIndicator(emailContent.find('.email-title'));
+			expandedFirstEmail = true;
 		}
 
 		return true;
@@ -583,6 +592,15 @@ function submitAjaxForm(form) {
 	});
 }
 
+var updateExpandedIndicator = function(element) {
+	$element = $(element);
+	if ($element.attr("aria-expanded") == "true") {
+		$element.find('.glyphicon').removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
+	}
+	else {
+		$element.find('.glyphicon').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
+	}
+}
 
 $(function(){
 	$successBox = $('.message-box.success');
@@ -620,13 +638,7 @@ $(function(){
 
 	// When clicking on .email-title switch expand state of toggle icon
 	$(document).on('click', '.email-title', function() {
-		var $this = $(this);
-		if ($this.attr("aria-expanded") == "true") {
-			$this.find('.glyphicon').removeClass('glyphicon-triangle-right').addClass('glyphicon-triangle-bottom');
-		}
-		else {
-			$this.find('.glyphicon').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
-		}
+		updateExpandedIndicator(this);
 	});
 
 	// When clicking on tr that gas href attr go to that address

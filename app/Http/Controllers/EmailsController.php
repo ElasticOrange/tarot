@@ -68,6 +68,7 @@ class EmailsController extends Controller
 
 
     public function unrespondedQuestions($site) {
+        \Auth::user()->setCurrentSiteId($site->id);
         $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
         return view('client/questionlist', [
             'site' => $site,
@@ -103,6 +104,7 @@ class EmailsController extends Controller
      */
     public function index($site)
     {
+        \Auth::user()->setCurrentSiteId($site->id);
         $emails = Email::getUnrespondedEmailsForSite($site);
         return view('email/list', ['emails' => $emails, 'site' => $site]);
     }

@@ -16,6 +16,7 @@ Route::get('/home', function() {
 
 Route::group(['middleware' => 'auth'], function(){
 
+
     Route::post('/sites/{sites}/sendmail', 'EmailsController@sendMail');
 
 

@@ -34,7 +34,17 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+        $continue = true;
+
         if ($this->auth->guest()) {
+            $continue = false;
+        }
+        else if (! $this->auth->user()->active) {
+            $this->auth->logout();
+            $continue = false;
+        }
+
+        if (!$continue) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {

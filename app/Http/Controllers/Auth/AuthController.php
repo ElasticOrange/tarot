@@ -64,4 +64,12 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    protected function authenticated($request, $user) {
+        if (!$user->active) {
+            $this->getLogout();
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
 }

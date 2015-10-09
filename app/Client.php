@@ -447,7 +447,7 @@ class Client extends Model
     }
 
     public function setAsUnsubscribed() {
-        $this->unsubscribed = 1;
+        $this->unsubscribed = time();
     }
 
     static public function getClientsWithUnrespondedQuestionsForSite($site) {

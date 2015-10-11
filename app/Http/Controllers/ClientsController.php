@@ -16,13 +16,48 @@ class ClientsController extends Controller
 
     public function editClientByEmail($site, $emailAddress) {
 
-        $client = Client::getBySiteAndEmailAddress($site->id, $emailAddress);
-        if (!$client) {
-            $client = new Client(['listid' => $site->id]);
-            $client->email = $emailAddress;
+        $sitesWithClient = $this->getSitesWithClientByEmail($emailAddress);
+//dd($sitesWithClient);
+
+        // treat found client
+        if ($sitesWithClient && ! $sitesWithClient->isEmpty()) {
+            // try to find if the client if registered on the current site
+            foreach ($sitesWithClient as $siteWClient) {
+                if ( ! $siteWClient->clients || $siteWClient->clients->isEmpty()) {
+                    continue;
+                }
+
+                if ($siteWClient->id === $site->id) {
+                    return $this->edit($site, $siteWClient->clients->first());
+                }
+            }
+
+            // return the first found client
+            foreach ($sitesWithClient as $siteWClient) {
+                if ( ! $siteWClient->clients || $siteWClient->clients->isEmpty()) {
+                    continue;
+                }
+
+                return $this->edit($siteWClient, $siteWClient->clients->first());
+            }
         }
 
-        return $this->show($site, $client);
+        $client = new Client(['listid' => $site->id]);
+        $client->email = $emailAddress;
+
+        $templates = Template::active()->ofCategory('email')->ofSite($site->id)->get();
+        $infocosts = $site->infocosts()->active()->default()->get();
+
+        return view('client.createFromEmail', [
+            'site' => $site,
+            'client' => $client,
+            'sites_with_client' => $sitesWithClient,
+            'subscribtionsCount' => 0,
+            'templates' => $templates,
+            'infocosts' => $infocosts,
+            'nextUrl' => ''
+        ]);
+
     }
 
     public function redirect()
@@ -79,13 +114,22 @@ class ClientsController extends Controller
 
         $input = $request->all();
 
-        $input['listid'] = $site->id;
+        if (array_key_exists('siteids', $input) && is_array($input['siteids']) && ! empty($input)) {
+            $siteids = $input['siteids'];
+        }
+        else {
+            $siteids = [$site->id];
+        }
 
-        $client = new Client(['listid' => $site->id]);
+        if (empty($siteids)) {
+            abort(404);
+        }
 
-        $client->fill($input);
-
-        $client->save();
+        foreach($siteids as $siteid) {
+            $client = new Client(['listid' => $siteid, 'confirmdate' => time()]);
+            $client->fill($input);
+            $client->save();
+        }
 
         return $client;
     }
@@ -118,7 +162,6 @@ class ClientsController extends Controller
     public function edit($site, $client, $templateCategory = 'email')
     {
         $sites_with_client = new \Illuminate\Database\Eloquent\Collection;
-
         if ($client) {
             $sites_with_client = $this->getSitesWithClientByEmail($client->emailaddress);
         }
@@ -156,12 +199,10 @@ class ClientsController extends Controller
         $nextUrl = null;
         if ($client->confirmdate) {
             if ($templateCategory === 'question') {
-               $clientConfirmDate = $client->confirmdate->timestamp;
                $nextUrl = "/sites/$site->id/nextquestion/$client->id";
             }
 
             if ($templateCategory === 'email') {
-               $clientConfirmDate = $client->confirmdate->timestamp;
                $nextUrl = "/sites/$site->id/nextemail/$client->id";
             }
         }
@@ -244,6 +285,10 @@ class ClientsController extends Controller
 
     public function subscribe($site, $client, Request $request) {
         $subscribe_to_site_ids = $request->input('siteids');
+
+        if (!$subscribe_to_site_ids) {
+            $subscribe_to_site_ids = [];
+        }
 
         $sites_with_client = $this->getSitesWithClientByEmail($client->email);
 

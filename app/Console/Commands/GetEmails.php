@@ -207,7 +207,7 @@ class GetEmails extends Command
             return withError('getEmailsFromMailbox: could not connect to mailbox', $emailbox);
         }
 
-        $mailIds = $mailbox->searchMailBox('SEEN'); //UNSEEN
+        $mailIds = $mailbox->searchMailBox('UNSEEN'); //UNSEEN
 
         if (!count($mailIds)) {
             log("No emails found");

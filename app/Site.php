@@ -105,4 +105,8 @@ class Site extends Model
 	public function getEmailbox() {
 		return $this->emailbox()->first();
 	}
+
+	public function hasUser($user) {
+		return $this->users()->where('id', $user->id)->first();
+	}
 }

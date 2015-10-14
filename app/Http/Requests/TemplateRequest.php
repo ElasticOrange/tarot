@@ -13,7 +13,17 @@ class TemplateRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $user = \Auth::user();
+
+        if ( ! $user) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

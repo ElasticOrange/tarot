@@ -10,6 +10,12 @@ use App\Infocost;
 
 class InfocostsController extends Controller
 {
+    function __construct() {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

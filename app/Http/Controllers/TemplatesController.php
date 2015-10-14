@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class TemplatesController extends Controller
 {
+    function __construct() {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
+    }
 
     public function redirect($templateCategory)
     {

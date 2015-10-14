@@ -9,6 +9,7 @@ use Response;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
@@ -19,6 +20,9 @@ class UsersController extends Controller
      */
     public function index()
     {
+        if ( ! \Auth::user()->isAdmin()) {
+            abort(403);
+        }
         $users = User::all();
 
         return view('user/list', ['users' => $users, 'userTypes' => User::getUserTypes()]);
@@ -31,6 +35,9 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if ( ! \Auth::user()->isAdmin()) {
+            abort(403);
+        }
         $user = new User;
         $sites = \App\Site::active()->get();
 
@@ -48,7 +55,7 @@ class UsersController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $this->validateUserInput($request);
         $input = $request->all();
@@ -94,6 +101,10 @@ class UsersController extends Controller
      */
     public function edit($user)
     {
+        if ( ! \Auth::user()->isAdmin()) {
+            abort(403);
+        }
+
         $sites = \App\Site::active()->get();
         return view('user/edit', [
                 'user' => $user,
@@ -110,7 +121,7 @@ class UsersController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($user, Request $request)
+    public function update($user, UserRequest $request)
     {
         $this->validateUserInput($request, $user);
         $input = $request->all();
@@ -132,6 +143,9 @@ class UsersController extends Controller
      */
     public function destroy($user)
     {
+        if ( ! \Auth::user()->isAdmin()) {
+            abort(403);
+        }
         $user->delete();
         return redirect('users');
     }

@@ -18,6 +18,9 @@ class SiteController extends Controller
      */
     public function index()
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $sites = Site::all();
 
         return view('site/list', ['sites' => $sites]);
@@ -30,6 +33,9 @@ class SiteController extends Controller
      */
     public function create()
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $site = new Site;
         return view('site/create', ['site' => $site]);
     }
@@ -68,6 +74,9 @@ class SiteController extends Controller
      */
     public function edit($site)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $infocosts = $site->infocosts()->orderBy('country')->orderBy('active', 'desc')->orderBy('default', 'desc')->get();
 
         $emailboxes = Emailbox::orderBy('name')->get();
@@ -103,6 +112,9 @@ class SiteController extends Controller
      */
     public function destroy($site)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $site->delete();
         return redirect('sites');
     }

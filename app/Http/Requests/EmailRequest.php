@@ -13,7 +13,28 @@ class EmailRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        $user = \Auth::user();
+
+        if ( ! $user) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        if ($user->isGuest()) {
+            return false;
+        }
+
+
+        $site = $this->route('sites');
+
+        if ($site->hasUser($user)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

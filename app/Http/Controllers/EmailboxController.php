@@ -12,6 +12,12 @@ use App\Emailbox as Emailbox;
 
 class EmailboxController extends Controller
 {
+    function __construct() {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *

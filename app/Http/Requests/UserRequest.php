@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class InfocostRequest extends Request
+class UserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,10 @@ class InfocostRequest extends Request
             return true;
         }
 
+        if ($user->email == $this->route('email')) {
+            return true;
+        }
+
         return false;
     }
 
@@ -34,11 +38,11 @@ class InfocostRequest extends Request
     public function rules()
     {
         return [
-            'country' => 'required|string',
-            'telephone' => 'required|string|min:3',
-            'infocost' => 'required|string|min:3',
+            'name' => 'string|min:2',
+            'email' => 'required|email',
+            'type' => 'integer|min:1|max:3',
             'active' => 'boolean',
-            'default' => 'boolean'
+            'password' => 'string|min:6'
         ];
     }
 }

@@ -85,4 +85,21 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
         return false;
     }
+
+    public function isAdmin() {
+        if ($this->type == User::ADMINISTRATOR) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    public function isGuest() {
+        if ($this->type == User::GUEST) {
+            return true;
+        }
+
+        return false;
+    }
 }

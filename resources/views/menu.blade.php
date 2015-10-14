@@ -17,6 +17,7 @@
 				<li <?=$selected_menu_item == 'Clients' ? 'class="active"' : ''?>><a href="/clients">Clients</a></li>
 				<li <?=$selected_menu_item == 'My account' ? 'class="active"' : ''?>><a href="/profile">My account</a></li>
 			</ul>
+			@if(\Auth::user()->type == \App\User::ADMINISTRATOR)
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">Settings <span class="caret"></span></a>
@@ -31,6 +32,7 @@
 					</ul>
 				</li>
 			</ul>
+			@endif
 		</div><!--/.nav-collapse -->
 	</div>
 </nav>

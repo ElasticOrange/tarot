@@ -91,6 +91,10 @@ class EmailsController extends Controller
     public function nextUnrespondedClientForSite($site, $currentClient = null) {
         $emails = Email::getUnrespondedEmailsForSite($site);
 
+        if ( ! $emails or $emails->isEmpty()) {
+            return redirect('EmailsController@index', ['site' => $site]);
+        }
+
         $clientLastEmail = $currentClient->getFirstUnrespondedEmail();
 
         $nextEmail = getNextEmail($emails, $clientLastEmail);
@@ -128,6 +132,7 @@ class EmailsController extends Controller
     {
         \Auth::user()->setCurrentSiteId($site->id);
         $emails = Email::getUnrespondedEmailsForSite($site);
+
         return view('email/list', ['emails' => $emails, 'site' => $site]);
     }
 

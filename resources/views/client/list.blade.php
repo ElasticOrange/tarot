@@ -49,7 +49,6 @@
 					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}">
 						<td>{{ $row }}</td>
 						<td>
-							{{ $client->firstName }} {{ $client->lastName }} {{ $client->fullName }}
 							@if($client->problem)
 								<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
 							@endif
@@ -59,6 +58,7 @@
 							@if($client->unsubscribed)
 								<span class="glyphicon glyphicon-remove-sign" title="Client is unsubscribed"></span>
 							@endif
+							{{ $client->firstName }} {{ $client->lastName }} {{ $client->fullName }}
 						</td>
 						<td>{{ $client->emailaddress }}</td>
 						<td class="hidden-xs">{{ $client->gender }}</td>

@@ -81,7 +81,7 @@ class ClientsController extends Controller
                                 return $query->limit(21);
                             }])
                         ->with(['sentEmails' => function($query) {
-                                return $query->limit(1);
+                                return $query->notBounced()->limit(1);
                             }])
                         ->get();
         return view('client.list', [

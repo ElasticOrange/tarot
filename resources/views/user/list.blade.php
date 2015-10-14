@@ -10,17 +10,6 @@
 		<div class="col-sm-6 col-sm-offset-3">
 			<pagetitle>Users</pagetitle>
 		</div>
-		<div class="col-sm-3">
-			<form class="form">
-				<div class="form-group">
-					<input 	type="text"
-							class="form-control"
-							name="table-search"
-							placeholder="Search in table"
-					/>
-				</div>
-			</form>
-		</div>
 	</div>
 
 	<div class="row">

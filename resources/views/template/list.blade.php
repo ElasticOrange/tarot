@@ -13,17 +13,6 @@
 		<div class="col-sm-6">
 			<pagetitle>{{ ucfirst($templateCategory) }} answer templates</pagetitle>
 		</div>
-		<div class="col-sm-3">
-			<form class="form">
-				<div class="form-group">
-					<input 	type="text"
-							class="form-control"
-							name="table-search"
-							placeholder="Search in table"
-					/>
-				</div>
-			</form>
-		</div>
 	</div>
 
 	<div class="row">

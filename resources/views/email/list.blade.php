@@ -40,9 +40,9 @@
 						<td> {{ $email->from_email }}</td>
 						<td class="hidden-xs">
 							@if ($email->sent_at->isToday())
-								{{ date('d-m-Y', $email->sent_at->timestamp) }}
-							@else
 								{{ date('H:i', $email->sent_at->timestamp) }}
+							@else
+								{{ date('d-m-Y', $email->sent_at->timestamp) }}
 							@endif
 						</td>
 						<td>{{ $email->email_count }}</td>

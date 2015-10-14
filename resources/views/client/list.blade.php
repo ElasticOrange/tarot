@@ -13,33 +13,22 @@
 		<div class="col-sm-6">
 			<pagetitle>Clients</pagetitle>
 		</div>
-		<div class="col-sm-3">
-			<form class="form">
-				<div class="form-group">
-					<input 	type="text"
-							class="form-control"
-							name="table-search"
-							placeholder="Search in table"
-					/>
-				</div>
-			</form>
-		</div>
 	</div>
 
 	@if($clients->count())
 
-		<table class="table table-striped">
+		<table class="table table-striped" id="clients-table">
 			<thead>
 				<tr href="/client">
 					<th>#</th>
 					<th>Name</th>
 					<th>Email</th>
-					<th class="hidden-xs">Gender</th>
-					<th>Country</th>
-					<th class="hidden-xs">Last email</th>
-					<th class="hidden-xs">Last response</th>
-					<th class="hidden-xs"># Emails</th>
-					<th class="hidden-xs">Comments</th>
+					<th class="visible-lg">Gender</th>
+					<th class="visible-md">Country</th>
+					<th class="visible-lg">Last email</th>
+					<th class="visible-lg">Last response</th>
+					<th class="visible-lg"># Emails</th>
+					<th class="visible-lg">Comments</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -49,6 +38,7 @@
 					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}">
 						<td>{{ $row }}</td>
 						<td>
+							{{ $client->firstName }} {{ $client->lastName }} {{ $client->fullName }}
 							@if($client->problem)
 								<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
 							@endif
@@ -58,21 +48,20 @@
 							@if($client->unsubscribed)
 								<span class="glyphicon glyphicon-remove-sign" title="Client is unsubscribed"></span>
 							@endif
-							{{ $client->firstName }} {{ $client->lastName }} {{ $client->fullName }}
 						</td>
 						<td>{{ $client->emailaddress }}</td>
-						<td class="hidden-xs">{{ $client->gender }}</td>
-						<td>{{ $client->country }}</td>
-						<td class="hidden-xs">
+						<td class="visible-lg">{{ $client->gender }}</td>
+						<td class="visible-md">{{ $client->country }}</td>
+						<td class="visible-lg">
 							@if($client->emails->count())
 								{{ date('d-m-Y', $client->emails->first()->sent_at->timestamp) }}
 							@endif
 						</td>
-						<td class="hidden-xs">
+						<td class="visible-lg">
 							@if($client->sentEmails->count())
 								{{ date('d-m-Y', $client->sentEmails->first()->sent_at->timestamp) }}
 							@endif</td>
-						<td class="hidden-xs">
+						<td class="visible-lg">
 							@if($client->emails->count())
 								@if ($client->emails->count() > 20)
 									more than 20
@@ -81,7 +70,7 @@
 								@endif
 							@endif
 						</td>
-						<td class="hidden-xs">{{$client->comment }}</td>
+						<td class="visible-lg">{{$client->comment }}</td>
 					</tr>
 				@endforeach
 

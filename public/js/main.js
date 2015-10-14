@@ -50,6 +50,8 @@ function initOnceActiveElements() {
 
 	initAutoSend($('#send_after_template_fill'));
 
+	$('#clients-table').DataTable();
+
 }
 
 var shouldAutoSend = function() {

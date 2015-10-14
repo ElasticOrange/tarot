@@ -8,8 +8,13 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
+    const ADMINISTRATOR = 1;
+    const USER = 2;
+    const GUEST = 3;
+
     use Authenticatable, CanResetPassword;
 
     /**
@@ -40,11 +45,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
     public static function getUserTypes() {
         return [
-            1 => 'Administrator',
-            2 => 'Editor',
-            3 => 'Responder',
-            4.=> 'Guest'
-
+            User::ADMINISTRATOR => 'Administrator',
+            User::USER => 'User',
+            User::GUEST => 'Guest'
         ];
     }
 

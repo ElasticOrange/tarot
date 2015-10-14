@@ -17,7 +17,6 @@ class ClientsController extends Controller
     public function editClientByEmail($site, $emailAddress) {
 
         $sitesWithClient = $this->getSitesWithClientByEmail($emailAddress);
-//dd($sitesWithClient);
 
         // treat found client
         if ($sitesWithClient && ! $sitesWithClient->isEmpty()) {

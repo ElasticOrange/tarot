@@ -19,14 +19,16 @@ class Infocost extends Model
     }
 
     public function countries() {
-        return [
-            'Australia',
-            'Canada',
-            'England',
-            'New Zealand',
-            'Romania',
-            'USA',
-        ];
+        $countries = \Config::get('countries.countries');
+
+        if (empty($countries)) {
+             $countries = [
+                'England',
+                'Romania'
+            ];
+        }
+
+        return $countries;
     }
 
     public function scopeActive($query)

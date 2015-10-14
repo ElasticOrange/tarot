@@ -158,7 +158,7 @@ class UsersController extends Controller
                 'password' => $password
             ],
             function ($m) use ($user) {
-                $m->to($user->email, $user->name)->sender('admin@tarot.com', 'Tarot Administrator')->from('admin@tarot.com')->subject('Your Tarot account!');
+                $m->to($user->email, $user->name)->subject('Your Tarot account!');
             }
         );
     }

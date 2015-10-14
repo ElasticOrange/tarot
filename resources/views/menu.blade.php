@@ -27,8 +27,6 @@
 						<li><a href="/users">Users</a></li>
 						<li><a href="/templates/question">Question templates</a></li>
 						<li><a href="/templates/email">Email templates</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="/settings">Settings</a></li>
 					</ul>
 				</li>
 			</ul>

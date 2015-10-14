@@ -482,7 +482,6 @@ class Client extends Model
 
     public function markEmailsAsResponded($site) {
         $unrespondedEmails = $this->getUnrespondedEmails($site);
-
         if (!$unrespondedEmails or $unrespondedEmails->isEmpty()) {
             return false;
         }
@@ -497,7 +496,6 @@ class Client extends Model
 
     public function markLastEmailAsUnresponded($site) {
         $lastEmail = $this->getLastEmail($site);
-
         if (!$lastEmail) {
             return false;
         }

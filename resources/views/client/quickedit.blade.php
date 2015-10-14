@@ -11,7 +11,7 @@
 							<input type="hidden" name="_method" value="PUT"/>
 							<h3>
 								Client
-								@if($sites_with_client && ($sites_with_client->count() > 1))
+								@if($subscribtionsCount > 1)
 									<span class="glyphicon glyphicon-duplicate" title="Client is registered on more than one site"></span>
 								@endif
 

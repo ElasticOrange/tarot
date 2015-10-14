@@ -64,6 +64,9 @@ class UsersController extends Controller
 
         $newUser = new User;
         $newUser->fill($input);
+        if ((\Auth::user()->isAdmin()) && $input['type']) {
+            $newUser->type = $input['type'];
+        }
         $newUser->password = $password;
 
         $result = $newUser->save();
@@ -126,7 +129,11 @@ class UsersController extends Controller
         $this->validateUserInput($request, $user);
         $input = $request->all();
 
+        if ((\Auth::user()->isAdmin()) && $input['type']) {
+            $user->type = $input['type'];
+        }
         $user->update($input);
+
 
         if (isset($input['sites'])) {
             $user->sites()->sync($input['sites']);

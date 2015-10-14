@@ -32,7 +32,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $fillable = [
         'name',
         'email',
-        'type',
         'active'
     ];
 

@@ -109,6 +109,13 @@
 							Mark as responded
 						</label>
 					</div>
+				@elseif($client->email)
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="mark_as_responded" mark-url="/sites/{{ $site->id }}/markresponded/{{ $client->email }}" unmark-url="/sites/{{ $site->id }}/markunresponded/{{ $client->email }}">
+							Mark as responded
+						</label>
+					</div>
 				@endif
 			</div>
 		</form>

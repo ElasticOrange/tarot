@@ -146,4 +146,31 @@ class EmailsController extends Controller
 
         return ['result' => $result];
     }
+
+    public function markEmailsFromAddressAsResponded($site, $clientEmailAddress) {
+        $emails = Email::fromEmailAddress($clientEmailAddress)->get(); //->unresponded()->get();
+        if ( ! $emails || $emails->isEmpty()) {
+            return ['result' => true];
+        }
+
+        foreach ($emails as $email) {
+            $email->responded = true;
+            $email->save();
+        }
+
+        return ['result' => true];
+    }
+
+
+    public function markEmailsFromAddressAsUnresponded($site, $clientEmailAddress) {
+        $email = Email::fromEmailAddress($clientEmailAddress)->orderBy('sent_at', 'desc')->first();
+        if ( ! $email) {
+            return ['result' => false];
+        }
+
+        $email->responded = false;
+        $email->save();
+
+        return ['result' => true];
+    }
 }

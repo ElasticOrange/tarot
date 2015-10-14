@@ -477,7 +477,7 @@ class Client extends Model
     }
 
     public function getLastEmail($site) {
-        return $this->emails()->toSite($site)->orderBy('sent_at', 'dest')->first();
+        return $this->emails()->toSite($site)->orderBy('sent_at', 'desc')->first();
     }
 
     public function markEmailsAsResponded($site) {

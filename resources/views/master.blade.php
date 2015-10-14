@@ -9,6 +9,9 @@
 		<link rel="stylesheet" type="text/css" href="/vendor/twbs/bootstrap/dist/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" type="text/css" href="/js/lib/bscombobox/css/bootstrap-combobox.css">
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel="stylesheet" type="text/css" href="/js/lib/DataTables/DataTables-1.10.9/css/dataTables.bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="/js/lib/DataTables/Responsive-1.0.7/css/responsive.bootstrap.min.css"/>
+
 	</head>
 	<body>
 		@include('menu')

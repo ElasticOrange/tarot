@@ -97,6 +97,28 @@ class EmailsController extends Controller
         return redirect("/sites/$site->id/clients/".$nextEmail->client->id);
     }
 
+    public function nextUnrespondedClientForSiteByTimestamp($site, $timeStamp = null) {
+        if ( ! $timeStamp || ! ($timeStamp > 0)) {
+            return redirect()->action('EmailsController@index', [$site]);
+        }
+
+        $emails = Email::getUnrespondedEmailsForSite($site);
+
+        if ( ! $emails || $emails->isEmpty()) {
+            return redirect()->action('EmailsController@index', [$site]);
+        }
+
+        $nextEmail = $emails->first();
+
+        foreach ($emails as $email) {
+            if ($email->sent_at->timestamp < $timeStamp) {
+                return redirect("/sites/$site->id/clients/".$email->from_email);
+            }
+        }
+
+        return redirect("/sites/$site->id/clients/".$nextEmail->from_email);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -63,6 +63,10 @@ class Email extends Model
 		return $query->where('to_email', $email);
 	}
 
+	public function scopeFromEmail($query, $email) {
+		return $query->where('from_email', $email);
+	}
+
 	public function scopeReceived($query) {
 		return $query->where('sent', 0);
 	}

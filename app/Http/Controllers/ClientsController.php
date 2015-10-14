@@ -47,6 +47,12 @@ class ClientsController extends Controller
         $templates = Template::active()->ofCategory('email')->ofSite($site->id)->get();
         $infocosts = $site->infocosts()->active()->default()->get();
 
+        $email = Email::fromEmail($emailAddress)->toSite($site)->orderBy('sent_at', 'desc')->first();
+
+        if ($email) {
+            $nextUrl =  "/sites/$site->id/nextemailbytime/".$email->sent_at->timestamp;
+        }
+
         return view('client.createFromEmail', [
             'site' => $site,
             'client' => $client,
@@ -54,7 +60,7 @@ class ClientsController extends Controller
             'subscribtionsCount' => 0,
             'templates' => $templates,
             'infocosts' => $infocosts,
-            'nextUrl' => ''
+            'nextUrl' => $nextUrl
         ]);
 
     }

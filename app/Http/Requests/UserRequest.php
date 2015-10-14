@@ -37,12 +37,14 @@ class UserRequest extends Request
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'string|min:2',
             'email' => 'required|email',
             'type' => 'integer|min:1|max:3',
             'active' => 'boolean',
             'password' => 'string|min:6'
         ];
+
+        return $rules;
     }
 }

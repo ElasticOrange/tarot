@@ -153,6 +153,11 @@ class UsersController extends Controller
         if ( ! \Auth::user()->isAdmin()) {
             abort(403);
         }
+
+        if (\Auth::user()->id == $user->id) {
+            abort(403);
+        }
+
         $user->delete();
         return redirect('users');
     }

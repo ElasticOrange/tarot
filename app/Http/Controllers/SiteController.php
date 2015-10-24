@@ -37,7 +37,8 @@ class SiteController extends Controller
             abort(403);
         }
         $site = new Site;
-        return view('site/create', ['site' => $site]);
+        $allCountries = \App\Infocost::countries();
+        return view('site/create', ['site' => $site, 'countries' => $allCountries]);
     }
 
     /**
@@ -81,10 +82,13 @@ class SiteController extends Controller
 
         $emailboxes = Emailbox::orderBy('name')->get();
 
+        $allCountries = \App\Infocost::countries();
+
         return view('site/edit', [
             'site' => $site,
             'infocosts' => $infocosts,
-            'emailboxes' => $emailboxes
+            'emailboxes' => $emailboxes,
+            'countries' => $allCountries
         ]);
     }
 

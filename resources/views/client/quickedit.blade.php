@@ -42,16 +42,6 @@
 												placeholder="first name"
 											/>
 										</div>
-										<div class="col-md-2">
-											<input
-												type="text"
-												name="lastName"
-												synchronize="lastName"
-												class="form-control"
-												value="{{ $client->lastName }}"
-												placeholder="last name"
-											/>
-										</div>
 										<div class="col-md-1">
 											<select name="gender"
 													class="form-control"
@@ -75,11 +65,21 @@
 											<?php
 												$combobox = [
 													'attributes' => 'class="form-control combobox" name="country" placeholder="country" synchronize="country"',
-													'options' => ['Australia', 'England', 'USA'],
-													'selected' => $client->country
+													'options' => $countries,
+													'selected' => ($client->country ? $client->country : $site->country)
 												];
 											?>
 											@include('_combobox', $combobox)
+										</div>
+										<div class="col-md-2">
+											<input
+												type="text"
+												name="interest"
+												synchronize="interest"
+												class="form-control"
+												value="{{ $client->interest }}"
+												placeholder="interest"
+											/>
 										</div>
 									</div>
 								</div>

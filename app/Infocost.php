@@ -18,7 +18,7 @@ class Infocost extends Model
     	return $this->belongsTo('App\Site');
     }
 
-    public function countries() {
+    static public function countries() {
         $countries = \Config::get('countries.countries');
 
         if (empty($countries)) {

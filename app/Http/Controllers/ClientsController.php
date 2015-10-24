@@ -53,6 +53,8 @@ class ClientsController extends Controller
             $nextUrl =  "/sites/$site->id/nextemailbytime/".$email->sent_at->timestamp;
         }
 
+        $countries = \App\Infocost::countries();
+
         return view('client.createFromEmail', [
             'site' => $site,
             'client' => $client,
@@ -60,7 +62,8 @@ class ClientsController extends Controller
             'subscribtionsCount' => 0,
             'templates' => $templates,
             'infocosts' => $infocosts,
-            'nextUrl' => $nextUrl
+            'nextUrl' => $nextUrl,
+            'countries' => $countries
         ]);
 
     }
@@ -104,8 +107,13 @@ class ClientsController extends Controller
     {
         // Passing siteid to new clients creates valid client fields for that site->form
         $client = new Client(['listid' => $site->id]);
+        $countries = \App\Infocost::countries();
 
-        return view('client.create', ['site' => $site, 'client' => $client]);
+        return view('client.create', [
+            'site' => $site,
+            'client' => $client,
+            'countries' => $countries
+        ]);
     }
 
     /**
@@ -211,6 +219,7 @@ class ClientsController extends Controller
                $nextUrl = "/sites/$site->id/nextemail/$client->id";
             }
         }
+        $countries = \App\Infocost::countries();
 
         return view('client/edit', [
             'site' => $site,
@@ -220,7 +229,8 @@ class ClientsController extends Controller
             'templates' => $templates,
             'infocosts' => $infocosts,
             'nextUrl' => $nextUrl,
-            'alertClientOpenedToSoon' => $alertClientOpenedToSoon
+            'alertClientOpenedToSoon' => $alertClientOpenedToSoon,
+            'countries' => $countries
         ]);
     }
 

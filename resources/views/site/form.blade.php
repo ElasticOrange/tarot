@@ -28,6 +28,17 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label >Country</label>
+		<?php
+			$combobox = [
+				'attributes' => 'class="form-control combobox" name="country"',
+				'options' => $countries,
+				'selected' => $site->country
+			];
+		?>
+		@include('_combobox', $combobox)
+	</div>
+	<div class="form-group">
 		<label>Sender name</label>
 		<input 	type="text"
 				class="form-control"

@@ -12,7 +12,7 @@
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-xs-2 control-label">First name</label>
+	<label class="col-xs-2 control-label">Name</label>
 	<div class="col-xs-10">
 		<input 	type="text"
 				class="form-control"
@@ -20,18 +20,6 @@
 				synchronize="firstName"
 				value="{{ $client->firstName }}"
 				placeholder="Ex: John"
-		/>
-	</div>
-</div>
-<div class="form-group">
-	<label class="col-xs-2 control-label">Last name</label>
-	<div class="col-xs-10">
-		<input 	type="text"
-				class="form-control"
-				name="lastName"
-				synchronize="lastName"
-				value="{{ $client->lastName }}"
-				placeholder="Ex: Doe"
 		/>
 	</div>
 </div>
@@ -71,27 +59,26 @@
 		</select>
 	</div>
 </div>
-<!--div class="form-group">
+<div class="form-group">
 	<label class="col-xs-2 control-label">Interest</label>
 	<div class="col-xs-10">
-		<?php
-			$combobox = [
-				'attributes' => 'class="form-control combobox" name="interest" synchronize="interest"',
-				'options' => ['Carrier', 'Love', 'Luck', 'Money'],
-				'selected' => $client->interest
-			];
-		?>
-		@include('_combobox', $combobox)
+		<input 	type="text"
+				class="form-control"
+				name="interest"
+				synchronize="interest"
+				value="{{ $client->interest }}"
+				placeholder="Ex: love"
+		/>
 	</div>
-</div-->
+</div>
 <div class="form-group">
 	<label class="col-xs-2 control-label">Country</label>
 	<div class="col-xs-10">
 		<?php
 			$combobox = [
 				'attributes' => 'class="form-control combobox" name="country" synchronize="country"',
-				'options' => ['Australia', 'England', 'USA'],
-				'selected' => $client->country
+				'options' => $countries,
+				'selected' => ($client->country ? $client->country : $site->country)
 			];
 		?>
 		@include('_combobox', $combobox)

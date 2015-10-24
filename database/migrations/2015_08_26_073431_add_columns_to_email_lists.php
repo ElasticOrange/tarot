@@ -17,6 +17,7 @@ class AddColumnsToEmailLists extends Migration
             $table->string('subject', 100);
             $table->string('signature', 1000);
             $table->integer('emailbox_id');
+            $table->string('country', 50);
             $table->string('unsubscribe', 10000);
             $table->boolean('active');
             $table->softDeletes();
@@ -46,6 +47,7 @@ class AddColumnsToEmailLists extends Migration
                 'subject',
                 'signature',
                 'emailbox_id',
+                'country',
                 'unsubscribe',
                 'active',
                 'deleted_at',

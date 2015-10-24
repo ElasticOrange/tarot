@@ -20,6 +20,7 @@ class Site extends Model
 		'email',
 		'sender',
 		'subject',
+		'country',
 		'unsubscribe',
 		'signature',
 		'active',

@@ -143,8 +143,9 @@ class TemplatesController extends Controller
         if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
             abort(403);
         }
-        $infocost->delete();
-        return redirect('sites/'. $site->id. '/templates/'.$template->category);
+        $category = $template->category;
+        $template->delete();
+        return redirect('sites/'. $site->id. '/templates/'.$category);
     }
 
     public function get($site, $template) {
@@ -152,4 +153,25 @@ class TemplatesController extends Controller
 
         return $template;
     }
+
+    public function bulkDelete($site, Request $request) {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
+
+        $templateIds = $request->get('id');
+
+        if (empty($templateIds)) {
+            return back();
+        }
+
+        \App\Template::whereIn('id', $templateIds)->delete();
+
+        return back();
+    }
+
+    public function bulkCopy($site, Request $request) {
+dd($request->all());
+    }
+
 }

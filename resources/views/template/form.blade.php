@@ -78,12 +78,22 @@
 							<li><a href="#" data-insert-text="%%%client-interest%%%">Interest</a></li>
 							<li><a href="#" data-insert-text="%%%client-age%%%">Age</a></li>
 							<li><a href="#" data-insert-text="%%%client-birth-date%%%">Date of birth</a></li>
+							<li><a href="#" data-insert-text="%%%client-sign%%%">Client zodiacal sign</a></li>
+							<li><a href="#" data-insert-text="%%%client-number%%%">Client destiny number</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-infocost%%%">Info cost</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-telephone%%%">Telephone</a></li>
 							<li><a href="#" data-insert-text="%%%site-default-country%%%">Country</a></li>
-							<li><a href="#" data-insert-text="%%%site-default-name%%%">Site name</a></li>
-							<li><a href="#" data-insert-text="%%%site-default-url%%%">Site URL</a></li>
-							<li><a href="#" data-insert-text="%%%site-default-sender%%%">Sender name</a></li>
+							<li><a href="#" data-insert-text="%%%site-name%%%">Site name</a></li>
+							<li><a href="#" data-insert-text="%%%site-url%%%">Site URL</a></li>
+							<li><a href="#" data-insert-text="%%%site-sender-name%%%">Sender name</a></li>
+							<li><a href="#" data-insert-text="%%%site-sender-email%%%">Sender email</a></li>
+							<li><a href="#" data-insert-text="%%%site-signature%%%">Site signature</a></li>
+							<li><a href="#" data-insert-text="%%%site-unsubscribe%%%">Site unsubscribe</a></li>
+							<li><a href="#" data-insert-text="%%%template-sender%%%">Template sender</a></li>
+							<li><a href="#" data-insert-text="%%%template-subject%%%">Template subject</a></li>
+							<li><a href="#" data-insert-text="%%%current-date%%%">Current date</a></li>
+							<li><a href="#" data-insert-text="%%%current-weekday%%%">Current day of week</a></li>
+
 						</ul>
 					</div>
 				</div>

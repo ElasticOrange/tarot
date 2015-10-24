@@ -302,18 +302,120 @@ function initEmailsLoader() {
 	return true;
 }
 
-function getValuesForTemplate() {
+function getZodiacalSignFromDate(date, signs) {
+	if (! _.isArray(signs)) {
+		signs = [
+			"Capricorn" ,
+			"Aquarius",
+			"Pisces",
+			"Aries",
+			"Taurus",
+			"Gemini",
+			"Cancer",
+			"Leo",
+			"Virgo",
+			"Libra",
+			"Scorpio",
+			"Sagittarius"
+		];
+	}
+
+	var signStartDaysPerMonth = {
+		0: 20,
+		1: 19,
+		2: 21,
+		3: 20,
+		4: 21,
+		5: 21,
+		6: 23,
+		7: 23,
+		8: 23,
+		9 : 23,
+		10: 22,
+		11: 22
+	}
+
+	var day = date.getDate();
+	var month = date.getMonth();
+	var nextMonth = month + 1;
+	if (nextMonth > 11) {
+		nextMonth = 0;
+	}
+
+	if (day >= signStartDaysPerMonth[month]) {
+		return signs[nextMonth];
+	}
+
+	return signs[month];
+}
+
+function getLuckyNumber(birthDateString) {
+	var digits = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+	var result = 0;
+	_.forEach(birthDateString, function(char) {
+		if (_.includes(digits, char)) {
+			result += 0 + parseInt(char, 10);
+		}
+	});
+
+	if (_.includes([11, 22], result)) {
+		return result;
+	}
+
+	if (result > 9) {
+		return getLuckyNumber(result.toString());
+	}
+
+	return result;
+}
+
+function minDigits(value, digitsCount) {
+	var valStr = value.toString();
+
+	while (valStr.length < digitsCount) {
+		valStr = '0' + valStr;
+	}
+
+	return valStr;
+}
+
+function formatDate(date) {
+
+	if ( ! date instanceof Date) {
+		console.error('formatDate(): date is not valid');
+		return '';
+	}
+
+	return minDigits(date.getDate(), 2) + '-' + minDigits((date.getMonth() + 1), 2) + '-' + date.getFullYear();
+}
+
+function dayOfWeek(date) {
+	var dayOfWeek = {
+		1: 'monday',
+		2: 'tuesday',
+		3: 'wednesday',
+		4: 'thursday',
+		5: 'friday',
+		6: 'saturday',
+		7: 'sunday'
+	};
+
+	return dayOfWeek[date.getDay()];
+}
+
+function getValuesForTemplate(template) {
+
+console.error('template', template);
 	var birthDateText =  $('input[name=birthDate]').val();
 	var birthDate = new Date(birthDateText);
 	var age = diffDatesInYears(new Date(), birthDate);
-
+	var birthDateString = formatDate(birthDate);
 	var country = $('input[name=country]').val();
 	var infocostsForCountry = _.filter(infocosts, {country: country});
 	var infocost;
 	if (!_.isEmpty(infocostsForCountry)) {
 		var infocost = infocostsForCountry[0];
 	}
-
 	var result = {
 		'client-first-name' : $('input[name=firstName]').val(),
 		'client-last-name' :  $('input[name=lastName]').val(),
@@ -321,21 +423,30 @@ function getValuesForTemplate() {
 		'client-gender' :  $('select[name=gender]').val(),
 		'client-interest' :  $('input[name=interest]').val(),
 		'client-age' : age,
-		'client-birth-date' : birthDate.getDay() + '-' + birthDate.getMonth() + '-' + birthDate.getFullYear(),
+		'client-birth-date' : birthDateString,
+		'client-sign': getZodiacalSignFromDate(birthDate),
+		'client-number': getLuckyNumber(birthDateString),
 		'site-default-infocost' : (infocost ? infocost.infocost : ''),
 		'site-default-telephone' : (infocost ? infocost.telephone : ''),
-		'site-default-country' : '',
-		'site-default-name' : currentSite.ownername,
-		'site-default-url' : currentSite.url,
-		'site-default-sender' : currentSite.owneremail
+		'site-default-country' : country,
+		'site-name': currentSite.name,
+		'site-url' : currentSite.url,
+		'site-sender-name' : currentSite.ownername,
+		'site-sender-email' : currentSite.owneremail,
+		'site-signature' : currentSite.signature,
+		'site-unsubscribe' : currentSite.unsubscribe,
+		'template-sender': template.sender_name,
+		'template-subject': template.subject,
+		'current-date': formatDate(new Date()),
+		'current-day': dayOfWeek(new Date())
 	}
-
+console.error('Template values', result);
 	return result;
 }
 
-function insertValuesInTemplate(content) {
-	var values = getValuesForTemplate();
-
+function insertValuesInTemplate(template) {
+	var values = getValuesForTemplate(template);
+	var content = template.content;
 	_.forEach(values, function(value, key) {
 		var placeHolder = '%%%' + key + '%%%';
 		var regEx = new RegExp(placeHolder, 'g');
@@ -354,7 +465,7 @@ function loadTemplateInEditor(templateId) {
 	});
 
 	request.done(function(template) {
-		templateBody = insertValuesInTemplate(template.content);
+		templateBody = insertValuesInTemplate(template);
 		CKEDITOR.instances.rich_editor.setData(templateBody);
 		$('#send-email-form').find('[name=content]').val(templateBody);
 		if ( ! _.isEmpty(template.sender_name)) {
@@ -374,7 +485,7 @@ function onEmailSendSuccess() {
 console.error('onEmailSendSuccess');
 	var href = $('#next-email').attr('href');
 
-	redirect(href, 1);
+	//redirect(href, 1);
 }
 
 function insertAtCaret(areaId,text) {

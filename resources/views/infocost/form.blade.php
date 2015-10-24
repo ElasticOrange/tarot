@@ -25,6 +25,7 @@
 		<textarea 	name="infocost"
 					rows="3"
 					class="form-control"
+					id="rich_editor"
 		>{{$infocost->infocost}}</textarea>
 	</div>
 	<div class="checkbox">

@@ -9,12 +9,6 @@ use App\Http\Controllers\Controller;
 
 class TemplatesController extends Controller
 {
-    function __construct() {
-        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
-            abort(403);
-        }
-    }
-
     public function redirect($templateCategory)
     {
         $siteId = \Auth::user()->currentSiteId();
@@ -43,6 +37,9 @@ class TemplatesController extends Controller
      */
     public function index($site, $templateCategory)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $templates = $site->templates()->ofCategory($templateCategory)->get();
 
         return view('template.list', [
@@ -59,6 +56,9 @@ class TemplatesController extends Controller
      */
     public function create($site, $templateCategory)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $newTemplate = new \App\Template;
 
         $newTemplate->category = $templateCategory;
@@ -108,6 +108,9 @@ class TemplatesController extends Controller
      */
     public function edit($site, $template)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $templateTypes = $template->getAllTypes();
 
         return view('template.edit', ['site' => $site, 'template' => $template, 'templateTypes' => $templateTypes]);
@@ -137,6 +140,9 @@ class TemplatesController extends Controller
      */
     public function destroy($site, $template)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $infocost->delete();
         return redirect('sites/'. $site->id. '/templates/'.$template->category);
     }

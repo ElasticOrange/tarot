@@ -10,11 +10,6 @@ use App\Infocost;
 
 class InfocostsController extends Controller
 {
-    function __construct() {
-        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
-            abort(403);
-        }
-    }
 
     /**
      * Display a listing of the resource.
@@ -23,6 +18,12 @@ class InfocostsController extends Controller
      */
     public function index($site)
     {
+        function __construct() {
+            if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+                abort(403);
+            }
+        }
+
         $infocosts = $site->infocosts()->orderBy('country')->get(); //->orderBy('active')->orderBy('default')
 
 
@@ -36,6 +37,11 @@ class InfocostsController extends Controller
      */
     public function create($site)
     {
+        function __construct() {
+            if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+                abort(403);
+            }
+        }
         $infocost = new Infocost;
         $allCountries = $infocost->countries();
         return view('infocost/create', ['site' => $site, 'infocost' => $infocost, 'countries' => $allCountries]);
@@ -78,7 +84,11 @@ class InfocostsController extends Controller
      */
     public function edit($site, $infocost)
     {
-
+        function __construct() {
+            if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+                abort(403);
+            }
+        }
         return view('infocost/edit', ['site' => $site, 'infocost' => $infocost, 'countries' => $infocost->countries()]);
     }
 
@@ -113,6 +123,11 @@ class InfocostsController extends Controller
      */
     public function destroy($site, $infocost)
     {
+        function __construct() {
+            if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+                abort(403);
+            }
+        }
         $infocost->delete();
         return redirect('sites/' . $site->id);
     }

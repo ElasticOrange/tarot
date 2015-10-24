@@ -12,12 +12,6 @@ use App\Emailbox as Emailbox;
 
 class EmailboxController extends Controller
 {
-    function __construct() {
-        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
-            abort(403);
-        }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +19,9 @@ class EmailboxController extends Controller
      */
     public function index()
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $emailboxes = Emailbox::with('sites')->get();
         return view('emailbox.list', ['emailboxes' => $emailboxes]);
     }
@@ -36,6 +33,9 @@ class EmailboxController extends Controller
      */
     public function create()
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $emailbox = new Emailbox();
         return view('emailbox.create', ['emailbox' => $emailbox]);
     }
@@ -74,6 +74,9 @@ class EmailboxController extends Controller
      */
     public function edit($emailbox)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         return view('emailbox.edit', ['emailbox' => $emailbox]);
     }
 
@@ -99,6 +102,9 @@ class EmailboxController extends Controller
      */
     public function destroy($emailbox)
     {
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
         $emailbox->delete();
 
         return redirect()->action('EmailboxController@index');

@@ -7,6 +7,7 @@
 									data-ajax="true"
 									success-message="Client updated successfully"
 									error-message="Error saving client"
+									id="form-client-informations"
 							>
 								{!! csrf_field() !!}
 								<input type="hidden" name="_method" value="PUT"/>

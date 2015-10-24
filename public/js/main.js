@@ -1,5 +1,6 @@
 var $successBox, $errorBox, $warningBox, successBoxTimeout, errorBoxTimeout;
 var loaderTimeoutHandle;
+var interestChanged = false;
 
 var hasLocalStorage = (function() {
   try {
@@ -254,8 +255,7 @@ function initEmailsLoader() {
 
 	var updateEmails = function(newEmails) {
 		if (!_.isArray(newEmails)) {
-			console.error('updateEmails: Emails is not array',newEmails);
-			return false;
+			return withError(['updateEmails: Emails is not array',newEmails]);
 		}
 
 		// delete emails that are not in the newEmails
@@ -382,8 +382,7 @@ function minDigits(value, digitsCount) {
 function formatDate(date) {
 
 	if ( ! date instanceof Date) {
-		console.error('formatDate(): date is not valid');
-		return '';
+		return withError(['formatDate(): date is not valid', date], '');
 	}
 
 	return minDigits(date.getDate(), 2) + '-' + minDigits((date.getMonth() + 1), 2) + '-' + date.getFullYear();
@@ -464,28 +463,37 @@ function loadTemplateInEditor(templateId) {
 		dataType: 'json'
 	});
 
-	request.done(function(template) {
-		templateBody = insertValuesInTemplate(template);
-		CKEDITOR.instances.rich_editor.setData(templateBody);
-		$('#send-email-form').find('[name=content]').val(templateBody);
-		if ( ! _.isEmpty(template.sender_name)) {
- 			$('input[name=sender]').val(template.sender_name);
-		}
-		if ( ! _.isEmpty(template.subject)) {
- 			$('input[name=subject]').val(template.subject);
-		}
+	request
+		.done(function(template) {
+			if (template.category != 'question' ) {
+				return;
+			}
+			setClientInterest(template.type);
+		})
+		.done(function(template) {
+			templateBody = insertValuesInTemplate(template);
+			CKEDITOR.instances.rich_editor.setData(templateBody);
+			$('#send-email-form').find('[name=content]').val(templateBody);
+			if ( ! _.isEmpty(template.sender_name)) {
+	 			$('input[name=sender]').val(template.sender_name);
+			}
+			if ( ! _.isEmpty(template.subject)) {
+	 			$('input[name=subject]').val(template.subject);
+			}
 
-		if (shouldAutoSend()) {
-			$('#send-email-form').submit();
-		}
-	});
+			if (shouldAutoSend()) {
+				$('#send-email-form').submit();
+			}
+		});
 }
 
 function onEmailSendSuccess() {
-console.error('onEmailSendSuccess');
 	var href = $('#next-email').attr('href');
 
+	saveClientInterest().done(function() {
 	//redirect(href, 1);
+	});
+
 }
 
 function insertAtCaret(areaId,text) {
@@ -575,16 +583,14 @@ function showWarningMessage(caption) {
 
 function generateLaravelErrorList(errorList) {
 	if(!_.isPlainObject(errorList)) {
-		console.error('generateLaravelErrorList(): errorList is invalid', errorList);
-		return;
+		return withError(['generateLaravelErrorList(): errorList is invalid', errorList]);
 	}
 
 	var resultHtml = '';
 
 	_.forOwn(errorList, function(messageList, formItem) {
 		if (!_.isArray(messageList)) {
-			console.error('generateLaravelErrorList(): messageList should be array', messageList, errorList, formItem);
-			return;
+			return withError(['generateLaravelErrorList(): messageList should be array', messageList, errorList, formItem]);
 		}
 
 		_.forEach(messageList, function(errorMessage) {
@@ -597,13 +603,11 @@ function generateLaravelErrorList(errorList) {
 
 function getKeyFromPlaceholder(placeholder) {
 	if (!_.isString(placeholder)) {
-		console.error('getKeyFromPlaceholder(): placeholder is not string', placeholder);
-		return;
+		return withError(['getKeyFromPlaceholder(): placeholder is not string', placeholder]);
 	}
 
 	if ((placeholder[0] !== '{') || (placeholder.substr(-1) !== '}')) {
-		console.error('getKeyFromPlaceholder(): placeholder is not of form {key}', placeholder);
-		return placeholder;
+		return withError(['getKeyFromPlaceholder(): placeholder is not of form {key}', placeholder], placeholder);
 	}
 
 	return placeholder.replace(/[{}]/g, '');
@@ -611,13 +615,11 @@ function getKeyFromPlaceholder(placeholder) {
 
 function fillPlaceholdersInString(string, data) {
 	if(!_.isString(string)) {
-		console.error('fillPlaceholdersInString(): string parameter should be of string type', string);
-		return;
+		return withError(['fillPlaceholdersInString(): string parameter should be of string type', string]);
 	}
 
 	if (!_.isPlainObject(data)) {
-		console.error('fillPlaceholdersInString(): data should be an object', data);
-		return string;
+		return withError(['fillPlaceholdersInString(): data should be an object', data], string);
 	}
 
 	var placeholders = string.match(/\{([a-z0-9\-_]+)\}/gi);
@@ -674,8 +676,7 @@ function submitAjaxForm(form) {
 
 	request.done(function(data) {
 		if (!_.isPlainObject(data)) {
-			console.error('submitAjaxForm(): ajax create did not receive the created item', data);
-			return;
+			return withError(['submitAjaxForm(): ajax create did not receive the created item', data]);
 		}
 
 		var successMessage = $form.attr('success-message');
@@ -713,6 +714,36 @@ var updateExpandedIndicator = function(element) {
 	else {
 		$element.find('.glyphicon').removeClass('glyphicon-triangle-bottom').addClass('glyphicon-triangle-right');
 	}
+}
+
+var resolvedPromise = function() {
+	return $.Deferred().resolve().promise();
+}
+
+var setClientInterest = function(interest) {
+	var interestInput = $('input[name=interest]');
+
+	if ( ! interestInput.length) {
+		con
+		return false;
+	}
+
+	var oldInterest = interestInput.val();
+	if (oldInterest == interest) {
+		return true;
+	}
+
+	interestInput.val(interest);
+	interestChanged = true;
+	return true;
+}
+
+var saveClientInterest = function() {
+	if (!interestChanged) {
+		return resolvedPromise();
+	}
+
+	return submitGenericAjaxForm($('form#form-client-informations'));
 }
 
 $(function(){

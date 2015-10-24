@@ -78,6 +78,7 @@ table.table td a {
 
 .email-body {
 	padding-left: 40px;
+	overflow: scroll;
 }
 
 a.table-link {

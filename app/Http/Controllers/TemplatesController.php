@@ -148,7 +148,7 @@ class TemplatesController extends Controller
     }
 
     public function get($site, $template) {
-        $template->content = $template->content.$site->signature.$site->unsubscribe;
+        $template->content = $template->content;
 
         return $template;
     }

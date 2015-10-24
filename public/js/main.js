@@ -438,7 +438,7 @@ console.error('template', template);
 		'template-sender': template.sender_name,
 		'template-subject': template.subject,
 		'current-date': formatDate(new Date()),
-		'current-day': dayOfWeek(new Date())
+		'current-weekday': dayOfWeek(new Date())
 	}
 console.error('Template values', result);
 	return result;

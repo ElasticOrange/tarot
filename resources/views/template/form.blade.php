@@ -32,7 +32,7 @@
 					class="form-control"
 					name="sender_name"
 					value="{{ $template->sender_name }}"
-					placeholder="Ex: John Doe"
+					placeholder="Ex: {{ $site->ownername }}"
 			/>
 		</div>
 		<div class="form-group">
@@ -41,7 +41,7 @@
 					class="form-control"
 					name="subject"
 					value="{{ $template->subject }}"
-					placeholder="Ex: Here is your reading"
+					placeholder="Ex: {{ $site->subject }}"
 			/>
 		</div>
 		<div class="form-group">

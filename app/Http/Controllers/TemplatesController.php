@@ -171,7 +171,30 @@ class TemplatesController extends Controller
     }
 
     public function bulkCopy($site, Request $request) {
-dd($request->all());
+        if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
+            abort(403);
+        }
+
+        $templateIds = $request->get('id');
+
+        if (empty($templateIds)) {
+            return back();
+        }
+
+        $templates = \App\Template::whereIn('id', $templateIds)->get();
+
+        if ( ! $templates) {
+            return back();
+        }
+
+        foreach($templates as $template) {
+            $newTemplate = $template->replicate();
+
+            $newTemplate->name = $newTemplate->name.' Copy';
+            $newTemplate->save();
+        }
+
+        return back();
     }
 
 }

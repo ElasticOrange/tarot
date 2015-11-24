@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<p></p>
-	@if(!count($sites))
+	@if(empty($sitesData))
 		<div class="alert alert-warning">
 			<span class="content-placeholder">There are no sites available for the moment. </span>
 		</div>
@@ -28,24 +28,24 @@
 			</thead>
 			<tbody>
 				<?php $rowIndex = 0 ?>
-				@foreach($sites as $site)
+				@foreach($sitesData as $siteData)
 					<tr>
 						<td>{{ ++$rowIndex }}</td>
 						<td>
-							<a href="/sites/{{ $site->id }}/questions">
-								<strong>{{ $site->name }}</strong></td>
+							<a href="/sites/{{ $siteData['site']->id }}/questions">
+								<strong>{{ $siteData['site']->name }}</strong></td>
 							</a>
 						<td>
-							@if($site->clients->count())
-								<a href="/sites/{{ $site->id }}/questions">
-									<span class="badge">{{ $site->clients->count() }}</span>
+							@if($siteData['unrespondedQuestions'])
+								<a href="/sites/{{ $siteData['site']->id }}/questions">
+									<span class="badge">{{ $siteData['unrespondedQuestions'] }}</span>
 								</a>
 							@endif
 						</td>
 						<td>
-							@if($site->emails->count())
-								<a href="/sites/{{ $site->id }}/emails">
-									<span class="badge">{{ $site->emails->count() }}</span>
+							@if($siteData['unrespondedEmails'])
+								<a href="/sites/{{ $siteData['site']->id }}/emails">
+									<span class="badge">{{ $siteData['unrespondedEmails'] }}</span>
 								</a>
 							@endif
 						</td>

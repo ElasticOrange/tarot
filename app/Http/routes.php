@@ -68,14 +68,19 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('emailboxes', 'EmailboxController');
 
     Route::get('/', function () {
+        $sites = \Auth::user()->sites()->get();
 
-        $sites = \Auth::user()->sites()->with(['emails' => function($query) {
-            return $query->received()->unresponded();
-        }])->with(['clients' => function($query) {
-            return $query->confirmed()->withQuestionUnresponded();
-        }])->get();
-
-        return view('homepage', ['sites' => $sites]);
+        $sitesData = [];
+        if($sites) {
+            foreach($sites as $site) {
+                $sitesData[] = [
+                    'site' => $site,
+                    'unrespondedEmails' => $site->emails()->received()->unresponded()->count(),
+                    'unrespondedQuestions' => $site->clients()->isActive()->withQuestionUnresponded()->count()
+                ];
+            }
+        }
+        return view('homepage', ['sitesData' => $sitesData]);
     });
 
     Route::get('questions', function () {

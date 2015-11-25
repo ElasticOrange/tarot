@@ -271,6 +271,10 @@ function initEmailsLoader() {
 	}
 
 	var insertNewEmail = function(email, afterEmail) {
+		if (! isValidEmail(email)) {
+			return false;
+		}
+
 		if (emailExists(email)) {
 			return false;
 		}

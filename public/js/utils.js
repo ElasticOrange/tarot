@@ -255,11 +255,13 @@ function hasStructure(object, structure) {
     _.forOwn(structure, function(value, key) {
         if (!_.has(object, key)){
             result = false;
+            console.error(key + ' key was not found');
             return false;
         }
 
         if (value !== undefined && typeof(object[key]) !== typeof(value)) {
             result = false;
+            console.error(key + 'key is not of type ' + typeof(value));
             return false;
         }
     })

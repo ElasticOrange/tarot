@@ -24,7 +24,7 @@
 					<th>Name</th>
 					<th>Email</th>
 					<th class="visible-lg">Gender</th>
-					<th class="visible-md">Country</th>
+					<th class="visible-lg">Country</th>
 					<th class="visible-lg">Last email</th>
 					<th class="visible-lg">Last response</th>
 					<th class="visible-lg"># Emails</th>

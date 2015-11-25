@@ -505,4 +505,8 @@ class Client extends Model
 
         return true;
     }
+
+    public static function filterByString($filterValue) {
+        $instance = new static;
+    }
 }

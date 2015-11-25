@@ -4,12 +4,12 @@ var interestChanged = false;
 
 var hasLocalStorage = (function() {
   try {
-  	var mod = '__localStorageTest';
-    localStorage.setItem(mod, mod);
-    localStorage.removeItem(mod);
-    return true;
+	var mod = '__localStorageTest';
+	localStorage.setItem(mod, mod);
+	localStorage.removeItem(mod);
+	return true;
   } catch (exception) {
-    return false;
+	return false;
   }
 }());
 
@@ -51,7 +51,61 @@ function initOnceActiveElements() {
 
 	initAutoSend($('#send_after_template_fill'));
 
-	$('#clients-table').DataTable();
+	$('#clients-table').DataTable({
+		"columnDefs": [
+			{
+				name: "index",
+				targets: 0,
+				orderable: false
+			},
+			{
+				name: "name",
+				targets: 1,
+				orderable: false
+			},
+			{
+				name: "emailaddress",
+				targets: 2,
+				orderable: false
+			},
+			{
+				name: "gender",
+				targets: 3,
+				orderable: false
+			},
+			{
+				name: "lastEmail",
+				targets: 4,
+				orderable: false
+			},
+			{
+				name: "lastResponse",
+				targets: 5,
+				orderable: false
+			},
+			{
+				name: "emailCount",
+				targets: 6,
+				orderable: false
+			},
+			{
+				name: "comments",
+				targets: 7,
+				orderable: false
+			}
+		],
+		responsive: true,
+		stateSave: true,
+		serverSide: true,
+		ajax: {
+		    "url": window.location.href + '/query',
+		},
+		createdRow: function(row, data, dataIndex) {
+//console.log('row', row, data, dataIndex);
+			$(row).attr('href',  window.location.href + '/' + data[9]);
+			return row;
+		}
+	});
 
 }
 
@@ -475,10 +529,10 @@ function loadTemplateInEditor(templateId) {
 			CKEDITOR.instances.rich_editor.setData(templateBody);
 			$('#send-email-form').find('[name=content]').val(templateBody);
 			if ( ! _.isEmpty(template.sender_name)) {
-	 			$('input[name=sender]').val(template.sender_name);
+				$('input[name=sender]').val(template.sender_name);
 			}
 			if ( ! _.isEmpty(template.subject)) {
-	 			$('input[name=subject]').val(template.subject);
+				$('input[name=subject]').val(template.subject);
 			}
 
 			if (shouldAutoSend()) {
@@ -497,37 +551,37 @@ function onEmailSendSuccess() {
 }
 
 function insertAtCaret(areaId,text) {
-    var txtarea = document.getElementById(areaId);
-    var scrollPos = txtarea.scrollTop;
-    var strPos = 0;
-    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
-        "ff" : (document.selection ? "ie" : false ) );
-    if (br == "ie") {
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart ('character', -txtarea.value.length);
-        strPos = range.text.length;
-    }
-    else if (br == "ff") strPos = txtarea.selectionStart;
+	var txtarea = document.getElementById(areaId);
+	var scrollPos = txtarea.scrollTop;
+	var strPos = 0;
+	var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+		"ff" : (document.selection ? "ie" : false ) );
+	if (br == "ie") {
+		txtarea.focus();
+		var range = document.selection.createRange();
+		range.moveStart ('character', -txtarea.value.length);
+		strPos = range.text.length;
+	}
+	else if (br == "ff") strPos = txtarea.selectionStart;
 
-    var front = (txtarea.value).substring(0,strPos);
-    var back = (txtarea.value).substring(strPos,txtarea.value.length);
-    txtarea.value=front+text+back;
-    strPos = strPos + text.length;
-    if (br == "ie") {
-        txtarea.focus();
-        var range = document.selection.createRange();
-        range.moveStart ('character', -txtarea.value.length);
-        range.moveStart ('character', strPos);
-        range.moveEnd ('character', 0);
-        range.select();
-    }
-    else if (br == "ff") {
-        txtarea.selectionStart = strPos;
-        txtarea.selectionEnd = strPos;
-        txtarea.focus();
-    }
-    txtarea.scrollTop = scrollPos;
+	var front = (txtarea.value).substring(0,strPos);
+	var back = (txtarea.value).substring(strPos,txtarea.value.length);
+	txtarea.value=front+text+back;
+	strPos = strPos + text.length;
+	if (br == "ie") {
+		txtarea.focus();
+		var range = document.selection.createRange();
+		range.moveStart ('character', -txtarea.value.length);
+		range.moveStart ('character', strPos);
+		range.moveEnd ('character', 0);
+		range.select();
+	}
+	else if (br == "ff") {
+		txtarea.selectionStart = strPos;
+		txtarea.selectionEnd = strPos;
+		txtarea.focus();
+	}
+	txtarea.scrollTop = scrollPos;
 }
 
 function redirect(url, timeout) {
@@ -681,7 +735,7 @@ function submitAjaxForm(form) {
 
 		var successMessage = $form.attr('success-message');
 		if (successMessage) {
- 			showSuccessMessage(successMessage);
+			showSuccessMessage(successMessage);
 		}
 
 		var successUrl = $form.attr('success-url');

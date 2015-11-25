@@ -84,6 +84,36 @@ class ClientsController extends Controller
     public function index($site)
     {
         $clients = $site->clients()
+                        ->with(['data.field', 'emails', 'sentEmails'])->limit(1)->get();
+
+/*                        ->with(['emails' => function($query) {
+                                return $query->limit(21);
+                            }])
+                        ->with(['sentEmails' => function($query) {
+                                return $query->notBounced()->limit(1);
+                            }])
+                        ->get();*/
+
+        return view('client.list', [
+            'site' => $site,
+            'clients' => $clients
+        ]);
+    }
+
+    public function query($site, Request $request)
+    {
+
+//dd($request->all());
+
+        $queryBuilder = $site   ->clients()
+                                ->where('emailaddress' , 'like', '%'.$request->input('search')['value'].'%')
+                                ->where('comment' , 'like', '%'.$request->input('search')['value'].'%');
+
+        $clientsCount = $site->clients()->count();
+
+        $clients = $site->clients()
+                        ->take($request->input('length'))
+                        ->skip($request->input('start'))
                         ->with('data.field')
                         ->with(['emails' => function($query) {
                                 return $query->limit(21);
@@ -92,10 +122,33 @@ class ClientsController extends Controller
                                 return $query->notBounced()->limit(1);
                             }])
                         ->get();
-        return view('client.list', [
-            'site' => $site,
-            'clients' => $clients
-        ]);
+
+        $tableData = [];
+        $index = $request->input('start');
+        foreach($clients as $client) {
+            $tableData[] = [
+                ++$index,
+                $client->firstName.' '.$client->lastName,
+                $client->emailaddress,
+                $client->gender,
+                $client->country,
+                '',
+                '',
+                '',
+                $client->comment,
+                $client->id
+            ];
+        }
+
+        $result = [
+            'draw' => 0 + $request->input('draw'),
+            'recordsTotal' => $clientsCount,
+            'recordsFiltered' => $clientsCount,
+            'data' => $tableData,
+            'request' => $request->all()
+        ];
+
+        return $result;
     }
 
     /**

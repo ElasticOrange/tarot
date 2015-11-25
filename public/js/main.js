@@ -217,7 +217,7 @@ function initEmailsLoader() {
 		to_name: '',
 		text_content: '',
 		html_content: '',
-		sent: ''
+		sent: undefined
 	}
 
 	var isValidEmail = function(email) {

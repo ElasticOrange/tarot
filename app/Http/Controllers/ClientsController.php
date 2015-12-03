@@ -31,14 +31,14 @@ class ClientsController extends Controller
                 }
             }
 
-            // return the first found client
-            foreach ($sitesWithClient as $siteWClient) {
+            // return the first found client in other sites
+/*            foreach ($sitesWithClient as $siteWClient) {
                 if ( ! $siteWClient->clients || $siteWClient->clients->isEmpty()) {
                     continue;
                 }
 
                 return $this->edit($siteWClient, $siteWClient->clients->first());
-            }
+            }*/
         }
 
         $client = new Client(['listid' => $site->id]);

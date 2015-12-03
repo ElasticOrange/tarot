@@ -103,7 +103,31 @@ class ClientsController extends Controller
     public function query($site, Request $request)
     {
 
-//dd($request->all());
+/*
+
+dd($request->all());
+
+        $clientsTable = \App\Client::getTable();
+        $clientsDataTable = \App\ClientData::getTable();
+
+        $site->clients()->join(\App\ClientData::getTable(), '');
+
+dd($request->all());
+
+
+
+        if ($request->input('search.value')) {
+
+        }
+
+*/
+
+
+
+
+
+
+
 
         $queryBuilder = $site   ->clients()
                                 ->where('emailaddress' , 'like', '%'.$request->input('search')['value'].'%')

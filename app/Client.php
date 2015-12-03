@@ -37,7 +37,9 @@ class Client extends Model
         return $this->attributes['subscriberid'] = $value;
     }
 
-    protected $dates = ['opened_at', 'deleted_at', 'created_at', 'updated_at', 'confirmdate'];
+    public $timestamps = false;
+
+    protected $dates = ['opened_at', 'deleted_at', 'confirmdate'];
 
     protected $fillable = [
         'email',

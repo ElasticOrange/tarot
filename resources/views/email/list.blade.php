@@ -5,7 +5,6 @@
 @section('title', 'Emails list')
 
 @section('content')
-
 	<div class="row">
 		<div class="col-sm-3">
 			@include('_siteselector')
@@ -33,10 +32,26 @@
 			</thead>
 			<tbody>
 				<?php $rowIndex = 0 ?>
-				@foreach($emails as $email)
+			@foreach($emails as $email)
+@if($email->client and $email->client->ignore)
+	<?php continue ?>
+@endif
 					<tr class="read-email" href="/sites/{{ $site->id }}/clients/{{ $email->from_email }}">
 						<td>{{ ++$rowIndex }}</td>
-						<td>{{ $email->from_name }}</td>
+						<td>
+								{{ $email->from_name }}
+								@if($email->client)
+									@if($email->client->problem)
+										<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
+									@endif
+									@if($email->client->ignore)
+										<span class="glyphicon glyphicon-ban-circle" title="Client is flagged as ignored"></span>
+									@endif
+									@if(! $email->client->isSubscribed())
+											<span class="glyphicon glyphicon-remove-sign" title="Client is unsubscribed"></span>
+									@endif
+								@endif
+						</td>
 						<td> {{ $email->from_email }}</td>
 						<td class="hidden-xs">
 							@if ($email->sent_at->isToday())

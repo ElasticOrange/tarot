@@ -43,7 +43,7 @@
 							@if($client->problem)
 								<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
 							@endif
-							@if($client->problem)
+							@if($client->ignore)
 								<span class="glyphicon glyphicon-ban-circle" title="Client is flagged as ignored"></span>
 							@endif
 							@if($client->unsubscribed)

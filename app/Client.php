@@ -417,7 +417,7 @@ class Client extends Model
     }
 */
     public function isSubscribed() {
-        if ($this->unsubscribed === "0") {
+        if ($this->unsubscribed == 0) {
             return true;
         };
 

@@ -25,6 +25,7 @@
 					<th>Email</th>
 					<th class="visible-lg">Gender</th>
 					<th class="visible-lg">Country</th>
+					<th class="visible-lg">Registered</th>
 					<th class="visible-lg">Last email</th>
 					<th class="visible-lg">Last response</th>
 					<th class="visible-lg"># Emails</th>
@@ -52,6 +53,7 @@
 						<td>{{ $client->emailaddress }}</td>
 						<td class="visible-lg">{{ $client->gender }}</td>
 						<td class="visible-md">{{ $client->country }}</td>
+						<td class="visible-md">{{ $client->confirmdate }}</td>
 						<td class="visible-lg">
 							@if($client->emails->count())
 								{{ date('d-m-Y', $client->emails->first()->sent_at->timestamp) }}

@@ -156,6 +156,7 @@ dd($request->all());
                 $client->emailaddress,
                 $client->gender,
                 $client->country,
+                $client->confirmdate->format('d-m-Y'),
                 '',
                 '',
                 '',

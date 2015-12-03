@@ -102,7 +102,7 @@
 						class="form-control"
 						rows="40"
 						id="rich_editor"
-			>{{ $template->content }}</textarea>
+			>{!! $template->content !!}</textarea>
 		</div>
 	</div>
 </div>

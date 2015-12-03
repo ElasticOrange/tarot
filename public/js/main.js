@@ -817,12 +817,16 @@ $(function(){
 		showWarningMessage('This client has been opened by somebody else less than a minute ago!');
 	}
 
+	var ckeditorSettings = {
+		allowedContent: true
+	};
+
 	if ($('#rich_editor').length) {
-		CKEDITOR.replace('rich_editor');
+		CKEDITOR.replace('rich_editor', ckeditorSettings);
 	}
 
 	if ($('#rich_editor2').length) {
-		CKEDITOR.replace('rich_editor2');
+		CKEDITOR.replace('rich_editor2', ckeditorSettings);
 	}
 
 

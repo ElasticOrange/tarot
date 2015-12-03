@@ -101,3 +101,10 @@ button[template-id] {
 .template-button-group {
 	width: 100%;
 }
+
+.template-button {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

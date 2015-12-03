@@ -13,7 +13,7 @@
 			</button>
 			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 				@foreach($templates as $template)
-					<li><a href="#" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }}</a></li>
+					<li><a href="#" template-id="{{ $template->id }}" class="template-button" title="{{ $template->type }} {{ $template->name }}"> {{ $template->type }} {{ $template->name }}</a></li>
 				@endforeach
 			</ul>
 		</div>
@@ -26,7 +26,7 @@
 
 			<?php $index = 0; ?>
 			@foreach($templates as $template)
-				<button class="btn btn-default" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }} </button>
+				<button class="btn btn-default template-button" template-id="{{ $template->id }}" title="{{ $template->type }} {{ $template->name }}"> {{ $template->type }} {{ $template->name }} </button>
 
 				<?php $index++ ?>
 
@@ -43,7 +43,7 @@
 	<div class="col-md-3 visible-md-block">
 		<div class="btn-group-vertical template-button-group">
 			@foreach($templates as $template)
-				<button class="btn btn-default" template-id="{{ $template->id }}"> {{ $template->type }} {{ $template->name }} </button>
+				<button class="btn btn-default template-button" template-id="{{ $template->id }}" title="{{ $template->type }} {{ $template->name }}"> {{ $template->type }} {{ $template->name }} </button>
 			@endforeach
 		</div>
 	</div>

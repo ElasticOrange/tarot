@@ -818,7 +818,8 @@ $(function(){
 	}
 
 	var ckeditorSettings = {
-		allowedContent: true
+		allowedContent: true,
+        autoParagraph: false
 	};
 
 	if ($('#rich_editor').length) {

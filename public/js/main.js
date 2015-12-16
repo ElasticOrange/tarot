@@ -102,7 +102,7 @@ function initOnceActiveElements() {
 		},
 		createdRow: function(row, data, dataIndex) {
 //console.log('row', row, data, dataIndex);
-			$(row).attr('href',  window.location.href + '/' + data[9]);
+			$(row).attr('href',  window.location.href + '/' + data[10]);
 			return row;
 		}
 	});

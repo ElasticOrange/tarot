@@ -174,6 +174,13 @@ function onMarkAsResponded() {
 	request.always(function() {
 		hideLoader();
 	});
+
+	request.done(function() {
+		if (shouldAutoSend()) {
+			onEmailSendSuccess();
+		}
+	});
+
 }
 
 function initActiveElements() {
@@ -547,9 +554,8 @@ function loadTemplateInEditor(templateId) {
 
 function onEmailSendSuccess() {
 	var href = $('#next-email').attr('href');
-
 	saveClientInterest().done(function() {
-	//redirect(href, 1);
+		redirect(href, 1);
 	});
 
 }
@@ -801,7 +807,7 @@ var saveClientInterest = function() {
 		return resolvedPromise();
 	}
 
-	return submitGenericAjaxForm($('form#form-client-informations'));
+	return submitGenericAjaxForm($('#form-client-informations'));
 }
 
 $(function(){

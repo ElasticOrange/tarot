@@ -1,5 +1,15 @@
 {!! csrf_field() !!}
 <div class="form-group">
+	<label class="col-xs-2 control-label">Registered time</label>
+	<div class="col-xs-10">
+		<input 	type="text"
+				class="form-control"
+				value="{{ $client->confirmdate->format('d-m-Y h:m') }}"
+				readonly="readonly"
+		/>
+	</div>
+</div>
+<div class="form-group">
 	<label class="col-xs-2 control-label">Email</label>
 	<div class="col-xs-10">
 		<input 	type="email"

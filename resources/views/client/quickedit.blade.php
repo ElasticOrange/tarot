@@ -112,7 +112,7 @@
 											/>
 										</div>
 										<div class="col-md-5">
-											<textarea class="form-control">{{ $client->question }}</textarea>
+											<textarea rows="5" class="form-control">{{ $client->question }}</textarea>
 										</div>
 
 										<div class="col-md-1">

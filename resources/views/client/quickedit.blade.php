@@ -31,6 +31,7 @@
 												class="form-control"
 												value="{{ $client->email }}"
 												placeholder="email"
+												title="E-mail address"
 											/>
 										</div>
 										<div class="col-md-2">
@@ -41,6 +42,8 @@
 												class="form-control"
 												value="{{ $client->firstName }}"
 												placeholder="first name"
+												title="Name"
+
 											/>
 										</div>
 										<div class="col-md-1">
@@ -48,6 +51,7 @@
 													class="form-control"
 													placeholder="gender"
 													synchronize="gender"
+													title="Gender"
 											>
 												<option value="Female">F</option>
 												<option value="Male" {{ ($client->gender == 'Male' ? 'selected="selected"' : '') }}>M</option>
@@ -59,27 +63,27 @@
 													name="birthDate"
 													synchronize="birthDate"
 													value="{{ $client->birthDate }}"
+													title="Birthdate"
 											/>
 										</div>
 
 										<div class="col-md-2">
 											<?php
 												$combobox = [
-													'attributes' => 'class="form-control combobox" name="country" placeholder="country" synchronize="country"',
+													'attributes' => 'class="form-control combobox" name="country" placeholder="country" synchronize="country" title="Country"',
 													'options' => $countries,
 													'selected' => ($client->country ? $client->country : $site->country)
 												];
 											?>
 											@include('_combobox', $combobox)
 										</div>
+
 										<div class="col-md-2">
-											<input
-												type="text"
-												name="interest"
-												synchronize="interest"
-												class="form-control"
-												value="{{ $client->interest }}"
-												placeholder="interest"
+											<input 	type="text"
+													class="form-control"
+													value="{{ $client->confirmdate->format('d-m-Y h:m') }}"
+													title="Register date/time"
+													readonly="readonly"
 											/>
 										</div>
 									</div>
@@ -93,9 +97,21 @@
 													synchronize="partnerName"
 													value="{{ $client->partnerName }}"
 													placeholder="partner name"
+													title="Partner name"
 											/>
 										</div>
-										<div class="col-md-7">
+										<div class="col-md-2">
+											<input
+												type="text"
+												name="interest"
+												synchronize="interest"
+												class="form-control"
+												value="{{ $client->interest }}"
+												placeholder="interest"
+												title="Interest"
+											/>
+										</div>
+										<div class="col-md-5">
 											<textarea class="form-control">{{ $client->question }}</textarea>
 										</div>
 

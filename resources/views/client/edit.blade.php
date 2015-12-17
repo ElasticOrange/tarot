@@ -52,4 +52,7 @@
  		<div id="alert-client-opened-too-soon"></div>
  	@endif
 
+ 	@if($subscribtionsCount > 1)
+ 		<div id="alert-client-many-registrations"></div>
+ 	@endif
 @endsection

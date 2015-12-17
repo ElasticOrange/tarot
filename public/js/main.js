@@ -819,8 +819,19 @@ $(function(){
 	});
 
 
+	var alertMessage = '';
+
 	if ($('#alert-client-opened-too-soon').length) {
-		showWarningMessage('This client has been opened by somebody else less than a minute ago!');
+		alertMessage += 'This client has been <strong>opened by somebody else</strong> less than a minute ago!';
+	}
+
+	if ($('#alert-client-many-registrations').length) {
+		alertMessage += (_.isEmpty(alertMessage) ? '' : '&nbsp;') + 'This client is <strong>registered multiple times</strong>!';
+	}
+
+	if (! _.isEmpty(alertMessage)) {
+
+		showWarningMessage(alertMessage);
 	}
 
 	var ckeditorSettings = {

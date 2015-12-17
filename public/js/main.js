@@ -498,7 +498,7 @@ console.error('template', template);
 		'site-sender-name' : currentSite.ownername,
 		'site-sender-email' : currentSite.owneremail,
 		'site-signature' : currentSite.signature,
-		'site-unsubscribe' : currentSite.unsubscribe,
+		'site-unsubscribe' : '<a href="http://mailis.free-psychic-tarot.com/unsubscribe.php?M=' + clientData.subscriberid + '&amp;C=' + clientData.confirmcode + '" target="_blank" rel="noreferrer">' + currentSite.unsubscribe + '</a>',
 		'template-sender': template.sender_name,
 		'template-subject': template.subject,
 		'current-date': formatDate(new Date()),

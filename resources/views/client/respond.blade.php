@@ -126,4 +126,5 @@
 
 	var infocosts = {!! $infocosts !!};
 
+	var clientData = {!! $client ? $client : '{}' !!};
 </script>

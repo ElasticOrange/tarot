@@ -4,7 +4,7 @@
 	<div class="col-xs-10">
 		<input 	type="text"
 				class="form-control"
-				value="{{ $client->confirmdate->format('d-m-Y h:m') }}"
+				value="{{ $client->confirmdate ? $client->confirmdate->format('d-m-Y h:m') : '' }}"
 				readonly="readonly"
 		/>
 	</div>

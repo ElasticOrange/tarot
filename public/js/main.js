@@ -481,8 +481,7 @@ console.error('template', template);
 		var infocost = infocostsForCountry[0];
 	}
 	var result = {
-		'client-first-name' : $('input[name=firstName]').val(),
-		'client-last-name' :  $('input[name=lastName]').val(),
+		'client-name' : $('input[name=name]').val(),
 		'client-partner-name' :  $('input[name=partnerName]').val(),
 		'client-gender' :  $('select[name=gender]').val(),
 		'client-interest' :  $('input[name=interest]').val(),

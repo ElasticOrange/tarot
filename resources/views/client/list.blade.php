@@ -39,7 +39,7 @@
 					<tr href="/sites/{{ $site->id }}/clients/{{ $client->id }}">
 						<td>{{ $row }}</td>
 						<td>
-							{{ $client->firstName }} {{ $client->lastName }} -> {{ $client->fullName }}
+							{{ $client->name }}
 							@if($client->problem)
 								<span class="glyphicon glyphicon-exclamation-sign" title="Client is flagged as problematic"></span>
 							@endif

@@ -45,8 +45,7 @@ class ClientRequest extends Request
     {
         $rules = [
             'email' => 'required|string|email',
-            'firstName' => 'required|string|min:2',
-            'lastName' => 'string',
+            'name' => 'required|string|min:2',
             'partnerName' => 'string',
             'birthDate' => 'date',
             'gender' => 'required|string|min:3|in:Male,Female',

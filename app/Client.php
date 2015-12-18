@@ -43,6 +43,7 @@ class Client extends Model
 
     protected $fillable = [
         'email',
+        'name',
         'firstName',
         'lastName',
         'gender',
@@ -298,8 +299,6 @@ class Client extends Model
                 $this->properties[$property->field->name] = $property->data;
             }
         }
-        $this->fixName();
-        $this->fixFirstLastName();
 
         return true;
     }
@@ -336,13 +335,48 @@ class Client extends Model
         $this->attributes['emailaddress'] = $value;
     }
 
-    public function getFullNameAttribute() {
+    public function getNameAttribute() {
+        $name = $this->getProperty('Name');
 
-        return $this->getProperty('Name');
+        if (empty($name)) {
+            $name = $this->getProperty('First name');
+        }
+
+        if (empty($name)) {
+            $name = $this->getProperty('Last name');
+        }
+
+        return $name;
+    }
+
+    public function setNameAttribute($value) {
+        $oldName = $this->getProperty('Name');
+
+        if (array_key_exists('Name', $this->properties)) {
+            $this->setProperty('Name', $value);
+            return;
+        }
+
+        if (array_key_exists('First name', $this->properties)) {
+            $this->setProperty('First name', $value);
+            return;
+        }
+
+
+        if (array_key_exists('Last name', $this->properties)) {
+            $this->setProperty('Last name', $value);
+            return;
+        }
+
+        $this->setProperty('Name', $value);
+    }
+
+    public function getFullNameAttribute() {
+        return $this->getNameAttribute();
     }
 
     public function setFullNameAttribute($value) {
-        $this->setProperty('Name', $value);
+        $this->setNameAttribute($value);
     }
 
     public function getFirstNameAttribute() {

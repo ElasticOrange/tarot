@@ -37,12 +37,12 @@
 										<div class="col-md-2">
 											<input
 												type="text"
-												name="firstName"
-												synchronize="firstName"
+												name="name"
+												synchronize="name"
 												class="form-control"
-												value="{{ $client->firstName }}"
-												placeholder="first name"
-												title="Name"
+												value="{{ $client->name }}"
+												placeholder="Client name"
+												title="Client name"
 
 											/>
 										</div>

@@ -155,7 +155,7 @@ dd($request->all());
         foreach($clients as $client) {
             $tableData[] = [
                 ++$index,
-                $client->firstName.' '.$client->lastName,
+                $client->name,
                 $client->emailaddress,
                 $client->gender,
                 $client->country,

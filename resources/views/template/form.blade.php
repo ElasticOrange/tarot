@@ -71,8 +71,7 @@
 									aria-expanded="false"
 						>Placeholders <span class="caret"></span></button>
 						<ul class="dropdown-menu">
-							<li><a href="#" data-insert-text="%%%client-first-name%%%">First name</a></li>
-							<li><a href="#" data-insert-text="%%%client-last-name%%%">Last name</a></li>
+							<li><a href="#" data-insert-text="%%%client-name%%%">Client name</a></li>
 							<li><a href="#" data-insert-text="%%%client-partner-name%%%">Partner name</a></li>
 							<li><a href="#" data-insert-text="%%%client-gender%%%">Gender</a></li>
 							<li><a href="#" data-insert-text="%%%client-interest%%%">Interest</a></li>

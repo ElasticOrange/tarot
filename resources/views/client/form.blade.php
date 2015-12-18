@@ -26,9 +26,9 @@
 	<div class="col-xs-10">
 		<input 	type="text"
 				class="form-control"
-				name="firstName"
-				synchronize="firstName"
-				value="{{ $client->firstName }}"
+				name="name"
+				synchronize="name"
+				value="{{ $client->name }}"
 				placeholder="Ex: John"
 		/>
 	</div>

@@ -55,7 +55,7 @@ class ClientsController extends Controller
 
         $countries = \App\Infocost::countries();
 
-        return view('client.createFromEmail', [
+        $viewData = [
             'site' => $site,
             'client' => $client,
             'sites_with_client' => $sitesWithClient,
@@ -63,8 +63,11 @@ class ClientsController extends Controller
             'templates' => $templates,
             'infocosts' => $infocosts,
             'nextUrl' => $nextUrl,
-            'countries' => $countries
-        ]);
+            'countries' => $countries,
+            'subject' => 'RE: ' . $email->subject
+        ];
+
+        return view('client.createFromEmail', $viewData);
 
     }
 
@@ -299,7 +302,9 @@ dd($request->all());
         }
         $countries = \App\Infocost::countries();
 
-        return view('client/edit', [
+        $lastEmail = $client->emails()->orderBy('sent_at', 'desc')->first();
+
+        $viewData = [
             'site' => $site,
             'client' => $client,
             'sites_with_client' => $sites_with_client,
@@ -308,8 +313,18 @@ dd($request->all());
             'infocosts' => $infocosts,
             'nextUrl' => $nextUrl,
             'alertClientOpenedToSoon' => $alertClientOpenedToSoon,
-            'countries' => $countries
-        ]);
+            'countries' => $countries,
+            'templateCategory' => $templateCategory,
+        ];
+
+        if ($templateCategory == 'email' && ($lastEmail)) {
+            $viewData['subject'] = 'RE: '.$lastEmail->subject;
+        }
+        else {
+            $viewData['subject'] = $site->subject;
+        }
+
+        return view('client/edit', $viewData);
     }
 
     public function markClientEmailsAsResponded($site, $client) {

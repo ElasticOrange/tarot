@@ -78,7 +78,7 @@
 					<input 	class="form-control"
 							type="text"
 							name="subject"
-							value="{{ $site->subject }}"
+							value="{{ $subject }}"
 					/>
 				</div>
 			</div>

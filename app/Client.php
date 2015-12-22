@@ -419,15 +419,17 @@ class Client extends Model
             $date = \Carbon\Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
         }
         catch(\Exception $e) {
+            \Log::error('Exception in Client::getBirthDateAttribute when transforming date from '.$date);
         }
         return $date;
     }
 
     public function setBirthDateAttribute($isoDate) {
         try {
-            $date = \Carbon\Carbon::createFromFormat('Y/m/d', $isoDate)->format('d/m/Y');
+            $date = \Carbon\Carbon::createFromFormat('Y-m-d', $isoDate)->format('d/m/Y');
         }
         catch (\Exception $e) {
+            \Log::error('Exception in Client::setBirthDateAttribute when transforming date from '.$isoDate);
             $date = $isoDate;
         }
 

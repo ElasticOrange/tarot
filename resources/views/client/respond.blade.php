@@ -25,7 +25,6 @@
 		</div>
 	</div>
 </div>
-
 <div class="row">
 	<div class="col-sm-2 visible-lg-block">
 		<div class="btn-group-vertical template-button-group">
@@ -39,7 +38,7 @@
 
 				<?php $index++ ?>
 
-				@if ($index >= (count($templates) / 2))
+				@if ($index == (count($templates) / 2))
 		</div>
 	</div>
 	<div class="col-sm-2 visible-lg-block">

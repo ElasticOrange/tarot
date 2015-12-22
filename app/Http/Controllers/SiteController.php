@@ -124,19 +124,14 @@ class SiteController extends Controller
     }
 
     public function change(Request $request) {
-        $referrer = $request->server('HTTP_REFERER');
-        $input = $request->all();
-
-        if (isset($input['siteId']) and $input['siteId'] > 0) {
-            $siteId = $input['siteId'];
-
-            $redirect_url = preg_replace('/(.*\/sites)\/([0-9]*)(.*)/', '$1/'.$siteId.'$3' ,$referrer);
-
-            \Auth::user()->setCurrentSiteId($siteId);
-
-            return redirect($redirect_url);
+        if (! $request->siteId or ! ($request->siteId > 0)) {
+            return back();
         }
 
-        return redirect($referrer);
+        $referrer = $request->server('HTTP_REFERER');
+        $redirect_url = preg_replace('/(.*\/sites)\/([0-9]*)(.*)/', '$1/'.$request->siteId.'$3' ,$referrer);
+
+        \Auth::user()->setCurrentSiteId($request->siteId);
+        return redirect($redirect_url);
     }
 }

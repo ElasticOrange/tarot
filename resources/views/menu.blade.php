@@ -15,7 +15,22 @@
 				<li <?=$selected_menu_item == 'Questions' ? 'class="active"' : ''?>><a href="/questions">Questions</a></li>
 				<li <?=$selected_menu_item == 'Emails' ? 'class="active"' : ''?>><a href="/emails">Emails</a></li>
 				<li <?=$selected_menu_item == 'Clients' ? 'class="active"' : ''?>><a href="/clients">Clients</a></li>
-				<li <?=$selected_menu_item == 'My account' ? 'class="active"' : ''?>><a href="/profile">My account</a></li>
+				<li <?=$selected_menu_item == 'My account' ? 'class="dropdown active"' : 'class="dropdown" ' ?>>
+					<a href="#"
+						class="dropdown-toggle"
+						data-toggle="dropdown"
+						role="button"
+						aria-haspopup="true"
+						aria-expanded="true"
+					>
+						<span class="glyphicon glyphicon-user"></span> {{ $user->name }} <span class="caret">
+					</a>
+
+					<ul class="dropdown-menu">
+						<li><a href="/profile">Edit profile</a><li>
+						<li><a href="/auth/logout">Logout</a></li>
+					</ul>
+				</li>
 			</ul>
 			@if(\Auth::user()->type == \App\User::ADMINISTRATOR)
 			<ul class="nav navbar-nav navbar-right">

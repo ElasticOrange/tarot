@@ -40,6 +40,7 @@ class TemplatesController extends Controller
         if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
             abort(403);
         }
+
         $templates = $site->templates()->ofCategory($templateCategory)->get();
 
         return view('template.list', [
@@ -59,11 +60,10 @@ class TemplatesController extends Controller
         if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
             abort(403);
         }
-        $newTemplate = new \App\Template;
 
+        $newTemplate = new \App\Template;
         $newTemplate->category = $templateCategory;
         $newTemplate->site_id = $site->id;
-
         $templateTypes = $newTemplate->getAllTypes();
 
         return view('template.create', [
@@ -174,27 +174,27 @@ class TemplatesController extends Controller
         if (\Auth::user()->type !=  \App\User::ADMINISTRATOR) {
             abort(403);
         }
-
         $templateIds = $request->get('id');
-
         if (empty($templateIds)) {
             return back();
         }
 
         $templates = \App\Template::whereIn('id', $templateIds)->get();
+        $destSite = \Auth::user()->sites()->withId($request->site)->first();
 
-        if ( ! $templates) {
+        if ( ! $templates || ! $destSite) {
             return back();
         }
 
         foreach($templates as $template) {
+            $templateCategory = $template->category;
             $newTemplate = $template->replicate();
-
-            $newTemplate->name = $newTemplate->name.' Copy';
-            $newTemplate->save();
+            //$newTemplate->name = $newTemplate->name.' Copy';
+            $destSite->templates()->save($newTemplate);
         }
 
-        return back();
+        \Auth::user()->setCurrentSiteId($destSite->id);
+        return redirect()->action('TemplatesController@index', [$destSite, $templateCategory]);
     }
 
 }

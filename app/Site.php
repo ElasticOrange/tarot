@@ -60,6 +60,14 @@ class Site extends Model
         return $query->where('active', 1);
     }
 
+    public function scopeWithId($query, $ids)
+    {
+    	if (! is_array($ids)) {
+    		$ids = [$ids];
+    	}
+        return $query->whereIn($this->primaryKey, $ids);
+    }
+
     public function users() {
         return $this->belongsToMany('\App\User')->withTimestamps();
     }

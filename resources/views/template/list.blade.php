@@ -17,10 +17,15 @@
 	<form method="post">
 		{{ csrf_field() }}
 		<div class="row">
-			<div class="col-sm-12">
+			<div class="col-sm-12 form-inline">
 				<a class="btn btn-primary" href="/sites/{{$site->id}}/templates/{{$templateCategory}}/create"><span class="glyphicon glyphicon-plus"></span> Add new</a>
 				<button class="btn btn-danger" type="submit" data-confirm="Are you sure you want to DELETE the selected templates?" formaction="{{ action('TemplatesController@bulkDelete', [$site]) }}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
-				<button class="btn btn-default" type="submit" data-confirm="Are you sure you want to COPY the selected templates?" formaction="{{ action('TemplatesController@bulkCopy', [$site]) }}"><span class="glyphicon glyphicon-duplicate"></span> Copy</button>
+				<button class="btn btn-warning" type="submit" data-confirm="Are you sure you want to COPY the selected templates?" formaction="{{ action('TemplatesController@bulkCopy', [$site]) }}"><span class="glyphicon glyphicon-duplicate"></span> Copy to</button>
+				<select name="site" class="form-control inline">
+					@foreach($loggedUserSites as $site)
+						<option value="{{ $site->id }}" {{ $site->id == $currentSiteId ? 'selected="selected"' : '' }}>{{ $site->name }}</option>
+					@endforeach
+				</select>
 			</div>
 		</div>
 

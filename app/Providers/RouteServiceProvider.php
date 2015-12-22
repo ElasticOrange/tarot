@@ -36,9 +36,9 @@ class RouteServiceProvider extends ServiceProvider
         $router->model('emails', 'App\Email');
         $router->model('emailboxes', 'App\Emailbox');
 
-        view()->composer('_siteselector', function($view) {
+        view()->composer(['_siteselector', 'template.list'], function($view) {
             $view->with([
-                'loggedUserSites' => \Auth::user()->sites()->lists('name', 'listid')->toArray(),
+                'loggedUserSites' => \Auth::user()->sites,
                 'currentSiteId' => \Auth::user()->currentSiteId()
             ]);
         });

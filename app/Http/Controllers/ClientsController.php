@@ -64,7 +64,8 @@ class ClientsController extends Controller
             'infocosts' => $infocosts,
             'nextUrl' => $nextUrl,
             'countries' => $countries,
-            'subject' => 'RE: ' . $email->subject
+            'subject' => 'RE: ' . $email->subject,
+            'templateCategory' => 'email',
         ];
 
         return view('client.createFromEmail', $viewData);

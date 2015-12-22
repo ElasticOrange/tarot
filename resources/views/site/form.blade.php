@@ -95,5 +95,5 @@
 				class="form-control"
 				name="unsubscribe"
 				rows="5"
-		>{{ $site->signature }}</textarea>
+		>{{ $site->unsubscribe }}</textarea>
 	</div>

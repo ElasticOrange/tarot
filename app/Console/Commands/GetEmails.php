@@ -232,6 +232,11 @@ class GetEmails extends Command
                 continue;
             }
 
+            if (strpos($mail->textPlain, "A contact has been removed from your list. Their details are listed below.") == 0) {
+                warn('Unsubscribtion mail '.$mail->fromAddress.': '.$mail->subject);
+                continue;
+            }
+
             log('Saving mail '.$mail->fromAddress.': '.$mail->subject.' '.$mail->date);
 
             if ($this->saveMailToDb($mail)) {

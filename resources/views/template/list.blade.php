@@ -22,8 +22,8 @@
 				<button class="btn btn-danger" type="submit" data-confirm="Are you sure you want to DELETE the selected templates?" formaction="{{ action('TemplatesController@bulkDelete', [$site]) }}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 				<button class="btn btn-warning" type="submit" data-confirm="Are you sure you want to COPY the selected templates?" formaction="{{ action('TemplatesController@bulkCopy', [$site]) }}"><span class="glyphicon glyphicon-duplicate"></span> Copy to</button>
 				<select name="site" class="form-control inline">
-					@foreach($loggedUserSites as $site)
-						<option value="{{ $site->id }}" {{ $site->id == $currentSiteId ? 'selected="selected"' : '' }}>{{ $site->name }}</option>
+					@foreach($loggedUserSites as $tsite)
+						<option value="{{ $tsite->id }}" {{ $tsite->id == $currentSiteId ? 'selected="selected"' : '' }}>{{ $tsite->name }}</option>
 					@endforeach
 				</select>
 			</div>

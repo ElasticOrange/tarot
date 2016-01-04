@@ -865,7 +865,7 @@ $(function(){
 	});
 
 	// When clicking on tr that gas href attr go to that address
-	$(document).on('click', 'table.table tbody td', function(ev) {
+	$(document).on('click-disabled', 'table.table tbody td', function(ev) {
 		var $this = $(this);
 
 		if ($this.hasClass('prevent-href')) {

@@ -941,6 +941,20 @@ $(function(){
 		loadTemplateInEditor(templateId);
 	});
 
+	$(document).on('change', 'input[type=checkbox][master-checkbox=true]', function() {
+		var $this = $(this);
+		var parentSelector = $this.attr('parent-selector');
+
+		if (_.isEmpty(parentSelector)) {
+			return withError(['Specify parent-selector attribute to master-checkbox', $this]);
+		}
+		var $parents = $this.parents(parentSelector);
+		var status = $this.prop('checked');
+		$parents.find('input[type=checkbox]').not("[master-checkbox=true]").each(function() {
+			$(this).prop('checked', status);
+		});
+	});
+
 	initActiveElements();
 	initEmailsLoader();
 	initOnceActiveElements();

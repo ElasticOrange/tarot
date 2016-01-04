@@ -108,3 +108,7 @@ button[template-id] {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+th label {
+	margin-bottom: 0px;
+}

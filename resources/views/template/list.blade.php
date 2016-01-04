@@ -17,7 +17,7 @@
 	<form method="post">
 		{{ csrf_field() }}
 		<div class="row">
-			<div class="col-sm-12 form-inline">
+			<div class="col-sm-12 form-inline form-group">
 				<a class="btn btn-primary" href="/sites/{{$site->id}}/templates/{{$templateCategory}}/create"><span class="glyphicon glyphicon-plus"></span> Add new</a>
 				<button class="btn btn-danger" type="submit" data-confirm="Are you sure you want to DELETE the selected templates?" formaction="{{ action('TemplatesController@bulkDelete', [$site]) }}"><span class="glyphicon glyphicon-remove"></span> Remove</button>
 				<button class="btn btn-warning" type="submit" data-confirm="Are you sure you want to COPY the selected templates?" formaction="{{ action('TemplatesController@bulkCopy', [$site]) }}"><span class="glyphicon glyphicon-duplicate"></span> Copy to</button>
@@ -34,7 +34,12 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th></th>
+						<th>
+							<label>
+								<input type="checkbox" master-checkbox="true" parent-selector="form"/>
+								All
+							</label>
+						</th>
 						<th>Name</th>
 						<th>Type</th>
 						<th>Active</th>

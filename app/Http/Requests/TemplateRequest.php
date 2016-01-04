@@ -36,7 +36,7 @@ class TemplateRequest extends Request
         return [
             'name' => 'required|string',
             'category' => 'required|string|min:3|in:question,email',
-            'type' => 'required|string|min:3',
+            'type' => 'string',
             'content' => 'required|string|min:3',
             'active' => 'boolean',
         ];

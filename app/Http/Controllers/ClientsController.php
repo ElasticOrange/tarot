@@ -265,8 +265,10 @@ dd($request->all());
 
         if ( ! $sites_with_client->isEmpty()) {
             foreach($sites_with_client as $key => $site_wc) {
-                if (! $site_wc->clients->isEmpty() and ($site_wc->clients->first()->isSubscribed())) {
-                    $site_wc->hasUserSubscribed = true;
+                if (! $site_wc->clients->isEmpty()) {
+                    if ($site_wc->clients->first()->isSubscribed()) {
+                        $site_wc->hasUserSubscribed = true;
+                    }
                     $subscribtionsCount++;
                 }
                 else {

@@ -825,7 +825,7 @@ $(function(){
 	}
 
 	if ($('#alert-client-many-registrations').length) {
-		alertMessage += (_.isEmpty(alertMessage) ? '' : '&nbsp;') + 'This client is <strong>registered multiple times</strong>!';
+		alertMessage += (_.isEmpty(alertMessage) ? '' : '&nbsp;') + 'This client is <strong>registered on more than one site</strong>!';
 	}
 
 	if (! _.isEmpty(alertMessage)) {

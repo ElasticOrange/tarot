@@ -346,7 +346,7 @@ dd($request->all());
             return false;
         }
 
-        if (! $client->emails->isEmpty()) {
+        if ($client->emails->isEmpty()) {
             $client->setQuestionUnanswered();
         }
 

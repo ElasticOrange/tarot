@@ -108,7 +108,7 @@ class Client extends Model
     }
 
     public function scopeWithQuestionUnresponded($query) {
-        return $query->doesntHave('emails');
+        return $query->where('questionAnswered', 0);
     }
 
     public function scopeForSite($query, $siteId) {
@@ -117,6 +117,15 @@ class Client extends Model
 
     public function scopeIsActive($query) {
         return $query->where('confirmed', 1)->where('ignore', 0)->where('unsubscribed', 0);
+    }
+
+    public function setQuestionAnswered() {
+        if (! $this->questionAnswered) {
+            $this->questionAnswered = 1;
+            $this->save();
+        }
+
+        return true;
     }
 
     public function setDefaultAttributes() {

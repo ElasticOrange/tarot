@@ -152,9 +152,9 @@ class EmailsController extends Controller
         $client = $site->clients()->emailAddress($input['email'])->first();
 
         if ($client) {
+            $client->setQuestionAnswered();
             $input['name'] = $client->fullName;
         }
-
 
         $emailData = [
             'sent' => 1,

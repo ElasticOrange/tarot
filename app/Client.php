@@ -128,6 +128,15 @@ class Client extends Model
         return true;
     }
 
+    public function setQuestionUnanswered() {
+        if ($this->questionAnswered) {
+            $this->questionAnswered = 0;
+            $this->save();
+        }
+
+        return true;
+    }
+
     public function setDefaultAttributes() {
         $this->domainname = getDomainFromEmailAddress($this->emailaddress);
         if (!$this->format) {

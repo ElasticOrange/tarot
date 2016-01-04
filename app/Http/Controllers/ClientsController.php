@@ -334,6 +334,9 @@ dd($request->all());
         if (!$client) {
             return false;
         }
+
+        $client->setQuestionAnswered();
+
         return ['result' => $client->markEmailsAsResponded($site)];
     }
 
@@ -342,6 +345,11 @@ dd($request->all());
         if (!$client) {
             return false;
         }
+
+        if (! $client->emails->isEmpty()) {
+            $client->setQuestionUnanswered();
+        }
+
         return ['result' => $client->markLastEmailAsUnresponded($site)];
     }
 

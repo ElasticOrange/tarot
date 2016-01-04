@@ -108,7 +108,7 @@ class Client extends Model
     }
 
     public function scopeWithQuestionUnresponded($query) {
-        return $query->where('questionAnswered', 0);
+        return $query->doesntHave('emails');
     }
 
     public function scopeForSite($query, $siteId) {
@@ -493,7 +493,7 @@ class Client extends Model
             return false;
         }
         $instance = new static;
-        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->get();
+        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with(['data','fields'])->orderBy('confirmdate', 'desc')->get();
         return $clients;
     }
 
@@ -502,7 +502,7 @@ class Client extends Model
             return false;
         }
         $instance = new static;
-        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with('data')->with('fields')->orderBy('confirmdate', 'desc')->first();
+        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with(['data','fields'])->orderBy('confirmdate', 'desc')->first();
         return $clients;
     }
 

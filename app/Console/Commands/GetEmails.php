@@ -232,7 +232,7 @@ class GetEmails extends Command
                 continue;
             }
 
-            if (strpos($mail->textPlain, "A contact has been removed from your list. Their details are listed below.") == 0) {
+            if (strpos($mail->textPlain, "A contact has been removed from your list. Their details are listed below.") === 0) {
                 warn('Unsubscribtion mail '.$mail->fromAddress.': '.$mail->subject);
                 continue;
             }

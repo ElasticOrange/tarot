@@ -7,4 +7,4 @@
 <script type="text/javascript" src="/js/lib/DataTables/DataTables-1.10.9/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/lib/DataTables/Responsive-1.0.7/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="/js/utils.js"></script>
-<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/main.js?2016010400"></script>

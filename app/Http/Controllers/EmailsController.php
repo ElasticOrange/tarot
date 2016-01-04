@@ -98,6 +98,15 @@ class EmailsController extends Controller
         $clientLastEmail = $currentClient->getFirstUnrespondedEmail();
 
         $nextEmail = getNextEmail($emails, $clientLastEmail);
+
+        if (!$nextEmail) {
+            return redirect('EmailsController@index', ['site' => $site]);
+        }
+
+        if (!$nextEmail->client) {
+            return redirect("/sites/$site->id/clients/".$nextEmail->from_email);
+        }
+
         return redirect("/sites/$site->id/clients/".$nextEmail->client->id);
     }
 

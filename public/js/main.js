@@ -688,7 +688,7 @@ function fillPlaceholdersInString(string, data) {
 	var placeholders = string.match(/\{([a-z0-9\-_]+)\}/gi);
 	var resultString = string;
 
-	if (!placeholders.length) {
+	if (placeholders && !placeholders.length) {
 		return resultString;
 	}
 

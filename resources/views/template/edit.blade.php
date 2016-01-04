@@ -16,6 +16,7 @@
 					data-ajax="true"
 					success-message="Template updated successfully"
 					error-message="Error saving template"
+					success-url="/sites/{{ $site->id }}/templates/{{ $template->category }}"
 			>
 				<input type="hidden" name="_method" value="PUT"/>
 				@include('template.form')

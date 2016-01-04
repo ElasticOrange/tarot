@@ -18,7 +18,7 @@
 							template-id="{{ $template->id }}"
 							class="template-button"
 							title="{{$template->type }} {{ $template->name }}"
-						> {{ $templateCategory != 'email' ? $template->type : ''}} {{ $template->name }}</a>
+						>{{ $template->name }}</a>
 					</li>
 				@endforeach
 			</ul>
@@ -34,7 +34,7 @@
 				<button class="btn btn-default template-button"
 						template-id="{{ $template->id }}"
 						title="{{ $template->type }} {{ $template->name }}"
-				> {{ $templateCategory != 'email' ? $template->type : ''}} {{ $template->name }} </button>
+				>{{ $template->name }}</button>
 
 				<?php $index++ ?>
 
@@ -54,7 +54,7 @@
 				<button class="btn btn-default template-button"
 						template-id="{{ $template->id }}"
 						title=" {{ $template->type }} {{ $template->name }}"
-				>{{ $templateCategory != 'email' ? $template->type : '' }}  {{ $template->name }} </button>
+				>{{ $template->name }}</button>
 			@endforeach
 		</div>
 	</div>

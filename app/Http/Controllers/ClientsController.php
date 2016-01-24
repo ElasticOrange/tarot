@@ -421,6 +421,6 @@ dd($request->all());
             }
         }
 
-        return redirect()->action('ClientsController@show', [$site, $client]);
+        return back();
     }
 }

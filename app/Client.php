@@ -361,7 +361,15 @@ class Client extends Model
         }
 
         if (empty($name)) {
+            $name = $this->getProperty('First Name');
+        }
+
+        if (empty($name)) {
             $name = $this->getProperty('Last name');
+        }
+
+        if (empty($name)) {
+            $name = $this->getProperty('Last Name');
         }
 
         return $name;

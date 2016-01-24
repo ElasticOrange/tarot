@@ -41,13 +41,15 @@ class ClientsController extends Controller
             }*/
         }
 
-        $client = new Client(['listid' => $site->id]);
-        $client->email = $emailAddress;
 
         $templates = $site->templates()->ofCategory('email')->active()->orderBy('type')->orderBy('name')->get();
         $infocosts = $site->infocosts()->active()->default()->get();
 
         $email = Email::fromEmail($emailAddress)->toSite($site)->orderBy('sent_at', 'desc')->first();
+
+        $client = new Client(['listid' => $site->id]);
+        $client->email = $emailAddress;
+        $client->name = $email->from_name;
 
         if ($email) {
             $nextUrl =  "/sites/$site->id/nextemailbytime/".$email->sent_at->timestamp;

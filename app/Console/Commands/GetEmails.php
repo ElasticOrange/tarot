@@ -237,6 +237,11 @@ class GetEmails extends Command
                 continue;
             }
 
+            if (strpos($mail->textPlain, "A contact has joined your contact list. Their details are listed below.") === 0) {
+                warn('Subscription mail '.$mail->fromAddress.': '.$mail->subject);
+                continue;
+            }
+
             log('Saving mail '.$mail->fromAddress.': '.$mail->subject.' '.$mail->date);
 
             if ($this->saveMailToDb($mail)) {

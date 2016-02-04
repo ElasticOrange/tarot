@@ -50,10 +50,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/clients', 'ClientsController@redirect');
     Route::get('/sites/{sites}/clients/query', 'ClientsController@query');
     Route::get('/sites/{sites}/clients/{clients}/{templateCategory}', 'ClientsController@show');
-    Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+@[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+');
-    Route::get('/sites/{sites}/markresponded/{clientEmailAddress}', 'EmailsController@markEmailsFromAddressAsResponded')->where('clientEmailAddress', '[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+@[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+');;
+    Route::get('/sites/{sites}/clients/{clientEmailAddress}', 'ClientsController@editClientByEmail')->where('clientEmailAddress', '(.+)@(.+)\.(.+)');
+    Route::get('/sites/{sites}/markresponded/{clientEmailAddress}', 'EmailsController@markEmailsFromAddressAsResponded')->where('clientEmailAddress', '(.+)@(.+)\.(.+)');
     Route::get('/sites/{sites}/markresponded/{clients}', 'ClientsController@markClientEmailsAsResponded');
-    Route::get('/sites/{sites}/markunresponded/{clientEmailAddress}', 'EmailsController@markEmailsFromAddressAsUnresponded')->where('clientEmailAddress', '[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+@[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+');;
+    Route::get('/sites/{sites}/markunresponded/{clientEmailAddress}', 'EmailsController@markEmailsFromAddressAsUnresponded')->where('clientEmailAddress', '(.+)@(.+)\.(.+)');
     Route::get('/sites/{sites}/markunresponded/{clients}', 'ClientsController@markClientLastEmailAsUnresponded');
     Route::resource('sites.clients', 'ClientsController');
 
@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/sites/{sites}/nextquestion/{clients?}', 'EmailsController@nextQuestionForSite');
     Route::get('/sites/{sites}/nextemail/{clients?}', 'EmailsController@nextUnrespondedClientForSite');
     Route::get('/sites/{sites}/nextemailbytime/{timestamp?}', 'EmailsController@nextUnrespondedClientForSiteByTimestamp');
-    Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails')->where('clientEmailAddress', '[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+@[A-Za-z0-9\.\_\-\#\$\~\&\*\,\;\=\:]+');;
+    Route::get('/sites/{sites}/emails/lastEmails/{clientEmailAddress}/{emailCount}', 'EmailsController@lastEmails')->where('clientEmailAddress', '(.+)@(.+)\.(.+)');
 
     Route::get('/emailboxes/{emailboxes}/delete', 'EmailboxController@destroy');
     Route::resource('emailboxes', 'EmailboxController');

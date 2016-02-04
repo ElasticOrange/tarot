@@ -108,50 +108,38 @@ class ClientsController extends Controller
 
     public function query($site, Request $request)
     {
+        if (! empty($request->input('search')['value'])) {
+            $clientsCount = $site->clients()->countBySearchTerm($request->input('search')['value']);
 
-/*
+            $clients = $site->clients()->bySearchTerm($request->input('search')['value'])
+                            ->take($request->input('length'))
+                            ->skip($request->input('start'))
+                            ->with('data.field')
+                            ->with(['emails' => function($query) {
+                                    return $query->limit(21);
+                                }])
+                            ->with(['sentEmails' => function($query) {
+                                    return $query->notBounced()->limit(1);
+                                }])
+                            ->get();
 
-dd($request->all());
-
-        $clientsTable = \App\Client::getTable();
-        $clientsDataTable = \App\ClientData::getTable();
-
-        $site->clients()->join(\App\ClientData::getTable(), '');
-
-dd($request->all());
-
-
-
-        if ($request->input('search.value')) {
 
         }
+        else {
+            $clientsCount = $site->clients()->count();
 
-*/
-
-
-
-
-
-
-
-
-        $queryBuilder = $site   ->clients()
-                                ->where('emailaddress' , 'like', '%'.$request->input('search')['value'].'%')
-                                ->where('comment' , 'like', '%'.$request->input('search')['value'].'%');
-
-        $clientsCount = $site->clients()->count();
-
-        $clients = $site->clients()
-                        ->take($request->input('length'))
-                        ->skip($request->input('start'))
-                        ->with('data.field')
-                        ->with(['emails' => function($query) {
-                                return $query->limit(21);
-                            }])
-                        ->with(['sentEmails' => function($query) {
-                                return $query->notBounced()->limit(1);
-                            }])
-                        ->get();
+            $clients = $site->clients()
+                            ->take($request->input('length'))
+                            ->skip($request->input('start'))
+                            ->with('data.field')
+                            ->with(['emails' => function($query) {
+                                    return $query->limit(21);
+                                }])
+                            ->with(['sentEmails' => function($query) {
+                                    return $query->notBounced()->limit(1);
+                                }])
+                            ->get();
+        }
 
         $tableData = [];
         $index = $request->input('start');

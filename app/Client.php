@@ -573,4 +573,41 @@ class Client extends Model
     public static function filterByString($filterValue) {
         $instance = new static;
     }
+
+    public function scopeCountBySearchTerm($query, $searchTerm) {
+        $clientData = new \App\ClientData();
+        $clientDataTable = $clientData->getTable();
+        $clientTable = $this->getTable();
+
+        return $query   ->distinct()
+                        ->leftJoin( $clientDataTable,
+                                    $clientTable.'.'.$this->getKeyName(),
+                                    '=',
+                                    $clientDataTable.'.'.$this->getKeyName())
+                        ->whereRaw('(emailaddress like ? or comment like ? or '.$clientDataTable.'.data like ?)', [
+                            '%'.$searchTerm.'%',
+                            '%'.$searchTerm.'%',
+                            '%'.$searchTerm.'%'
+                        ])->count($clientTable.'.'.$this->getKeyName());
+    }
+
+    public function scopeBySearchTerm($query, $searchTerm) {
+
+        $clientData = new \App\ClientData();
+        $clientDataTable = $clientData->getTable();
+        $clientTable = $this->getTable();
+
+        return $query
+                        ->leftJoin( $clientDataTable,
+                                    $clientTable.'.'.$this->getKeyName(),
+                                    '=',
+                                    $clientDataTable.'.'.$this->getKeyName())
+                        ->whereRaw('(emailaddress like ? or comment like ? or '.$clientDataTable.'.data like ?)', [
+                            '%'.$searchTerm.'%',
+                            '%'.$searchTerm.'%',
+                            '%'.$searchTerm.'%'
+                        ])
+                        ->groupBy($clientTable.'.'.$this->getKeyName());
+    }
+
 }

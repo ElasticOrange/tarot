@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Email as Email;
 
 function getNextClient($collection, $currentClient = null) {
-    if (!$collection) {
+    if (! $collection) {
         return false;
     }
 
@@ -16,14 +16,14 @@ function getNextClient($collection, $currentClient = null) {
         return false;
     }
 
-    if (!$currentClient) {
+    if (! $currentClient) {
         return $collection[0];
     }
 
     $aMinuteAgo = time() - 60;
 
     foreach ($collection as $index => $item) {
-        if (($item->confirmdate->timestamp < $currentClient->confirmdate->timestamp)
+        if (($item->confirmdate->timestamp > $currentClient->confirmdate->timestamp)
         and ($item->opened_at->timestamp < $aMinuteAgo)) {
             return $item;
         }

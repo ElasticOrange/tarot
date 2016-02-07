@@ -518,8 +518,8 @@ class Client extends Model
         if (!$site) {
             return false;
         }
-        $instance = new static;
-        $clients = $instance->isActive()->forSite($site->id)->withQuestionUnresponded()->with(['data','fields'])->orderBy('confirmdate', 'desc')->get();
+
+        $clients = $site->clients()->isActive()->withQuestionUnresponded()->with(['data','fields'])->orderBy('confirmdate')->get();
         return $clients;
     }
 

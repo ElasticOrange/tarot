@@ -42,7 +42,7 @@ class ClientsController extends Controller
         }
 
 
-        $templates = $site->templates()->ofCategory('email')->active()->orderBy('type')->orderBy('name')->get();
+        $templates = $site->templates()->ofCategory('email')->active()->orderBy('name')->get();
         $infocosts = $site->infocosts()->active()->default()->get();
 
         $email = Email::fromEmail($emailAddress)->toSite($site)->orderBy('sent_at', 'desc')->first();
@@ -267,7 +267,7 @@ class ClientsController extends Controller
             }
         }
 
-        $templates = Template::active()->ofCategory($templateCategory)->ofSite($site->id)->orderBy('type')->orderBy('name')->get();
+        $templates = Template::active()->ofCategory($templateCategory)->ofSite($site->id)->orderBy('name')->get();
 
         $infocosts = $site->infocosts()->active()->default()->get();
 

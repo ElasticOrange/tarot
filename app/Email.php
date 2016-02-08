@@ -110,7 +110,7 @@ class Email extends Model
         $instance = new static;
         $emails = $instance	->unrespondedEmailsForSite($site)
         					->select(\DB::raw('*, count(id) as email_count'))
-        					->orderBy('sent_at', 'desc')
+        					->orderBy('sent_at')
         					->get();
         return $emails;
 	}

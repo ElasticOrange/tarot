@@ -47,10 +47,10 @@ function getNextEmail($collection, $currentEmail = null) {
     }
 
     foreach ($collection as $index => $item) {
-        if (!$item->client) {
+/*        if (!$item->client) {
             continue;
-        }
-        if ($item->sent_at->timestamp < $currentEmail->sent_at->timestamp) {
+        }*/
+        if ($item->sent_at->timestamp > $currentEmail->sent_at->timestamp) {
             return $item;
         }
     }
@@ -111,6 +111,8 @@ class EmailsController extends Controller
     }
 
     public function nextUnrespondedClientForSiteByTimestamp($site, $timeStamp = null) {
+        $timeStamp = 0 + $timeStamp;
+
         if ( ! $timeStamp || ! ($timeStamp > 0)) {
             return redirect()->action('EmailsController@index', [$site]);
         }
@@ -124,7 +126,7 @@ class EmailsController extends Controller
         $nextEmail = $emails->first();
 
         foreach ($emails as $email) {
-            if ($email->sent_at->timestamp < $timeStamp) {
+            if ($email->sent_at->timestamp > $timeStamp) {
                 return redirect("/sites/$site->id/clients/".$email->from_email);
             }
         }

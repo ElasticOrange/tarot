@@ -1,4 +1,5 @@
 <?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -40,7 +41,6 @@ class ClientsController extends Controller
                 return $this->edit($siteWClient, $siteWClient->clients->first());
             }*/
         }
-
 
         $templates = $site->templates()->ofCategory('email')->active()->orderBy('name')->get();
         $infocosts = $site->infocosts()->active()->default()->get();

@@ -520,6 +520,9 @@ class Client extends Model
         }
 
         $clients = $site->clients()->isActive()->withQuestionUnresponded()->with(['data','fields'])->orderBy('confirmdate')->get();
+
+        $clients = Client::filterClientsWithValidAge($clients);
+
         return $clients;
     }
 
@@ -629,6 +632,22 @@ class Client extends Model
         }
 
         return false;
+    }
+
+    public static function filterClientsWithValidAge($clients) {
+        $filteredClients = [];
+
+        foreach ($clients as $client) {
+            if ($client->hasValidAge()) {
+                $filteredClients[] = $client;
+                continue;
+            }
+
+            $client->setAsUnsubscribed();
+            $client->save();
+        }
+
+        return collect($filteredClients);
     }
 
 }

@@ -610,4 +610,25 @@ class Client extends Model
                         ->groupBy($clientTable.'.'.$this->getKeyName());
     }
 
+    public function hasValidAge() {
+        $secondsIn18Years = 567648000;
+        $now = strtotime('now');
+        $birthDate = $this->birthDate;
+
+        if (is_string($birthDate)) {
+            $birthDate = strtotime($birthDate);
+        }
+
+        // If birthdate is not valid we suppose he is over 18
+        if (! is_numeric($birthDate)) {
+            return true;
+        }
+
+        if (($now - $birthDate) > $secondsIn18Years) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

@@ -45,7 +45,7 @@ class ClientsController extends Controller
         $templates = $site->templates()->ofCategory('email')->active()->orderBy('name')->get();
         $infocosts = $site->infocosts()->active()->default()->get();
 
-        $email = Email::fromEmail($emailAddress)->toSite($site)->orderBy('sent_at', 'desc')->first();
+        $email = Email::fromEmail($emailAddress)->toSite($site)->unresponded()->orderBy('sent_at')->first();
 
         $client = new Client(['listid' => $site->id]);
         $client->email = $emailAddress;

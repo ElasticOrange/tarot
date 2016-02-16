@@ -127,7 +127,8 @@ class EmailsController extends Controller
 
         foreach ($emails as $email) {
             if ($email->sent_at->timestamp > $timeStamp) {
-                return redirect("/sites/$site->id/clients/".$email->from_email);
+                $nextEmail = $email;
+                break;
             }
         }
 

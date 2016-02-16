@@ -70,8 +70,6 @@ class EmailsController extends Controller
         \Auth::user()->setCurrentSiteId($site->id);
         $clients = \App\Client::getClientsWithUnrespondedQuestionsForSite($site);
 
-        $clients = $this->filterClientsWithValidAge($clients);
-
         return view('client/questionlist', [
             'site' => $site,
             'clients' => $clients
